@@ -1,0 +1,300 @@
+.footer {
+  background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+  color: white;
+  padding: 3rem 0 0 0;
+  margin-top: auto;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footerContent {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.brandSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.footerLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.logoIcon {
+  font-size: 2rem;
+  color: #ff6f61;
+}
+
+.brandName {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brandDescription {
+  color: #ccc;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #ff6f61;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.socialLink:hover {
+  background: #ff6f61;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #ff6f61;
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: #ff6f61;
+}
+
+.contactSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.contactIcon {
+  font-size: 1.2rem;
+  color: #ff6f61;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.contactLabel {
+  font-weight: 600;
+  color: #ff6f61;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.contactText {
+  color: #ccc;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.hoursSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hoursItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.hoursIcon {
+  font-size: 1.2rem;
+  color: #ff6f61;
+  flex-shrink: 0;
+}
+
+.hoursInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.hoursDays {
+  font-weight: 600;
+  color: #fff;
+}
+
+.hoursTime {
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.deliveryInfo {
+  background: rgba(255, 111, 97, 0.1);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+.deliveryInfo p {
+  margin: 0.5rem 0;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.linksSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+ 
+  gap: 0.8rem;
+}
+
+.footerLink {
+  color: #ccc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.footerLink::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ff6f61;
+}
+
+.footerLink:hover {
+  color: #ff6f61;
+  transform: translateX(5px);
+}
+
+.copyrightSection {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem 0;
+}
+
+.copyrightContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.copyrightText {
+  color: #999;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.madeIn {
+  color: #ff6f61;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+@media (max-width: 968px) {
+  .footerContent {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .copyrightContent {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 0 0 0;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .footerContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .brandSection {
+    text-align: center;
+    align-items: center;
+  }
+
+  .socialLinks {
+    justify-content: center;
+  }
+
+  .sectionTitle {
+    text-align: center;
+  }
+
+  .sectionTitle::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 480px) {
+  .contactItem,
+  .hoursItem {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .footerLink {
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .footerLink::before {
+    display: none;
+  }
+}

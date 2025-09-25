@@ -1,0 +1,54 @@
+.parentCard {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #fffaf0 0%, #fff5e6 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  background: linear-gradient(45deg, #ff6f61, #e53935);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.sectionSubtitle {
+  text-align: center;
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+.pizzaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .parentCard {
+    padding: 2rem 0;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+  
+  .pizzaGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

@@ -1,0 +1,127 @@
+.signupContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: linear-gradient(135deg, #fff8f0 0%, #ffe8d6 100%);
+  padding: 2rem;
+}
+
+.signupForm {
+  background: white;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(255, 111, 97, 0.15);
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid rgba(255, 111, 97, 0.1);
+}
+
+.signupHeader {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.signupTitle {
+  background: linear-gradient(45deg, #ff6f61, #e53935);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.75rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: "Playfair Display", serif;
+}
+
+.signupSubtitle {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+
+.signupInput {
+  width: 100%;
+  height: 55px;
+  padding: 1rem 1.25rem;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: #fafafa;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.signupInput:focus {
+  outline: none;
+  border-color: #ff6f61;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.1);
+  transform: translateY(-2px);
+}
+
+.terms {
+  margin-bottom: 1.5rem;
+}
+
+.termsLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+  cursor: pointer;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.termsLink {
+  color: #ff6f61;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.termsLink:hover {
+  text-decoration: underline;
+}
+
+.signupButton {
+  width: 100%;
+  height: 55px;
+  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.signupButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 111, 97, 0.4);
+}
+
+.switchText {
+  text-align: center;
+  margin-top: 2rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.switchLink {
+  color: #ff6f61;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.switchLink:hover {
+  text-decoration: underline;
+  color: #e53935;
+}
