@@ -13,21 +13,71 @@ import OrderForm from "./Components/Local/OrderFrom/OrderForm";
 import Orderpage from "./Pages/OrderPage/Orderpage";
 import Confirmation from "./Components/Local/Confirmation/Confirmation";
 import ProductForm from "./Components/Local/Products form/ProductForm";
+import ProtectedPath from "./ProtectedPath";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<HomePage />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedPath>
+                <HomePage />
+              </ProtectedPath>
+            }
+          />
           <Route path="/signup" element={<SignUpFrom />} />
           <Route path="/" element={<LoginPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/product" element={<ProductsPage />} />
-          <Route path="/addproduct" element={<ProductForm />} />
-          <Route path="/order" element={<Orderpage />} />
-          <Route path="/confirmation" element={<Confirmation />} />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedPath>
+                <CartPage />
+              </ProtectedPath>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <ProtectedPath>
+                <AboutPage />
+              </ProtectedPath>
+            }
+          />
+          <Route
+            path="/product"
+            element={
+              <ProtectedPath>
+                <ProductsPage />
+              </ProtectedPath>
+            }
+          />
+          <Route
+            path="/addproduct"
+            element={
+              <ProtectedPath>
+                <ProductForm />
+              </ProtectedPath>
+            }
+          />
+          <Route
+            path="/order"
+            element={
+              <ProtectedPath>
+                <Orderpage />
+              </ProtectedPath>
+            }
+          />
+          <Route
+            path="/confirmation"
+            element={
+              <ProtectedPath>
+                <Confirmation />
+              </ProtectedPath>
+            }
+          />
         </Routes>
       </BrowserRouter>
       <ToastContainer
