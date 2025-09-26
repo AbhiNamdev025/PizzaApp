@@ -37,7 +37,7 @@ const ParentCard = () => {
 
         <div className={styles.pizzaGrid}>
           {pizzas.map((pizza) => (
-            <PizzaCard key={pizza._id} pizza={pizza} addToCart={addToCart} />
+            <PizzaCard key={pizza._id} pizza={pizza} addToCart={() => addToCart(pizza)} />
           ))}
         </div>
       </div>
@@ -46,3 +46,6 @@ const ParentCard = () => {
 };
 
 export default ParentCard;
+
+
+
