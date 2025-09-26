@@ -31,6 +31,8 @@ function LoginForm() {
       if (response.status === 200) {
         const token = userData.token;
         localStorage.setItem("token", token);
+        const userName = userData.user.name;
+        localStorage.setItem("userName", userName);
 
         toast.success("Login successful");
         console.log("Login successful:", userData);

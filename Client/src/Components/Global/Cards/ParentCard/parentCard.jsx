@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PizzaCard from "../PizzaCard/pizzaCard";
 import styles from "./parentCard.module.css";
+import { toast } from "react-toastify";
 
 const ParentCard = () => {
   const [pizzas, setPizzas] = useState([]);
@@ -19,6 +20,13 @@ const ParentCard = () => {
     fetchProducts();
   }, []);
 
+
+
+  const addToCart = (pizza) => {
+    toast.success(`${pizza.name} added to the cart!`);
+  };
+
+  
   return (
     <section className={styles.parentCard}>
       <div className={styles.container}>
@@ -29,7 +37,7 @@ const ParentCard = () => {
 
         <div className={styles.pizzaGrid}>
           {pizzas.map((pizza) => (
-            <PizzaCard key={pizza.id} pizza={pizza} />
+            <PizzaCard key={pizza._id} pizza={pizza} addToCart={addToCart} />
           ))}
         </div>
       </div>

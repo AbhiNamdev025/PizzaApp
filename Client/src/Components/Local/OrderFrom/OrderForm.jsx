@@ -34,7 +34,13 @@ function OrderForm() {
     },
   ];
 
-  const handleInputChange = (e) => {};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,13 +48,6 @@ function OrderForm() {
     alert("Order placed successfully!");
     navigate("/confirmation");
   };
-
-  // const itemsTotal
-  //   orderItems();
-  //   // (total, item) => total + item.price * item.quantity
-  const deliveryFee = 49;
-  const tax = 0.05;
-  // const grandTotal = itemsTotal + deliveryFee + tax;
 
   return (
     <div className={styles.orderContainer}>
@@ -188,11 +187,11 @@ function OrderForm() {
                 </div>
                 <div className={styles.totalRow}>
                   <span>Delivery:</span>
-                  <span>₹{deliveryFee}</span>
+                  <span>₹</span>
                 </div>
                 <div className={styles.totalRow}>
                   <span>Tax (5%):</span>
-                  <span>₹{tax}</span>
+                  <span>₹</span>
                 </div>
                 <div className={styles.grandTotal}>
                   <span>Total:</span>

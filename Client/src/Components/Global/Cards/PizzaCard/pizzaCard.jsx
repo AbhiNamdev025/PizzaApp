@@ -1,12 +1,7 @@
 import React from "react";
-import { toast } from "react-toastify";
 import styles from "./pizzaCard.module.css";
 
-const PizzaCard = ({ pizza }) => {
-  const addToCart = () => {
-    //ruko
-  };
-
+const PizzaCard = ({ pizza, addToCart }) => {
   return (
     <div className={styles.pizzaCard}>
       <div className={styles.imageContainer}>
