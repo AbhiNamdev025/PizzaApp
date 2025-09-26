@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import OrderForm from "./Components/Local/OrderFrom/OrderForm";
 import Orderpage from "./Pages/OrderPage/Orderpage";
 import Confirmation from "./Components/Local/Confirmation/Confirmation";
+import ProductForm from "./Components/Local/Products form/ProductForm";
 
 function App() {
   return (
@@ -24,8 +25,9 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/product" element={<ProductsPage />} />
+          <Route path="/addproduct" element={<ProductForm />} />
           <Route path="/order" element={<Orderpage />} />
-           <Route path="/confirmation" element={<Confirmation/>} />
+          <Route path="/confirmation" element={<Confirmation />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer

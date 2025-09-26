@@ -64,7 +64,7 @@ const Header = () => {
             <li>
               <button
                 className={styles.navLink}
-                onClick={() => navigate("/products")}
+                onClick={() => navigate("/product")}
               >
                 <FaPizzaSlice className={styles.navIcon} />
                 Products

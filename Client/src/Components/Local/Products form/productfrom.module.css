@@ -79,22 +79,3 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 111, 97, 0.4);
 }
-
-.switchText {
-  text-align: center;
-  margin-top: 2rem;
-  color: #666;
-  font-size: 0.95rem;
-}
-
-.switchLink {
-  color: #ff6f61;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.switchLink:hover {
-  text-decoration: underline;
-  color: #e53935;
-}
