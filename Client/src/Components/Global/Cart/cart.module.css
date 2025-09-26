@@ -12,12 +12,8 @@
 
 .cartTitle {
   text-align: center;
-  font-family: "Playfair Display", serif;
   font-size: 2.5rem;
-  background: linear-gradient(45deg, #ff6f61, #e53935);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ff4757;
   margin-bottom: 0.5rem;
 }
 
@@ -41,8 +37,8 @@
 }
 
 .cartItem {
-  display: grid;
-  grid-template-columns: 100px 1fr auto auto auto;
+  display: flex;
+  justify-content: space-between;
   gap: 1rem;
   align-items: center;
   background: white;
@@ -60,7 +56,10 @@
 }
 
 .itemDetails {
-  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .itemName {
@@ -223,7 +222,6 @@
   }
 
   .cartItem {
-    grid-template-columns: 80px 1fr;
     gap: 1rem;
   }
 

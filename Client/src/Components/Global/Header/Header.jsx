@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   return (
@@ -75,7 +75,10 @@ const Header = () => {
 
         <div className={styles.rightSection}>
           <div className={styles.cartWrapper}>
-            <button className={styles.cartButton}>
+            <button
+              className={styles.cartButton}
+              onClick={() => navigate("/cart")}
+            >
               <FaCartPlus className={styles.cartIcon} />
             </button>
           </div>

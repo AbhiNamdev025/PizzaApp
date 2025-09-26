@@ -60,9 +60,6 @@
   gap: 2rem;
 }
 
-.headlineWrapper {
-  min-height: 200px;
-}
 
 .headline {
   font-family: "Playfair Display", serif;
@@ -71,10 +68,8 @@
   color: #333;
   margin: 0 0 1rem 0;
   line-height: 1.2;
-  background: linear-gradient(45deg, #ff6f61, #e53935);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+background: transparent;
+color: #ff6f61;
   transition: all 0.5s ease-in-out;
 }
 
@@ -121,7 +116,6 @@
   background: rgba(255, 255, 255, 0.9);
   color: #ff6f61;
   border: 2px solid rgba(255, 111, 97, 0.3);
-  backdrop-filter: blur(10px);
 }
 
 .menuBtn:hover {
@@ -145,7 +139,6 @@
   background: rgba(255, 255, 255, 0.8);
   padding: 0.5rem 1rem;
   border-radius: 25px;
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 111, 97, 0.1);
 }
 
@@ -204,7 +197,5 @@
     justify-content: center;
   }
 
-  .pizzaImage {
-    max-width: 350px;
-  }
+  
 }

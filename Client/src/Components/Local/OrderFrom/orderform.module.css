@@ -1,0 +1,268 @@
+.orderContainer {
+  min-height: 80vh;
+  padding: 2rem 0;
+  background: linear-gradient(135deg, #fff8f0 0%, #ffe8d6 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.orderTitle {
+  text-align: center;
+  font-size: 2.5rem;
+color: #ff6f61;
+  margin-bottom: 0.5rem;
+}
+
+.orderSubtitle {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.orderContent {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.orderSummary {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 111, 97, 0.1);
+  height: auto;
+}
+
+.orderSummary h3 {
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #ff6f61;
+  padding-bottom: 0.5rem;
+}
+
+.orderItem {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.orderItem:last-child {
+  border-bottom: none;
+}
+
+.itemImage {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.itemName {
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.itemPrice {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.itemTotal {
+  font-weight: 700;
+  color: #333;
+}
+
+.checkoutForm {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 111, 97, 0.1);
+}
+
+.checkoutForm h3 {
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #ff6f61;
+  padding-bottom: 0.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #ff6f61;
+  box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.1);
+}
+
+.formGroup textarea {
+  
+  min-height: 80px;
+}
+
+.formGroup select {
+  background: white;
+  cursor: pointer;
+
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.orderTotal {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.orderTotal h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.grandTotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ff6f61;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #ddd;
+}
+
+.placeOrderBtn {
+  width: 100%;
+  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.placeOrderBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 111, 97, 0.3);
+}
+
+.backButton {
+  width: 100%;
+  background: transparent;
+  color: #ff6f61;
+  border: 2px solid #ff6f61;
+  padding: 0.8rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.backButton:hover {
+  background: #ff6f61;
+  color: white;
+}
+
+@media (max-width: 968px) {
+  .orderContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .orderSummary {
+    position: static;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .orderTitle {
+    font-size: 2rem;
+  }
+
+  .checkoutForm {
+    padding: 1.5rem;
+  }
+
+  .orderSummary {
+    padding: 1.5rem;
+  }
+
+  .orderItem {
+    grid-template-columns: 60px 1fr auto;
+    gap: 0.8rem;
+  }
+
+  .itemImage {
+    width: 60px;
+    height: 50px;
+  }
+}

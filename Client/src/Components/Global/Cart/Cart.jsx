@@ -5,7 +5,26 @@ import styles from "./cart.module.css";
 const CartPage = () => {
   const navigate = useNavigate();
 
-  const cartItems = [];
+  const cartItems = [
+    {
+      id: 1,
+      name: "Margherita",
+      price: 399,
+      image:
+        "https://safrescobaldistatic.blob.core.windows.net/media/2022/11/PIZZA-MARGHERITA.jpg",
+      description: "Classic tomato sauce and mozzarella",
+      quantity: 2,
+    },
+    {
+      id: 2,
+      name: "Pepperoni",
+      price: 499,
+      image:
+        "https://media.istockphoto.com/id/521403691/photo/hot-homemade-pepperoni-pizza.jpg?s=612x612&w=0&k=20&c=PaISuuHcJWTEVoDKNnxaHy7L2BTUkyYZ06hYgzXmTbo=",
+      description: "Pepperoni with extra cheese",
+      quantity: 1,
+    },
+  ];
 
   if (cartItems.length === 0) {
     return (
@@ -15,7 +34,7 @@ const CartPage = () => {
           <p>Add some delicious pizzas to get started!</p>
           <button
             className={styles.continueShopping}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
           >
             Continue Shopping
           </button>
@@ -34,26 +53,32 @@ const CartPage = () => {
 
         <div className={styles.cartContent}>
           <div className={styles.cartItems}>
-            {cartItems.map((item) => (
-              <div key={item.id} className={styles.cartItem}>
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className={styles.itemImage}
-                />
-
+            {cartItems.map((cartItem) => (
+              <div key={cartItem.id} className={styles.cartItem}>
+                <div>
+                  <img
+                    src={cartItem.image}
+                    alt={cartItem.name}
+                    className={styles.itemImage}
+                  />
+                </div>
                 <div className={styles.itemDetails}>
-                  <h3 className={styles.itemName}>{item.name}</h3>
-                  <p className={styles.itemDescription}>{item.description}</p>
-                  <span className={styles.itemPrice}>₹{item.price}</span>
+                  <h3 className={styles.itemName}>{cartItem.name}</h3>
+                  <p className={styles.itemDescription}>
+                    {cartItem.description}
+                  </p>
+                  <span className={styles.itemPrice}>₹{cartItem.price}</span>
                 </div>
 
-                <div className={styles.quantityControls}>
-                  <span className={styles.quantity}>{item.quantity}</span>
-                </div>
+                <div>
+                  <div className={styles.itemTotal}>
+                    ₹{cartItem.price * cartItem.quantity}
+                  </div>
+                  <div className={styles.quantityControls}>
+                    <span className={styles.quantity}>Quantity : {cartItem.quantity}</span>
+                  </div>
 
-                <div className={styles.itemTotal}>
-                  ₹{item.price * item.quantity}
+                  
                 </div>
               </div>
             ))}
@@ -78,7 +103,12 @@ const CartPage = () => {
               <span>₹49</span>
             </div>
 
-            <button className={styles.checkoutBtn}>Proceed to Checkout</button>
+            <button
+              className={styles.checkoutBtn}
+              onClick={() => navigate("/order")}
+            >
+              Proceed to Checkout
+            </button>
 
             <button
               className={styles.continueShopping}

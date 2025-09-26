@@ -22,12 +22,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
 }
 
-.pizzaCard:hover .pizzaImage {
-  transform: scale(1.1);
-}
+
 
 .overlay {
   position: absolute;
@@ -43,7 +40,6 @@
 }
 
 .pizzaName {
-  font-family: "Playfair Display", serif;
   font-size: 1.5rem;
   color: #333;
   margin: 0 0 0.5rem 0;

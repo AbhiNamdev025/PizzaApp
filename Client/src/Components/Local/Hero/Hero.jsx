@@ -17,7 +17,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeadline((i) => (i + 1) % subHeadlines.length);
-    }, 1500);
+    }, 3000);
   }, []);
 
   return (
@@ -35,14 +35,12 @@ const HeroSection = () => {
           </div>
 
           <div className={styles.textSection}>
-            <div className={styles.headlineWrapper}>
-              <h1 className={styles.headline}>
+             <h1 className={styles.headline}>
                 An Italian term for a pizza maker, giving it a premium feel.
               </h1>
               <p className={styles.subHeadline}>
                 {subHeadlines[currentHeadline]}
               </p>
-            </div>
 
             <div className={styles.buttons}>
               <button
