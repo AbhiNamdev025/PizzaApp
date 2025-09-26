@@ -8,6 +8,7 @@ function LoginForm() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    role: "",
   });
 
   const changeHandler = (e) => {
@@ -33,6 +34,8 @@ function LoginForm() {
         localStorage.setItem("token", token);
         const userName = userData.user.name;
         localStorage.setItem("userName", userName);
+        const role = userData.user.role;
+        localStorage.setItem("role", role);
 
         toast.success("Login successful");
         console.log("Login successful:", userData);
