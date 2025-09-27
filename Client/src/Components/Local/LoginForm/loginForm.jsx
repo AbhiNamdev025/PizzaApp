@@ -43,10 +43,12 @@ function LoginForm() {
         setTimeout(() => {
           navigate("/home");
         }, 1500);
+      } else {
+        toast.error("Wrong Details");
       }
     } catch (err) {
       console.error("Login error:", err);
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Wrong Details");
     }
   };
 

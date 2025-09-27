@@ -1,32 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./cart.module.css";
+import { toast } from "react-toastify";
 
 const CartPage = () => {
   const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
 
-  const cartItems = [
-    {
-      id: 1,
-      name: "Margherita",
-      price: 399,
-      image:
-        "https://safrescobaldistatic.blob.core.windows.net/media/2022/11/PIZZA-MARGHERITA.jpg",
-      description: "Classic tomato sauce and mozzarella",
-      quantity: 2,
-    },
-    {
-      id: 2,
-      name: "Pepperoni",
-      price: 499,
-      image:
-        "https://media.istockphoto.com/id/521403691/photo/hot-homemade-pepperoni-pizza.jpg?s=612x612&w=0&k=20&c=PaISuuHcJWTEVoDKNnxaHy7L2BTUkyYZ06hYgzXmTbo=",
-      description: "Pepperoni with extra cheese",
-      quantity: 1,
-    },
-  ];
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
 
-  if (cartItems.length === 0) {
+  const fetchCartItems = async () => {
+    try {
+      const res = await fetch("http://localhost:2525/cart/find");
+      const data = await res.json();
+      setCartItems(data);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+      setCartItems([]);
+    }
+  };
+
+  const removeFromCart = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:2525/cart/del/${id}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        fetchCartItems();
+        toast.warn("Item Removed From Cart");
+      } else {
+        console.log("Failed to remove item from cart");
+      }
+    } catch (error) {
+      console.log("Error removing item from cart:", error);
+    }
+  };
+
+  if (!cartItems || cartItems.length === 0) {
     return (
       <div className={styles.cartContainer}>
         <div className={styles.emptyCart}>
@@ -48,59 +61,38 @@ const CartPage = () => {
       <div className={styles.container}>
         <h1 className={styles.cartTitle}>Your Pizza Cart</h1>
         <p className={styles.cartSubtitle}>
-          {cartItems.length} items in your cart
+          {cartItems.length} item(s) in your cart
         </p>
 
         <div className={styles.cartContent}>
           <div className={styles.cartItems}>
-            {cartItems.map((cartItem) => (
-              <div key={cartItem.id} className={styles.cartItem}>
-                <div>
-                  <img
-                    src={cartItem.image}
-                    alt={cartItem.name}
-                    className={styles.itemImage}
-                  />
-                </div>
+            {cartItems.map((item) => (
+              <div key={item.productId || item._id} className={styles.cartItem}>
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className={styles.itemImage}
+                />
+
                 <div className={styles.itemDetails}>
-                  <h3 className={styles.itemName}>{cartItem.name}</h3>
-                  <p className={styles.itemDescription}>
-                    {cartItem.description}
-                  </p>
-                  <span className={styles.itemPrice}>₹{cartItem.price}</span>
+                  <h3>{item.name}</h3>
+                  <p>{item.description}</p>
+                  <span>Quantity: {item.quantity}</span>
                 </div>
 
-                <div>
-                  <div className={styles.itemTotal}>
-                    ₹{cartItem.price * cartItem.quantity}
-                  </div>
-                  <div className={styles.quantityControls}>
-                    <span className={styles.quantity}>Quantity : {cartItem.quantity}</span>
-                  </div>
-
-                </div>
+                <button
+                  className={styles.removeBtn}
+                  onClick={() => removeFromCart(item._id)}
+                >
+                  Remove
+                </button>
               </div>
             ))}
           </div>
 
           <div className={styles.cartSummary}>
             <h3>Order Summary</h3>
-            <div className={styles.summaryRow}>
-              <span>Items:</span>
-              <span>₹0</span>
-            </div>
-            <div className={styles.summaryRow}>
-              <span>Delivery:</span>
-              <span>₹49</span>
-            </div>
-            <div className={styles.summaryRow}>
-              <span>Tax (5%):</span>
-              <span>₹0</span>
-            </div>
-            <div className={styles.summaryTotal}>
-              <span>Total:</span>
-              <span>₹49</span>
-            </div>
+            <p>Price details </p>
 
             <button
               className={styles.checkoutBtn}

@@ -2,6 +2,7 @@
   min-height: 80vh;
   padding: 2rem 0;
   background: linear-gradient(135deg, #fff8f0 0%, #ffe8d6 100%);
+
 }
 
 .container {
@@ -215,6 +216,8 @@
   color: #666;
   margin-bottom: 2rem;
 }
+
+
 
 @media (max-width: 968px) {
   .cartContent {

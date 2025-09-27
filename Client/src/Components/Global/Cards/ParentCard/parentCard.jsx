@@ -12,7 +12,7 @@ const ParentCard = () => {
       const data = await response.json();
       setPizzas(data);
     } catch (error) {
-      console.error("Problem in fetching tasks:", error);
+      console.error("Problem in fetching products:", error);
     }
   };
 
@@ -20,13 +20,22 @@ const ParentCard = () => {
     fetchProducts();
   }, []);
 
+  const addToCart = async (productId, pizza) => {
+    try {
+      const res = await fetch("http://localhost:2525/cart/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId }),
+      });
 
-
-  const addToCart = (pizza) => {
-    toast.success(`${pizza.name} added to the cart!`);
+      toast.success(`${pizza.name} added to the cart!`);
+    } catch (error) {
+      toast.error("Failed to add item to cart");
+    }
   };
 
-  
   return (
     <section className={styles.parentCard}>
       <div className={styles.container}>
@@ -37,7 +46,11 @@ const ParentCard = () => {
 
         <div className={styles.pizzaGrid}>
           {pizzas.map((pizza) => (
-            <PizzaCard key={pizza._id} pizza={pizza} addToCart={() => addToCart(pizza)} />
+            <PizzaCard
+              key={pizza._id}
+              pizza={pizza}
+              addToCart={() => addToCart(pizza._id, pizza)}
+            />
           ))}
         </div>
       </div>
@@ -46,6 +59,3 @@ const ParentCard = () => {
 };
 
 export default ParentCard;
-
-
-

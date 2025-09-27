@@ -105,7 +105,7 @@ const Footer = () => {
               </li>
 
               <li>
-                <a href="/products" className={styles.footerLink}>
+                <a href="/product" className={styles.footerLink}>
                   Our Products
                 </a>
               </li>

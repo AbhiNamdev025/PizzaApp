@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./orderform.module.css";
+import React, { useEffect, useState } from "react";
 
 function OrderForm() {
   const navigate = useNavigate();
@@ -15,24 +15,22 @@ function OrderForm() {
     specialInstructions: "",
   });
 
-  const orderItems = [
-    {
-      id: 1,
-      name: "Margherita",
-      price: 399,
-      quantity: 2,
-      image:
-        "https://safrescobaldistatic.blob.core.windows.net/media/2022/11/PIZZA-MARGHERITA.jpg",
-    },
-    {
-      id: 2,
-      name: "Pepperoni",
-      price: 499,
-      quantity: 1,
-      image:
-        "https://media.istockphoto.com/id/521403691/photo/hot-homemade-pepperoni-pizza.jpg?s=612x612&w=0&k=20&c=PaISuuHcJWTEVoDKNnxaHy7L2BTUkyYZ06hYgzXmTbo=",
-    },
-  ];
+  const [orderItems, setOrderItems] = useState([]);
+
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
+
+  const fetchCartItems = async () => {
+    try {
+      const res = await fetch("http://localhost:2525/cart/find");
+      const data = await res.json();
+      setOrderItems(data);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+      setOrderItems([]);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
