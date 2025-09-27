@@ -1,0 +1,51 @@
+.aboutContainer {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #333;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  color: #e63946;
+}
+
+.description {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.subheading {
+  font-size: 1.5rem;
+  color: #1d3557;
+  margin-bottom: 0.8rem;
+}
+
+.list {
+  list-style-type: disc;
+  padding-left: 2rem;
+  line-height: 1.8;
+}
+
+.callToAction {
+  background-color: #f1faee;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.callToAction h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  color: #457b9d;
+}
