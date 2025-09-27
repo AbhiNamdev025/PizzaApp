@@ -9,7 +9,7 @@ const addToCart = async (req, res) => {
     const product = await mongoose.model("Product").findById(productId);
 
     if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).json("Product not found" );
     }
 
     const cartItem = await Cart.findOne({ productId: product._id });
