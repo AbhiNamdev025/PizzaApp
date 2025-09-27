@@ -2,18 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-// const jwt = require("jsonwebtoken");
 
 const port = process.env.PORT;
 const mongourl = process.env.MongoURL;
 
-
-// Tasks
-// const getTaskData = require("./Backend Management/Router/TaskRoute/getRoute/getRoute");
-// const addTaskData = require("./Backend Management/Router/TaskRoute/postRoute/postRoute");
-// const delTaskData = require("./Backend Management/Router/TaskRoute/delRoute/delRoute");
-// const updateTaskData = require("./Backend Management/Router/TaskRoute/updateRoute/putRoute");
-
+//product
+const postProductData = require("./Backend Management/Router/ProductRoute/postRoute/postRoute");
+const getProductData = require("./Backend Management/Router/ProductRoute/getRoute/getRoute");
+const deleteProductData = require("./Backend Management/Router/ProductRoute/delRoute/delRoute");
+const updateProductData = require("./Backend Management/Router/ProductRoute/updateRoute/putRoute");
 //User
 const getUserData = require("./Backend Management/Router/UserRoute/getRoute/getRoute");
 const postUserData = require("./Backend Management/Router/UserRoute/postRoute/postRoute");
@@ -21,6 +18,11 @@ const putUserData = require("./Backend Management/Router/UserRoute/updateRoute/p
 const deleteUserData = require("./Backend Management/Router/UserRoute/delRoute/delRoute");
 
 const loginUser = require("./Backend Management/Router/LoginRoute/loginRoute");
+
+//cart
+const addCart = require("./Backend Management/Router/CartRoute/addroute/addRoute");
+const getCart = require("./Backend Management/Router/CartRoute/getRoute/getcart");
+const delCart = require("./Backend Management/Router/CartRoute/delRoute/delRoute")
 
 const app = express();
 
@@ -32,19 +34,22 @@ mongoose
   .then(() => console.log("DB connected"))
   .catch((err) => console.log("DB connection failed:", err));
 
-
-
-// app.use("/task", addTaskData);
-// app.use("/task", getTaskData);
-// app.use("/task", delTaskData);
-// app.use("/task", updateTaskData);
-
+//For Produts
+app.use("/product", postProductData);
+app.use("/product", getProductData);
+app.use("/product", deleteProductData);
+app.use("/product", updateProductData);
 //For User
 app.use("/user", getUserData);
 app.use("/user", postUserData);
 app.use("/user", putUserData);
 app.use("/user", deleteUserData);
 app.use("/user", loginUser);
+
+//cart
+app.use("/cart", addCart);
+app.use("/cart", getCart);
+app.use("/cart", delCart)
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });

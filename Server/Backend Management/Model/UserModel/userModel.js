@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+  },
 });
 
 exports.User = mongoose.model("User", userSchema);
