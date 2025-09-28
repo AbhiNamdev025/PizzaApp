@@ -1,7 +1,7 @@
-## Pizzaiolo - Pizza Ordering App
+# Pizzaiolo - Pizza Ordering App
 - A React Web application for ordering pizza.
 
-# Features
+## Features
 
 - Sign-Up
 - Login
@@ -12,7 +12,7 @@
 - Checkout Form
 - Order Confirmation
 
-# Technologies
+## Technologies
 
 - React
 - Express
