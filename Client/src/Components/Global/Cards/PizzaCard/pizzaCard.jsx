@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./pizzaCard.module.css";
 
-const PizzaCard = ({ pizza, addToCart }) => {
+const PizzaCard = ({ pizza, addToCart  }) => {
   return (
     <div className={styles.pizzaCard}>
       <div className={styles.imageContainer}>

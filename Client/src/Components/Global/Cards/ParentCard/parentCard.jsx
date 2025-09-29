@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const ParentCard = () => {
   const [pizzas, setPizzas] = useState([]);
-
+  // const userId = user._id;
   const fetchProducts = async () => {
     try {
       const response = await fetch("http://localhost:2525/product/find");
@@ -19,7 +19,7 @@ const ParentCard = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
-
+  //  const addToCart = async (productId, pizza, userId) => {
   const addToCart = async (productId, pizza) => {
     try {
       const res = await fetch("http://localhost:2525/cart/add", {
@@ -28,6 +28,7 @@ const ParentCard = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ productId }),
+        // body: JSON.stringify({ productId, userId }),
       });
 
       toast.success(`${pizza.name} added to the cart!`);
@@ -49,6 +50,7 @@ const ParentCard = () => {
             <PizzaCard
               key={pizza._id}
               pizza={pizza}
+              // addToCart={() => addToCart(pizza._id, pizza, userId)}
               addToCart={() => addToCart(pizza._id, pizza)}
             />
           ))}
