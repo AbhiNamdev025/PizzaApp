@@ -2,14 +2,16 @@ const mongoose = require("mongoose");
 const Product = require("../../../Model/ProductModel/productSchema");
 const Cart = require("../../../Model/CartModel/cartModel");
 const User = require("../../../Model/UserModel/userModel");
+
 const addToCart = async (req, res) => {
   const { productId } = req.body;
-  const { userId } = req.body;
+  const { token } = req.body;
+
+  console.log(req.body);
 
   try {
     const product = await mongoose.model("Product").findById(productId);
-    const user = await mongoose.model("User").findById(userId);
-
+    console.log(token);
     if (!product) {
       return res.status(404).json("Product not found");
     }
@@ -25,7 +27,7 @@ const addToCart = async (req, res) => {
       });
     } else {
       const cartItem = new Cart({
-        userId: user._id,
+        token: token,
         productId: product._id,
         name: product.name,
         price: product.price,
