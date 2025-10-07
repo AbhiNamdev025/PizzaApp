@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 const CartPage = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchCartItems();
@@ -13,31 +14,71 @@ const CartPage = () => {
 
   const fetchCartItems = async () => {
     try {
-      const res = await fetch("http://localhost:2525/cart/find");
-      const data = await res.json();
-      setCartItems(data);
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        toast.error("Please login to view your cart");
+        setCartItems([]);
+        setLoading(false);
+        return;
+      }
+
+      const res = await fetch("http://localhost:2525/cart/find", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setCartItems(data || []);
+      } else {
+        console.error("Failed to fetch cart items");
+        setCartItems([]);
+      }
     } catch (error) {
       console.error("Error fetching cart items:", error);
       setCartItems([]);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const removeFromCart = async (id) => {
+  const removeFromCart = async (cartItemId) => {
     try {
-      const res = await fetch(`http://localhost:2525/cart/del/${id}`, {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`http://localhost:2525/cart/del/${cartItemId}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (res.ok) {
         fetchCartItems();
         toast.warn("Item Removed From Cart");
       } else {
-        console.log("Failed to remove item from cart");
+        const errorData = await res.json();
+        toast.error(errorData.message || "Failed to remove item");
       }
     } catch (error) {
       console.log("Error removing item from cart:", error);
+      toast.error("Failed to remove item");
     }
   };
+
+  if (loading) {
+    return (
+      <div className={styles.cartContainer}>
+        <div className={styles.loading}>
+          <h2>Loading your cart...</h2>
+        </div>
+      </div>
+    );
+  }
 
   if (!cartItems || cartItems.length === 0) {
     return (
@@ -67,7 +108,7 @@ const CartPage = () => {
         <div className={styles.cartContent}>
           <div className={styles.cartItems}>
             {cartItems.map((item) => (
-              <div key={item.productId || item._id} className={styles.cartItem}>
+              <div key={item._id} className={styles.cartItem}>
                 <img
                   src={item.image}
                   alt={item.name}
@@ -76,8 +117,13 @@ const CartPage = () => {
 
                 <div className={styles.itemDetails}>
                   <h3>{item.name}</h3>
-                  <p>{item.description}</p>
-                  <span>Quantity: {item.quantity}</span>
+                  <p className={styles.itemDescription}>{item.description}</p>
+                  <div className={styles.itemInfo}>
+                    <span className={styles.price}>Rs.{item.price}</span>
+                    <span className={styles.quantity}>
+                      Quantity: {item.quantity}
+                    </span>
+                  </div>
                 </div>
 
                 <button
@@ -92,7 +138,19 @@ const CartPage = () => {
 
           <div className={styles.cartSummary}>
             <h3>Order Summary</h3>
-            <p>Price details </p>
+            <div className={styles.summaryDetails}>
+              <p>Total Items: {cartItems.length}</p>
+              <p className={styles.totalPrice}>
+                Total: Rs.
+                {cartItems
+                  .reduce(
+                    (total, item) =>
+                      total + parseFloat(item.price) * item.quantity,
+                    0
+                  )
+                  .toFixed(2)}
+              </p>
+            </div>
 
             <button
               className={styles.checkoutBtn}

@@ -4,6 +4,8 @@ const {
   addToCart,
 } = require("../../../Controller/CartController/postController/addController");
 
-router.post("/add", addToCart);
+const authenticateToken = require("../../../auth/authToken");
+
+router.post("/add", authenticateToken, addToCart);
 
 module.exports = router;

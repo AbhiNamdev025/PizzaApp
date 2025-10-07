@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const delCart = require("../../../Controller/CartController/deleteController/delcontroller");
+const removeFromCart = require("../../../Controller/CartController/deleteController/delcontroller");
+const authenticateToken = require("../../../auth/authToken");
 
-router.delete("/del/:id", delCart.removeFromCart);
-
+router.delete("/del/:id", authenticateToken, removeFromCart);
 module.exports = router;

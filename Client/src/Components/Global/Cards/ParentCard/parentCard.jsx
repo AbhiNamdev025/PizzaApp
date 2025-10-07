@@ -5,12 +5,13 @@ import { toast } from "react-toastify";
 
 const ParentCard = () => {
   const [pizzas, setPizzas] = useState([]);
-  // const userId = user._id;
+
   const fetchProducts = async () => {
     try {
       const response = await fetch("http://localhost:2525/product/find");
       const data = await response.json();
       setPizzas(data);
+      console.log(data);
     } catch (error) {
       console.error("Problem in fetching products:", error);
     }
@@ -19,19 +20,30 @@ const ParentCard = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
-  //  const addToCart = async (productId, pizza, userId) => {
+
   const addToCart = async (productId, pizza) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Please login to add items to cart");
+      return;
+    }
+
     try {
       const res = await fetch("http://localhost:2525/cart/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ productId }),
-        // body: JSON.stringify({ productId, userId }),
       });
 
-      toast.success(`${pizza.name} added to the cart!`);
+      if (res.ok) {
+        toast.success(`${pizza.name} added to the cart!`);
+      } else {
+        toast.error("Failed to add item to cart");
+      }
     } catch (error) {
       toast.error("Failed to add item to cart");
     }

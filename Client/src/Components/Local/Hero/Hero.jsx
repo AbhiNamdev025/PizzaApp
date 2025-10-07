@@ -35,17 +35,17 @@ const HeroSection = () => {
           </div>
 
           <div className={styles.textSection}>
-             <h1 className={styles.headline}>
-                An Italian term for a pizza maker, giving it a premium feel.
-              </h1>
-              <p className={styles.subHeadline}>
-                {subHeadlines[currentHeadline]}
-              </p>
+            <h1 className={styles.headline}>
+              An Italian term for a pizza maker, giving it a premium feel.
+            </h1>
+            <p className={styles.subHeadline}>
+              {subHeadlines[currentHeadline]}
+            </p>
 
             <div className={styles.buttons}>
               <button
                 className={styles.orderBtn}
-                onClick={() => navigate("/home")}
+                onClick={() => navigate("/order")}
               >
                 🍕 Order Now
               </button>

@@ -21,7 +21,7 @@ const User = require("../../../Model/UserModel/userModel");
 
 //     const cartItems = await Cart.find( );
 //     console.log(cartItems);
-    
+
 //     // Return the array directly instead of wrapping in an object
 //     res.status(200).json(cartItems);
 //   } catch (err) {
@@ -29,27 +29,21 @@ const User = require("../../../Model/UserModel/userModel");
 //   }
 // };
 
-
-
-
 const getCartItems = async (req, res) => {
   try {
-    const { token } = req.params;
-    console.log("Token received:", token);
+    const userId = req.user.id;
+    console.log("Fetching cart for user ID:", userId);
 
-    // Check if token is provided and not empty
-    if (!token || token === "null" || token === "undefined" || token.trim() === "") {
-      return res.status(400).json({ 
-        message: "Token is required",
-        cartItems: [] 
+    if (!userId) {
+      return res.status(400).json({
+        message: "User ID is required",
+        cartItems: [],
       });
     }
 
-    // Only find cart items that match the token
-    const cartItems = await Cart.find();
-    console.log("Cart items found:", cartItems);
-    
-    // Return the array directly
+    const cartItems = await Cart.find({ userId: userId });
+    console.log("Cart items found:", cartItems.length);
+
     res.status(200).json(cartItems);
   } catch (err) {
     console.error("Server error:", err);
