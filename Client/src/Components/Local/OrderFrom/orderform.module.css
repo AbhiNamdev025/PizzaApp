@@ -224,6 +224,55 @@ color: #ff6f61;
   color: white;
 }
 
+/* Add these to your orderform.module.css */
+
+.loading, .emptyCart {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.loading h2, .emptyCart h2 {
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.emptyCart p {
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.continueShopping {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.orderItems {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.itemDescription {
+  color: #666;
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.itemInfo {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.quantity {
+  color: #666;
+}
+
 @media (max-width: 968px) {
   .orderContent {
     grid-template-columns: 1fr;

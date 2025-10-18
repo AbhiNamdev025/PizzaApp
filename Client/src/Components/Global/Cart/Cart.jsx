@@ -23,7 +23,7 @@ const CartPage = () => {
         return;
       }
 
-      const res = await fetch("http://localhost:2525/cart/find", {
+      const res = await fetch("http://localhost:3535/cart/find", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const CartPage = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`http://localhost:2525/cart/del/${cartItemId}`, {
+      const res = await fetch(`http://localhost:3535/cart/del/${cartItemId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

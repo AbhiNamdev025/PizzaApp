@@ -18,7 +18,7 @@ function SignUpForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:2525/user/add", {
+      const response = await fetch("http://localhost:3535/user/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

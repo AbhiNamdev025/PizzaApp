@@ -19,7 +19,7 @@ function ProductForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:2525/product/add", {
+      const response = await fetch("http://localhost:3535/product/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +99,7 @@ function ProductForm() {
           </div>
 
           <button type="submit" className={styles.loginButton}>
-         Add Product
+            Add Product
           </button>
         </form>
       </div>

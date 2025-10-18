@@ -8,7 +8,7 @@ const ParentCard = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:2525/product/find");
+      const response = await fetch("http://localhost:3535/product/find");
       const data = await response.json();
       setPizzas(data);
       console.log(data);
@@ -30,7 +30,7 @@ const ParentCard = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:2525/cart/add", {
+      const res = await fetch("http://localhost:3535/cart/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
