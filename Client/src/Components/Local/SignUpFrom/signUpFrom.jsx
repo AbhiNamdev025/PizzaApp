@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import styles from "./signup.module.css";
 import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "../../../utils/constant";
 
 function SignUpForm() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function SignUpForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3535/user/add", {
+      const response = await fetch(`${BASE_URL}/user/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import styles from "./loginform.module.css";
+import { BASE_URL } from "../../../utils/constant";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function LoginForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3535/user/login", {
+      const response = await fetch(`${BASE_URL}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

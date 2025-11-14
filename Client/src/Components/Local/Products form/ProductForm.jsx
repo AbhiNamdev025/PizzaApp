@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./productfrom.module.css";
+import { BASE_URL } from "../../../utils/constant";
 
 function ProductForm() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function ProductForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3535/product/add", {
+      const response = await fetch(`${BASE_URL}/product/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

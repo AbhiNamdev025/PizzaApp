@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./cart.module.css";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../../utils/constant";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const CartPage = () => {
         return;
       }
 
-      const res = await fetch("http://localhost:3535/cart/find", {
+      const res = await fetch(`${BASE_URL}/cart/find`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +51,7 @@ const CartPage = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`http://localhost:3535/cart/del/${cartItemId}`, {
+      const res = await fetch(`${BASE_URL}/cart/del/${cartItemId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import PizzaCard from "../PizzaCard/pizzaCard";
 import styles from "./parentCard.module.css";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../../../utils/constant";
 
 const ParentCard = () => {
   const [pizzas, setPizzas] = useState([]);
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3535/product/find");
+      const response = await fetch(`${BASE_URL}/product/find`);
       const data = await response.json();
       setPizzas(data);
       console.log(data);
@@ -30,7 +31,7 @@ const ParentCard = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3535/cart/add", {
+      const res = await fetch(`${BASE_URL}/cart/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
