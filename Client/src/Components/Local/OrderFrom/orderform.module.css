@@ -13,7 +13,7 @@
 .orderTitle {
   text-align: center;
   font-size: 2.5rem;
-color: #ff6f61;
+  color: #ff6f61;
   margin-bottom: 0.5rem;
 }
 
@@ -112,11 +112,24 @@ color: #ff6f61;
 }
 
 .formGroup label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #333;
   font-size: 0.95rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  color: #e53935;
+  font-size: 1.5rem !important;
+  border-bottom: 2px solid #eee !important;
+  padding-bottom: 0.75rem !important;
 }
 
 .formGroup input,
@@ -141,14 +154,12 @@ color: #ff6f61;
 }
 
 .formGroup textarea {
-  
   min-height: 80px;
 }
 
 .formGroup select {
   background: white;
   cursor: pointer;
-
 }
 
 .formRow {
@@ -188,50 +199,71 @@ color: #ff6f61;
   border-top: 2px solid #ddd;
 }
 
+.freeBadge {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 700;
+  margin-left: 0.5rem;
+}
+
 .placeOrderBtn {
   width: 100%;
-  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  background: linear-gradient(45deg, #4caf50, #66bb6a);
   color: white;
   border: none;
-  padding: 1rem;
-  border-radius: 10px;
+  padding: 1.25rem;
+  border-radius: 12px;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .placeOrderBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 111, 97, 0.3);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
 }
 
 .backButton {
   width: 100%;
-  background: transparent;
-  color: #ff6f61;
-  border: 2px solid #ff6f61;
-  padding: 0.8rem;
-  border-radius: 10px;
+  background: white;
+  color: #666;
+  border: 2px solid #eee;
+  padding: 1rem;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .backButton:hover {
-  background: #ff6f61;
-  color: white;
+  background: #f8f9fa;
+  border-color: #ddd;
 }
 
 /* Add these to your orderform.module.css */
 
-.loading, .emptyCart {
+.loading,
+.emptyCart {
   text-align: center;
   padding: 60px 20px;
 }
 
-.loading h2, .emptyCart h2 {
+.loading h2,
+.emptyCart h2 {
   color: #333;
   margin-bottom: 16px;
 }
@@ -271,6 +303,21 @@ color: #ff6f61;
 
 .quantity {
   color: #666;
+}
+
+.codBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
 }
 
 @media (max-width: 968px) {
@@ -314,4 +361,30 @@ color: #ff6f61;
     width: 60px;
     height: 50px;
   }
+}
+
+/* Size & Portion badges */
+.sizeBadge {
+  display: inline-block;
+  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  color: white;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  margin-left: 0.4rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.portionBadge {
+  display: inline-block;
+  background: linear-gradient(45deg, #4caf50, #66bb6a);
+  color: white;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  margin-left: 0.3rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  vertical-align: middle;
 }

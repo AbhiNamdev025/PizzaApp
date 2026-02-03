@@ -2,95 +2,385 @@
   background: white;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 111, 97, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.pizzaCard:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(255, 111, 97, 0.2);
+.wishlistBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  background: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  color: #ddd;
+  transition: all 0.3s ease;
+}
+
+.wishlistBtn:hover {
+  transform: scale(1.1);
+  color: #ff4757;
+}
+
+.wishlistBtn.wishlisted {
+  color: #ff4757;
 }
 
 .imageContainer {
   position: relative;
   height: 200px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .pizzaImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-
+.pizzaCard:hover .pizzaImage {
+  transform: scale(1.1);
+}
 
 .overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pizzaCard:hover .overlay {
+  opacity: 1;
+}
+
+.viewBtn {
+  background: white;
+  color: #333;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(255, 111, 97, 0.3);
+}
+
+.premiumBadge {
+  background: linear-gradient(45deg, #ffc107, #ffca2c);
+  color: #333;
+  box-shadow: 0 3px 10px rgba(255, 193, 7, 0.4);
+}
+
+/* Veg/Non-Veg Diet Badge */
+.dietBadge {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.vegBadge {
+  border: 2px solid #4caf50;
+  background: white;
+}
+
+.nonvegBadge {
+  border: 2px solid #e53935;
+  background: white;
+}
+
+.dietDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.vegBadge .dietDot {
+  background: #4caf50;
+}
+
+.nonvegBadge .dietDot {
+  background: #e53935;
 }
 
 .cardContent {
-  padding: 1.5rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.stars {
+  display: flex;
+  gap: 0.15rem;
+}
+
+.starFilled {
+  color: #ffc107;
+  font-size: 0.85rem;
+}
+
+.starEmpty {
+  color: #ddd;
+  font-size: 0.85rem;
+}
+
+.ratingValue {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .pizzaName {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #333;
   margin: 0 0 0.5rem 0;
   font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.pizzaName:hover {
+  color: #ff6f61;
 }
 
 .pizzaDescription {
   color: #666;
-  font-size: 0.9rem;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .cardFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.priceBox {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
 }
 
 .price {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #ff6f61;
+}
+
+.originalPrice {
+  font-size: 0.9rem;
+  color: #999;
+  text-decoration: line-through;
 }
 
 .addToCartBtn {
   background: linear-gradient(45deg, #4caf50, #66bb6a);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.65rem 1.25rem;
   border-radius: 25px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
 }
 
 .addToCartBtn:hover {
-  transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-  background: linear-gradient(45deg, #45a049, #5cb860);
 }
 
 @media (max-width: 768px) {
+  .imageContainer {
+    height: 160px;
+  }
+
+  .pizzaName {
+    font-size: 1.1rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  .cardContent {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .imageContainer {
+    height: 120px;
+  }
+
+  .badge {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.65rem;
+    top: 0.5rem;
+    left: 0.5rem;
+  }
+
+  .cardContent {
+    padding: 0.75rem;
+  }
+
+  .pizzaName {
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .pizzaDescription {
+    font-size: 0.5rem;
+    margin-bottom: 0.5rem;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+
+  .price {
+    font-size: 1.1rem;
+  }
+
+  .originalPrice {
+    font-size: 0.8rem;
+  }
+
+  .addToCartBtn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    width: 100%;
+    text-align: center;
+  }
+
   .cardFooter {
     flex-direction: column;
-    gap: 1rem;
-    align-items: stretch;
+    gap: 0.5rem;
   }
-  
-  .addToCartBtn {
+
+  .priceBox {
+    justify-content: flex-start;
     width: 100%;
   }
+}
+
+/* Size Selector */
+.sizeSelector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.sizeBtn {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid #e0e0e0;
+  background: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sizeBtn:hover {
+  border-color: #ff6f61;
+  color: #ff6f61;
+}
+
+.sizeBtn.sizeActive {
+  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  border-color: #ff6f61;
+  color: white;
+}
+
+/* Portion Selector */
+.portionSelector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.portionBtn {
+  flex: 1;
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #e0e0e0;
+  background: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.portionBtn:hover {
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.portionBtn.portionActive {
+  background: linear-gradient(45deg, #4caf50, #66bb6a);
+  border-color: #4caf50;
+  color: white;
 }

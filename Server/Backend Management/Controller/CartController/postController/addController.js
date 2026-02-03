@@ -49,10 +49,23 @@ const User = require("../../../Model/UserModel/userModel");
 // };
 
 const addToCart = async (req, res) => {
-  const { productId } = req.body;
+  const { productId, quantity, size, portion, customPrice } = req.body;
   const userId = req.user.id;
 
-  console.log("User ID:", userId, "Product ID:", productId);
+  const qty = parseInt(quantity) || 1;
+
+  console.log(
+    "User ID:",
+    userId,
+    "Product ID:",
+    productId,
+    "Quantity:",
+    qty,
+    "Size:",
+    size,
+    "Portion:",
+    portion,
+  );
 
   try {
     const product = await mongoose.model("Product").findById(productId);
@@ -61,13 +74,21 @@ const addToCart = async (req, res) => {
       return res.status(404).json("Product not found");
     }
 
-    const cartItem = await Cart.findOne({
+    // Determine the final price
+    let finalPrice = customPrice || product.price;
+
+    // Build unique cart key with size/portion
+    const cartQuery = {
       productId: product._id,
       userId: userId,
-    });
+    };
+    if (size) cartQuery.size = size;
+    if (portion) cartQuery.portion = portion;
+
+    const cartItem = await Cart.findOne(cartQuery);
 
     if (cartItem) {
-      cartItem.quantity += 1;
+      cartItem.quantity += qty;
       await cartItem.save();
       res.status(200).json({
         message: "Item quantity updated in cart",
@@ -78,10 +99,12 @@ const addToCart = async (req, res) => {
         userId: userId,
         productId: product._id,
         name: product.name,
-        price: product.price,
+        price: finalPrice,
         image: product.image,
         description: product.description,
-        quantity: 1,
+        quantity: qty,
+        size: size || null,
+        portion: portion || null,
       });
 
       await newCartItem.save();

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./hero.module.css";
 import heroImage from "./hero.png";
+import { Flame, Timer, Star, ShoppingCart, ClipboardList } from "lucide-react";
 
 const HeroSection = () => {
   const [currentHeadline, setCurrentHeadline] = useState(0);
@@ -36,7 +37,7 @@ const HeroSection = () => {
 
           <div className={styles.textSection}>
             <h1 className={styles.headline}>
-              An Italian term for a pizza maker, giving it a premium feel.
+              Mastering the Art of Authentic Pizza.
             </h1>
             <p className={styles.subHeadline}>
               {subHeadlines[currentHeadline]}
@@ -47,28 +48,28 @@ const HeroSection = () => {
                 className={styles.orderBtn}
                 onClick={() => navigate("/order")}
               >
-                🍕 Order Now
+                <ShoppingCart size={20} /> Order Now
               </button>
               <button
                 className={styles.menuBtn}
                 onClick={() => navigate("/product")}
               >
-                📋 View Menu
+                <ClipboardList size={20} /> View Menu
               </button>
             </div>
 
             <div className={styles.features}>
               <div className={styles.feature}>
-                <span className={styles.featureIcon}>🔥</span>
-                <span>Wood-Fired Oven</span>
+                <Flame className={styles.featureIcon} size={20} />
+                <span>Wood-Fired</span>
               </div>
               <div className={styles.feature}>
-                <span className={styles.featureIcon}>⏱️</span>
-                <span>30 Min Delivery</span>
+                <Timer className={styles.featureIcon} size={20} />
+                <span>30 Min</span>
               </div>
               <div className={styles.feature}>
-                <span className={styles.featureIcon}>⭐</span>
-                <span>4.9/5 Rating</span>
+                <Star className={styles.featureIcon} size={20} />
+                <span>4.9/5</span>
               </div>
             </div>
           </div>

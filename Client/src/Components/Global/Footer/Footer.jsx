@@ -9,6 +9,7 @@ import {
   FaInstagram,
   FaTwitter,
   FaPizzaSlice,
+  FaTruck,
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -84,8 +85,14 @@ const Footer = () => {
               </div>
             </div>
             <div className={styles.deliveryInfo}>
-              <p>🚚 Free delivery on orders above ₹499</p>
-              <p>⏱️ 30-minute delivery guarantee</p>
+              <p>
+                <FaTruck className={styles.deliveryIcon} /> Free delivery on
+                orders above ₹299
+              </p>
+              <p>
+                <FaClock className={styles.deliveryIcon} /> 30-minute delivery
+                guarantee
+              </p>
             </div>
           </div>
 

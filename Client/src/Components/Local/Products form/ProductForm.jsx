@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./productfrom.module.css";
 import { BASE_URL } from "../../../utils/constant";
+import Header from "../../Global/Header/Header";
+import Footer from "../../Global/Footer/Footer";
 
 function ProductForm() {
   const navigate = useNavigate();
@@ -46,65 +48,70 @@ function ProductForm() {
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginForm}>
-        <div className={styles.loginHeader}>
-          <h2 className={styles.loginTitle}>Add Products to Pizzaiolo</h2>
-          <p className={styles.loginSubtitle}>AddMore Pizzas</p>
+    <>
+      <Header />
+      <div className={styles.loginContainer}>
+        <div className={styles.loginForm}>
+          <div className={styles.loginHeader}>
+            <h2 className={styles.loginTitle}>Add Products to Pizzaiolo</h2>
+            <p className={styles.loginSubtitle}>Expand our delicious menu</p>
+          </div>
+
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                placeholder="Product Name"
+                className={styles.loginInput}
+                name="name"
+                value={formData.name}
+                onChange={changeHandler}
+                required
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                placeholder="Price (Rs. )"
+                className={styles.loginInput}
+                name="price"
+                value={formData.price}
+                onChange={changeHandler}
+                required
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                placeholder="Image URL"
+                className={styles.loginInput}
+                name="image"
+                value={formData.image}
+                onChange={changeHandler}
+                required
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <textarea
+                placeholder="Description"
+                className={styles.loginInput}
+                name="description"
+                value={formData.description}
+                onChange={changeHandler}
+                required
+                rows="3"
+                style={{ resize: "vertical" }}
+              />
+            </div>
+
+            <button type="submit" className={styles.loginButton}>
+              Add Product
+            </button>
+          </form>
         </div>
-
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
-            <input
-              type="text"
-              placeholder="Product Name"
-              className={styles.loginInput}
-              name="name"
-              value={formData.name}
-              onChange={changeHandler}
-              required
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <input
-              type="text"
-              placeholder="price"
-              className={styles.loginInput}
-              name="price"
-              value={formData.price}
-              onChange={changeHandler}
-              required
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <input
-              type="text"
-              placeholder="imageLink"
-              className={styles.loginInput}
-              name="image"
-              value={formData.image}
-              onChange={changeHandler}
-              required
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <input
-              type="text"
-              placeholder="description"
-              className={styles.loginInput}
-              name="description"
-              value={formData.description}
-              onChange={changeHandler}
-              required
-            />
-          </div>
-
-          <button type="submit" className={styles.loginButton}>
-            Add Product
-          </button>
-        </form>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

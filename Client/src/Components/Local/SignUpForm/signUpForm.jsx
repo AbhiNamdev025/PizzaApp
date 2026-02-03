@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+import { User, Mail, Lock, UserPlus, Pizza } from "lucide-react";
 import styles from "./signup.module.css";
-import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../../../utils/constant";
 
 function SignUpForm() {
@@ -44,7 +42,7 @@ function SignUpForm() {
           navigate("/");
         }, 2000);
       } else {
-        response.json(err)(err, "Failed to create account");
+        toast.error(data.message || "Failed to create account");
       }
     } catch (err) {
       console.error("Signup error:", err);
@@ -61,6 +59,9 @@ function SignUpForm() {
       <div className={styles.signupContainer}>
         <div className={styles.signupForm}>
           <div className={styles.signupHeader}>
+            <div className={styles.iconCircle}>
+              <Pizza size={40} className={styles.headerIcon} />
+            </div>
             <h2 className={styles.signupTitle}>Join Pizzaiolo</h2>
             <p className={styles.signupSubtitle}>
               Create your account and start your pizza adventure
@@ -69,37 +70,46 @@ function SignUpForm() {
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
-              <input
-                type="text"
-                placeholder="Full Name"
-                className={styles.signupInput}
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+              <div className={styles.inputWrapper}>
+                <User className={styles.inputIcon} size={20} />
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className={styles.signupInput}
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
             <div className={styles.inputGroup}>
-              <input
-                type="email"
-                placeholder="Email Address"
-                className={styles.signupInput}
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+              <div className={styles.inputWrapper}>
+                <Mail className={styles.inputIcon} size={20} />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className={styles.signupInput}
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
             <div className={styles.inputGroup}>
-              <input
-                type="password"
-                placeholder="Password"
-                className={styles.signupInput}
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
+              <div className={styles.inputWrapper}>
+                <Lock className={styles.inputIcon} size={20} />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className={styles.signupInput}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
             <div className={styles.terms}>
@@ -116,7 +126,7 @@ function SignUpForm() {
             </div>
 
             <button type="submit" className={styles.signupButton}>
-              Create Account
+              <UserPlus size={20} /> Create Account
             </button>
           </form>
 
@@ -128,16 +138,6 @@ function SignUpForm() {
           </p>
         </div>
       </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-      />
     </>
   );
 }

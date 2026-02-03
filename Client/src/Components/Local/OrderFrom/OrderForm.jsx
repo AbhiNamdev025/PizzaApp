@@ -1,7 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./orderform.module.css";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+import {
+  ShoppingBag,
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  CreditCard,
+  ChevronRight,
+  ArrowLeft,
+  CheckCircle,
+  Truck,
+} from "lucide-react";
 import { BASE_URL } from "../../../utils/constant";
 
 function OrderForm() {
@@ -63,17 +76,22 @@ function OrderForm() {
   const calculateOrderTotal = () => {
     const itemsTotal = orderItems.reduce(
       (total, item) => total + parseFloat(item.price) * item.quantity,
-      0
+      0,
     );
-    const deliveryCharge = itemsTotal > 0 ? 40 : 0; // Rs. 40 delivery charge
-    const tax = (itemsTotal * 0.05).toFixed(2); // 5% tax
-    const grandTotal = itemsTotal + deliveryCharge + parseFloat(tax);
+    // Free delivery for orders under Rs 300, Rs 40 for orders >= 300
+    const isFreeDelivery = itemsTotal > 300;
+    const deliveryCharge = isFreeDelivery ? 0 : 40;
+    // Only 1% packaging charge
+    const packagingCharge = (itemsTotal * 0.01).toFixed(2);
+    const grandTotal =
+      itemsTotal + deliveryCharge + parseFloat(packagingCharge);
 
     return {
       itemsTotal: itemsTotal.toFixed(2),
       deliveryCharge: deliveryCharge.toFixed(2),
-      tax: tax,
+      packagingCharge: packagingCharge,
       grandTotal: grandTotal.toFixed(2),
+      isFreeDelivery: isFreeDelivery,
     };
   };
 
@@ -85,7 +103,7 @@ function OrderForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -107,23 +125,68 @@ function OrderForm() {
     const totals = calculateOrderTotal();
 
     const orderData = {
-      orderId: `ORD-${Date.now()}`,
-      customerInfo: formData,
-      items: orderItems,
-      orderDate: new Date().toLocaleDateString(),
-      orderTime: new Date().toLocaleTimeString(),
-      totals: totals,
-      status: "Confirmed",
+      customerName: formData.customerName,
+      phone: formData.phone,
+      email: formData.email,
+      deliveryAddress: formData.deliveryAddress,
+      city: formData.city,
+      pincode: formData.pincode,
+      specialInstructions: formData.specialInstructions,
+      items: orderItems.map((item) => ({
+        productId: item.productId || item._id,
+        name: item.name,
+        price: parseFloat(item.price),
+        quantity: item.quantity,
+        image: item.image,
+        size: item.size || null,
+        portion: item.portion || null,
+      })),
+      itemsTotal: totals.itemsTotal,
+      deliveryCharge: totals.deliveryCharge,
+      tax: totals.packagingCharge,
+      grandTotal: totals.grandTotal,
     };
 
-    // Navigate to confirmation page with order data
-    navigate("/confirmation", {
-      state: {
-        orderData: orderData,
-      },
-    });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${BASE_URL}/order/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(orderData),
+      });
 
-    toast.success("Order placed successfully!");
+      const data = await res.json();
+
+      if (res.ok) {
+        // Navigate to confirmation page with order data
+        navigate("/confirmation", {
+          state: {
+            orderData: {
+              orderId: data.order.orderId,
+              customerInfo: formData,
+              items: orderItems,
+              orderDate: new Date().toLocaleDateString(),
+              orderTime: new Date().toLocaleTimeString(),
+              totals: totals,
+              status: "Confirmed",
+              paymentMethod: "Cash on Delivery",
+            },
+          },
+        });
+
+        toast.success("Order placed successfully!");
+        // Notify Header to update cart count (will be 0 now)
+        window.dispatchEvent(new Event("cartUpdate"));
+      } else {
+        toast.error(data.message || "Failed to place order");
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+      toast.error("Failed to place order. Please try again.");
+    }
   };
 
   if (loading) {
@@ -140,13 +203,14 @@ function OrderForm() {
     return (
       <div className={styles.orderContainer}>
         <div className={styles.emptyCart}>
+          <ShoppingBag size={80} color="#ddd" strokeWidth={1} />
           <h2>Your Cart is Empty</h2>
           <p>Add some delicious pizzas to place an order!</p>
           <button
             className={styles.continueShopping}
             onClick={() => navigate("/home")}
           >
-            Continue Shopping
+            <ArrowLeft size={18} /> Continue Shopping
           </button>
         </div>
       </div>
@@ -175,7 +239,19 @@ function OrderForm() {
                     className={styles.itemImage}
                   />
                   <div className={styles.itemDetails}>
-                    <h4 className={styles.itemName}>{item.name}</h4>
+                    <h4 className={styles.itemName}>
+                      {item.name}
+                      {item.size && (
+                        <span className={styles.sizeBadge}>
+                          {item.size.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                      {item.portion && (
+                        <span className={styles.portionBadge}>
+                          {item.portion}
+                        </span>
+                      )}
+                    </h4>
                     <p className={styles.itemDescription}>{item.description}</p>
                     <div className={styles.itemInfo}>
                       <span className={styles.itemPrice}>Rs. {item.price}</span>
@@ -194,10 +270,14 @@ function OrderForm() {
 
           <div className={styles.checkoutForm}>
             <form onSubmit={handleSubmit}>
-              <h3>Delivery Information</h3>
+              <h3 className={styles.sectionHeader}>
+                <MapPin size={20} /> Delivery Information
+              </h3>
 
               <div className={styles.formGroup}>
-                <label>Full Name *</label>
+                <label>
+                  <User size={16} /> Full Name *
+                </label>
                 <input
                   type="text"
                   name="customerName"
@@ -209,7 +289,9 @@ function OrderForm() {
               </div>
 
               <div className={styles.formGroup}>
-                <label>Phone Number *</label>
+                <label>
+                  <Phone size={16} /> Phone Number *
+                </label>
                 <input
                   type="tel"
                   name="phone"
@@ -221,7 +303,9 @@ function OrderForm() {
               </div>
 
               <div className={styles.formGroup}>
-                <label>Email Address</label>
+                <label>
+                  <Mail size={16} /> Email Address
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -232,7 +316,9 @@ function OrderForm() {
               </div>
 
               <div className={styles.formGroup}>
-                <label>Delivery Address *</label>
+                <label>
+                  <MapPin size={16} /> Delivery Address *
+                </label>
                 <textarea
                   name="deliveryAddress"
                   value={formData.deliveryAddress}
@@ -269,18 +355,12 @@ function OrderForm() {
               </div>
 
               <div className={styles.formGroup}>
-                <label>Payment Method *</label>
-                <select
-                  name="paymentMethod"
-                  value={formData.paymentMethod}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="credit-card">Credit Card</option>
-                  <option value="debit-card">Debit Card</option>
-                  <option value="UPI">UPI</option>
-                  <option value="cash">Cash on Delivery</option>
-                </select>
+                <label>
+                  <CreditCard size={16} /> Payment Method
+                </label>
+                <div className={styles.codBadge}>
+                  <Truck size={16} /> Cash on Delivery
+                </div>
               </div>
 
               <div className={styles.formGroup}>
@@ -301,12 +381,27 @@ function OrderForm() {
                   <span>Rs. {totals.itemsTotal}</span>
                 </div>
                 <div className={styles.totalRow}>
-                  <span>Delivery:</span>
-                  <span>Rs. {totals.deliveryCharge}</span>
+                  <span>
+                    Delivery{" "}
+                    {totals.isFreeDelivery && (
+                      <span className={styles.freeBadge}>FREE</span>
+                    )}
+                  </span>
+                  <span
+                    style={
+                      totals.isFreeDelivery
+                        ? { textDecoration: "line-through", color: "#999" }
+                        : {}
+                    }
+                  >
+                    {totals.isFreeDelivery
+                      ? "Rs. 40"
+                      : `Rs. ${totals.deliveryCharge}`}
+                  </span>
                 </div>
                 <div className={styles.totalRow}>
-                  <span>Tax (5%):</span>
-                  <span>Rs. {totals.tax}</span>
+                  <span>Packaging (1%)</span>
+                  <span>Rs. {totals.packagingCharge}</span>
                 </div>
                 <div className={styles.grandTotal}>
                   <span>Total:</span>
@@ -315,7 +410,7 @@ function OrderForm() {
               </div>
 
               <button type="submit" className={styles.placeOrderBtn}>
-                Place Order - Rs. {totals.grandTotal}
+                <CheckCircle size={20} /> Place Order - Rs. {totals.grandTotal}
               </button>
 
               <button
@@ -323,7 +418,7 @@ function OrderForm() {
                 className={styles.backButton}
                 onClick={() => navigate("/cart")}
               >
-                Back to Cart
+                <ArrowLeft size={18} /> Back to Cart
               </button>
             </form>
           </div>

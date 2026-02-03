@@ -62,10 +62,128 @@
   box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
 }
 
+.orderDetails {
+  background: #f8fdf9;
+  border: 1px solid #d1fae5;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: slideUp 0.6s ease-out 0.35s both;
+}
+
+.orderId {
+  margin: 0 0 1rem 0;
+  color: #065f46;
+  font-size: 1.1rem;
+}
+
+.orderId strong {
+  color: #10b981;
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.paymentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.paymentInfo p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.codBadge {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  animation: slideUp 0.6s ease-out 0.4s both;
+}
+
+.ordersButton {
+  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ordersButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 111, 97, 0.3);
+}
+
 .redirectMessage {
   font-size: 0.9rem;
   color: #9ca3af;
   animation: slideUp 0.6s ease-out 0.5s both;
+}
+
+/* Items List styles */
+.itemsList {
+  border-top: 1px solid #d1fae5;
+  padding-top: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.orderItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.itemName {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.itemQty {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* Badge styles */
+.sizeBadge {
+  background: linear-gradient(45deg, #ff6f61, #ff8e53);
+  color: white;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.portionBadge {
+  background: linear-gradient(45deg, #4caf50, #66bb6a);
+  color: white;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 @keyframes fadeIn {

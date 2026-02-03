@@ -27,6 +27,12 @@ const cartSchema = new mongoose.Schema({
   image: { type: String, required: true },
   description: { type: String },
   quantity: { type: Number, default: 1 },
+  size: {
+    type: String,
+    enum: ["small", "medium", "large", null],
+    default: null,
+  },
+  portion: { type: String, enum: ["half", "full", null], default: null },
 });
 
 module.exports = mongoose.model("Cart", cartSchema);

@@ -7,14 +7,20 @@ exports.updateProduct = async (req, res) => {
     const { id } = req.params;
     const updatedData = req.body;
 
-    const updatedproduct = await productModel.Product.findByIdAndUpdate(
+    const updatedProduct = await productModel.Product.findByIdAndUpdate(
       id,
       updatedData,
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
-    console.log(updatedproduct);
-    res.status(200).json("Updated Successfully", updatedproduct);
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Updated Successfully", product: updatedProduct });
   } catch (err) {
-    res.status(500).json("Error in updating product", err);
+    res.status(500).json({ message: "Error in updating product", error: err });
   }
 };

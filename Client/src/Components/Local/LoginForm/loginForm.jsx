@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+import { Mail, Lock, LogIn, Pizza } from "lucide-react";
 import styles from "./loginform.module.css";
 import { BASE_URL } from "../../../utils/constant";
 
@@ -42,7 +43,12 @@ function LoginForm() {
         console.log("Login successful:", userData);
 
         setTimeout(() => {
-          navigate("/home");
+          // Redirect admin to admin dashboard, regular users to home
+          if (role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/home");
+          }
         }, 1500);
       } else {
         toast.error("Wrong Details");
@@ -57,6 +63,9 @@ function LoginForm() {
     <div className={styles.loginContainer}>
       <div className={styles.loginForm}>
         <div className={styles.loginHeader}>
+          <div className={styles.iconCircle}>
+            <Pizza size={40} className={styles.headerIcon} />
+          </div>
           <h2 className={styles.loginTitle}>Login to Pizzaiolo</h2>
           <p className={styles.loginSubtitle}>
             Welcome back! Sign in to continue your pizza journey.
@@ -65,30 +74,36 @@ function LoginForm() {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
-            <input
-              type="email"
-              placeholder="Email Address"
-              className={styles.loginInput}
-              name="email"
-              value={formData.email}
-              onChange={changeHandler}
-              required
-            />
+            <div className={styles.inputWrapper}>
+              <Mail className={styles.inputIcon} size={20} />
+              <input
+                type="email"
+                placeholder="Email Address"
+                className={styles.loginInput}
+                name="email"
+                value={formData.email}
+                onChange={changeHandler}
+                required
+              />
+            </div>
           </div>
           <div className={styles.inputGroup}>
-            <input
-              type="password"
-              placeholder="Password"
-              className={styles.loginInput}
-              name="password"
-              value={formData.password}
-              onChange={changeHandler}
-              required
-            />
+            <div className={styles.inputWrapper}>
+              <Lock className={styles.inputIcon} size={20} />
+              <input
+                type="password"
+                placeholder="Password"
+                className={styles.loginInput}
+                name="password"
+                value={formData.password}
+                onChange={changeHandler}
+                required
+              />
+            </div>
           </div>
 
           <button type="submit" className={styles.loginButton}>
-            Log In
+            <LogIn size={20} /> Log In
           </button>
         </form>
 

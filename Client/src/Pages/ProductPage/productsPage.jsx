@@ -7,8 +7,7 @@ function ProductsPage() {
   return (
     <>
       <Header />
-      <ParentCard />
-      <ParentCard />
+      <ParentCard showFilters={true} />
       <Footer />
     </>
   );
