@@ -68,6 +68,26 @@
   }
 
   .premiumSection {
-    padding: 4rem 1.5rem;
+    padding: 2rem 1rem;
+  }
+
+  .premiumGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 1.6rem;
+  }
+
+  .premiumGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .header {
+    margin-bottom: 2rem;
   }
 }

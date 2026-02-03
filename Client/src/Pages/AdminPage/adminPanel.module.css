@@ -163,6 +163,7 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .bulkDiscountBox {
@@ -980,6 +981,18 @@
   .addBtn {
     width: 100%;
     text-align: center;
+  }
+
+  .headerActions {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .bulkDiscountBox {
+    width: 100%;
+  }
+  .bulkInput{
+    width: 100%;
   }
 
   .orderCard {

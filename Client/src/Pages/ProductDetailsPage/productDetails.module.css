@@ -898,7 +898,9 @@
   .reviewCard {
     padding: 1.5rem;
   }
-
+.addToCartBtn{
+  padding: 0.8rem;
+}
   .carouselActions {
     gap: 1.5rem;
   }

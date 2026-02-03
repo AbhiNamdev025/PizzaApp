@@ -157,9 +157,6 @@ const PizzaCard = ({ pizza, addToCart }) => {
             ))}
           </div>
           <span className={styles.ratingValue}>{rating}</span>
-          {Number(pizza.discount) > 0 && (
-            <span className={styles.cardDiscountTag}>-{pizza.discount}%</span>
-          )}
         </div>
 
         <h3

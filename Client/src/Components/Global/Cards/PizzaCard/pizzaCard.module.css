@@ -349,71 +349,122 @@
 
 @media (max-width: 480px) {
   .imageContainer {
-    height: 120px;
+    height: 140px; /* Slightly taller for more room */
   }
 
   .badge {
-    padding: 0.2rem 0.5rem;
-    font-size: 0.65rem;
-    top: 0.5rem;
-    left: 0.5rem;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.55rem;
+    top: 0.4rem;
+    left: 0.4rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .discountBadge {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.6rem;
+    top: 0.4rem;
+    right: 0.4rem;
+    border-radius: 12px;
+  }
+
+  /* Fix wishlist button overlap with discount badge on mobile */
+  .pizzaCard:has(.discountBadge) .wishlistBtn {
+    top: 6.5rem; /* Adjusted from 3.5rem for shorter mobile cards */
+  }
+
+  .wishlistBtn {
+    width: 28px;
+    height: 28px;
+    right: 0.4rem;
+    top: 0.4rem; /* Default if no discount */
+  }
+
+  .wishlistBtn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .dietBadge {
+    width: 16px;
+    height: 16px;
+    bottom: 0.4rem;
+    left: 0.4rem;
+    border-width: 1.5px;
+  }
+
+  .dietDot {
+    width: 7px;
+    height: 7px;
   }
 
   .cardContent {
     padding: 0.75rem;
+    gap: 0.25rem;
+  }
+
+  .ratingRow {
+    margin-bottom: 0.25rem;
+    gap: 0.3rem;
+  }
+
+  .stars svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .ratingValue {
+    font-size: 0.75rem;
   }
 
   .pizzaName {
-    font-size: 0.75rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.95rem; /* Larger and clearer */
+    margin-bottom: 0.15rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .pizzaDescription {
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     margin-bottom: 0.5rem;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
+    -webkit-line-clamp: 2; /* 2 lines is better for context */
+    line-clamp: 2;
   }
 
   .price {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    color: #ff6f61;
   }
 
   .originalPrice {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 
   .addToCartBtn {
-    padding: 0.4rem 0.7rem;
-    font-size: 0.7rem;
-    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
     width: 100%;
-    text-align: center;
+    margin-top: 0.25rem;
+    gap: 0.5rem;
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
   }
 
   .cardFooter {
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: 0.4rem;
   }
 
   .priceBox {
     justify-content: flex-start;
     width: 100%;
   }
+
   .viewBtn {
-    font-size: 0.7rem;
-    padding: 0.35rem 0.5rem;
-  }
-  .wishlistBtn {
-    font-size: 0.7rem;
-    padding: 0.35rem 0.5rem;
-    top: 0.25rem;
-    right: 0.25rem;
-    height: 30px;
-    width: 30px;
-  }
-  .sizeBtn {
-    font-size: 0.6rem;
-    padding: 0.2rem 0.35rem;
+    display: none; /* Hide overlay button on small mobile for touch accessibility */
   }
 }
