@@ -7,11 +7,9 @@ const User = require("../../../Model/UserModel/userModel");
 //   const { productId } = req.body;
 //   const { token } = req.body;
 
-//   console.log(req.body);
-
 //   try {
 //     const product = await mongoose.model("Product").findById(productId);
-//     console.log(token);
+
 //     if (!product) {
 //       return res.status(404).json("Product not found");
 //     }
@@ -41,7 +39,7 @@ const User = require("../../../Model/UserModel/userModel");
 //         message: "Product added to cart",
 //         cartItem: cartItem,
 //       });
-//       console.log(cartItem);
+
 //     }
 //   } catch (err) {
 //     res.status(500).json({ message: "Server error", error: err.message });
@@ -53,19 +51,6 @@ const addToCart = async (req, res) => {
   const userId = req.user.id;
 
   const qty = parseInt(quantity) || 1;
-
-  console.log(
-    "User ID:",
-    userId,
-    "Product ID:",
-    productId,
-    "Quantity:",
-    qty,
-    "Size:",
-    size,
-    "Portion:",
-    portion,
-  );
 
   try {
     const product = await mongoose.model("Product").findById(productId);

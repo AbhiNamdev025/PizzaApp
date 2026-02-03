@@ -26,9 +26,7 @@ function BillReceipt({ bill, onClose, isAdmin = false }) {
 
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
       pdf.save(`Receipt_${bill.billId}.pdf`);
-    } catch (error) {
-      console.error("PDF Generation failed", error);
-    }
+    } catch (error) {}
   };
 
   const handlePrint = () => {

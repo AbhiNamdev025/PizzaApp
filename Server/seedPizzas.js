@@ -107,30 +107,21 @@ const pizzas = [
 const seedDatabase = async () => {
   try {
     await mongoose.connect(process.env.MongoURL);
-    console.log("Connected to MongoDB");
 
     // Clear existing products
     await Product.deleteMany({});
-    console.log("Cleared existing products");
 
     // Insert new products
     await Product.insertMany(pizzas);
-    console.log(`Successfully added ${pizzas.length} pizzas to database!`);
 
     const premiumCount = pizzas.filter((p) => p.isPremium).length;
-    console.log(`\n⭐ Premium Pizzas: ${premiumCount}`);
-    console.log(`🍕 Regular Pizzas: ${pizzas.length - premiumCount}`);
 
-    console.log("\n🍕 Pizza Menu Added:");
     pizzas.forEach((pizza, index) => {
       const premium = pizza.isPremium ? " ⭐" : "";
-      console.log(`${index + 1}. ${pizza.name} - ₹${pizza.price}${premium}`);
     });
 
     mongoose.connection.close();
-    console.log("\nDatabase connection closed.");
   } catch (error) {
-    console.error("Error seeding database:", error);
     process.exit(1);
   }
 };

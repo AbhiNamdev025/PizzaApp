@@ -187,10 +187,9 @@ ${order.specialInstructions ? `Special Instructions: ${order.specialInstructions
   try {
     const transporter = createTransporter();
     await transporter.sendMail(mailOptions);
-    console.log(`Order notification email sent for order ${order.orderId}`);
+
     return true;
   } catch (error) {
-    console.error("Error sending order notification email:", error);
     // Don't throw - we don't want to fail the order if email fails
     return false;
   }

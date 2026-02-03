@@ -36,15 +36,11 @@ function ProductForm() {
         const token = userData.token;
         localStorage.setItem("token", token);
 
-        console.log("Login successful:", userData);
-
         setTimeout(() => {
           navigate("/home");
         }, 1500);
       }
-    } catch (err) {
-      console.error("Login error:", err);
-    }
+    } catch (err) {}
   };
 
   return (

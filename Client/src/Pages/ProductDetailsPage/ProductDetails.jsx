@@ -55,7 +55,6 @@ function ProductDetails() {
         navigate("/product");
       }
     } catch (error) {
-      console.error("Error fetching product:", error);
       toast.error("Failed to load product");
     } finally {
       setLoading(false);
@@ -103,7 +102,6 @@ function ProductDetails() {
         toast.error("Failed to add to cart");
       }
     } catch (error) {
-      console.error("Error adding to cart:", error);
       toast.error("Failed to add to cart");
     }
   };

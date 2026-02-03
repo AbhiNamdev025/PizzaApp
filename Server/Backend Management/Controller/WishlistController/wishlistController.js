@@ -29,7 +29,6 @@ exports.toggleWishlist = async (req, res) => {
         .json({ message: "Removed from wishlist", isWishlisted: false });
     }
   } catch (error) {
-    console.error("Error toggling wishlist:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -46,7 +45,6 @@ exports.getWishlist = async (req, res) => {
 
     res.status(200).json(user.wishlist);
   } catch (error) {
-    console.error("Error fetching wishlist:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };

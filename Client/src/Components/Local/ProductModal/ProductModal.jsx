@@ -138,7 +138,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
         }
       }
     } catch (error) {
-      console.error("Upload error:", error);
       toast.error("Upload failed");
     } finally {
       setUploading(false);
@@ -194,7 +193,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
         toast.error(data.message || "Operation failed");
       }
     } catch (error) {
-      console.error("Error:", error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

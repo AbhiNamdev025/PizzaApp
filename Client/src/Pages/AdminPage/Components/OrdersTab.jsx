@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RefreshCw, User, Filter, Eye, Calendar, FileText   } from "lucide-react";
+import { RefreshCw, User, Filter, Eye, Calendar, FileText } from "lucide-react";
 import styles from "../adminPanel.module.css";
 import BillReceipt from "../../../Components/Global/BillReceipt/BillReceipt";
 import OrderDetailsModal from "./OrderDetailsModal";
@@ -40,7 +40,6 @@ const OrdersTab = ({
         toast.error("Failed to generate bill");
       }
     } catch (error) {
-      console.error("Bill generation error:", error);
       toast.error("Something went wrong");
     } finally {
       setGeneratingBill(false);

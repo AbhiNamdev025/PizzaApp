@@ -6,7 +6,6 @@ exports.getProduct = async (req, res) => {
     const products = await productModel.Product.find();
     res.json(products);
   } catch (err) {
-    console.error(err);
     res.json("Error in getting product", err);
   }
 };
@@ -22,7 +21,6 @@ exports.getProductById = async (req, res) => {
     }
     res.json(product);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Error getting product", error: err });
   }
 };

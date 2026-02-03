@@ -57,7 +57,6 @@ exports.generateBill = async (req, res) => {
       .status(201)
       .json({ message: "Bill generated successfully", bill: newBill });
   } catch (error) {
-    console.error("Error generating bill:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -75,7 +74,6 @@ exports.getBill = async (req, res) => {
 
     res.status(200).json(bill);
   } catch (error) {
-    console.error("Error fetching bill:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

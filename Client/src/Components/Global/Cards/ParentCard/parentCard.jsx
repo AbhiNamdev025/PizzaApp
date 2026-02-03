@@ -32,7 +32,6 @@ const ParentCard = ({ showFilters = false, limit = null }) => {
       const data = await response.json();
       setPizzas(data);
     } catch (error) {
-      console.error("Problem in fetching products:", error);
     } finally {
       setLoading(false);
     }

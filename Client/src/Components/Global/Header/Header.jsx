@@ -79,9 +79,7 @@ const Header = () => {
         const data = await res.json();
         setCartCount(data.length);
       }
-    } catch (error) {
-      console.error("Error fetching cart count:", error);
-    }
+    } catch (error) {}
   };
 
   const handleLogout = () => {

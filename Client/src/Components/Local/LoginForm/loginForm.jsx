@@ -40,7 +40,6 @@ function LoginForm() {
         localStorage.setItem("role", role);
 
         toast.success("Login successful");
-        console.log("Login successful:", userData);
 
         setTimeout(() => {
           // Redirect admin to admin dashboard, regular users to home
@@ -54,7 +53,6 @@ function LoginForm() {
         toast.error("Wrong Details");
       }
     } catch (err) {
-      console.error("Login error:", err);
       toast.error("Wrong Details");
     }
   };

@@ -60,12 +60,10 @@ function OrderForm() {
         const data = await res.json();
         setOrderItems(data || []);
       } else {
-        console.error("Failed to fetch cart items");
         setOrderItems([]);
         toast.error("Failed to load cart items");
       }
     } catch (error) {
-      console.error("Error fetching cart items:", error);
       setOrderItems([]);
       toast.error("Error loading cart items");
     } finally {
@@ -184,7 +182,6 @@ function OrderForm() {
         toast.error(data.message || "Failed to place order");
       }
     } catch (error) {
-      console.error("Error placing order:", error);
       toast.error("Failed to place order. Please try again.");
     }
   };

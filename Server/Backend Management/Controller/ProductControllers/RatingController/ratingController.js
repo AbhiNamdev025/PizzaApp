@@ -41,7 +41,6 @@ exports.addRating = async (req, res) => {
       totalRatings: product.totalRatings,
     });
   } catch (error) {
-    console.error("Error adding rating:", error);
     res.status(500).json({ message: "Error adding rating", error });
   }
 };

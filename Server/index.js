@@ -47,13 +47,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 mongoose
   .connect(mongourl)
   .then(() => {
-    console.log("DB connected");
-    app.listen(port, () => {
-      console.log(`Running at port ${port}`);
-    });
+    app.listen(port, () => {});
   })
   .catch((err) => {
-    console.error("DB connection failed:", err.message);
     process.exit(1);
   });
 
@@ -89,6 +85,4 @@ app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });
 });
 
-app.listen(port, () => {
-  console.log(`Running at port ${port}`);
-});
+app.listen(port, () => {});

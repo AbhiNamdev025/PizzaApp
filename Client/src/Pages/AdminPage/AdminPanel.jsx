@@ -77,7 +77,6 @@ function AdminPanel() {
         setStats(statsData);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
       toast.error("Failed to load admin data");
     } finally {
       setLoading(false);

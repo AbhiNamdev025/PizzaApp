@@ -40,7 +40,6 @@ const WishlistPage = () => {
         toast.error("Failed to fetch wishlist");
       }
     } catch (error) {
-      console.error("Error fetching wishlist:", error);
       toast.error("Failed to load wishlist");
     } finally {
       setLoading(false);

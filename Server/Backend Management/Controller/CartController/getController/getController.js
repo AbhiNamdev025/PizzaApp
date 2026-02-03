@@ -17,10 +17,8 @@ const User = require("../../../Model/UserModel/userModel");
 // const getCartItems = async (req, res) => {
 //   try {
 //     const { token } = req.params;
-//     console.log(token)
 
 //     const cartItems = await Cart.find( );
-//     console.log(cartItems);
 
 //     // Return the array directly instead of wrapping in an object
 //     res.status(200).json(cartItems);
@@ -32,7 +30,6 @@ const User = require("../../../Model/UserModel/userModel");
 const getCartItems = async (req, res) => {
   try {
     const userId = req.user.id;
-    console.log("Fetching cart for user ID:", userId);
 
     if (!userId) {
       return res.status(400).json({
@@ -42,11 +39,9 @@ const getCartItems = async (req, res) => {
     }
 
     const cartItems = await Cart.find({ userId: userId });
-    console.log("Cart items found:", cartItems.length);
 
     res.status(200).json(cartItems);
   } catch (err) {
-    console.error("Server error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };

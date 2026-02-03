@@ -36,8 +36,6 @@ function SignUpForm() {
           password: "",
         });
 
-        console.log("Signup successful:", data);
-
         setTimeout(() => {
           navigate("/");
         }, 2000);
@@ -45,7 +43,6 @@ function SignUpForm() {
         toast.error(data.message || "Failed to create account");
       }
     } catch (err) {
-      console.error("Signup error:", err);
       toast.error("Please try again.");
     }
   };

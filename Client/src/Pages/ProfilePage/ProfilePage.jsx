@@ -45,7 +45,6 @@ const ProfilePage = () => {
         toast.error("Failed to load profile");
       }
     } catch (error) {
-      console.error("Error fetching profile:", error);
       toast.error("An error occurred while fetching profile");
     } finally {
       setLoading(false);

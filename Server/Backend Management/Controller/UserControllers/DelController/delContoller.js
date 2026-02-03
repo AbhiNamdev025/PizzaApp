@@ -8,7 +8,6 @@ exports.deleteUser = async (req, res) => {
 
     res.status(200).json("User deleted successfully", result);
   } catch (err) {
-    console.error(err);
     res.status(500).json("Error in deleting User", err);
   }
 };

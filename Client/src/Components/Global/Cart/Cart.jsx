@@ -48,11 +48,9 @@ const CartPage = () => {
         const data = await res.json();
         setCartItems(data || []);
       } else {
-        console.error("Failed to fetch cart items");
         setCartItems([]);
       }
     } catch (error) {
-      console.error("Error fetching cart items:", error);
       setCartItems([]);
     } finally {
       setLoading(false);
@@ -80,7 +78,6 @@ const CartPage = () => {
         toast.error(errorData.message || "Failed to remove item");
       }
     } catch (error) {
-      console.log("Error removing item from cart:", error);
       toast.error("Failed to remove item");
     }
   };

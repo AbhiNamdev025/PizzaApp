@@ -28,9 +28,7 @@ const PizzaCard = ({ pizza, addToCart }) => {
         const wishlist = await res.json();
         setIsWishlisted(wishlist.some((item) => item._id === pizza._id));
       }
-    } catch (error) {
-      console.error("Error checking wishlist:", error);
-    }
+    } catch (error) {}
   };
 
   const toggleWishlist = async (e) => {

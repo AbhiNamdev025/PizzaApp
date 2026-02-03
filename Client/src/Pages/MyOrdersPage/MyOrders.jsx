@@ -58,7 +58,6 @@ function MyOrders() {
         toast.error("Failed to fetch orders");
       }
     } catch (error) {
-      console.error("Error fetching orders:", error);
       toast.error("Error loading orders");
     } finally {
       setLoading(false);
@@ -83,7 +82,6 @@ function MyOrders() {
         toast.error("Failed to generate bill");
       }
     } catch (error) {
-      console.error("Bill generation error:", error);
       toast.error("Something went wrong");
     } finally {
       setGeneratingBill(false);

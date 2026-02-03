@@ -9,9 +9,9 @@ exports.updateUser = async (req, res) => {
     const updatedUser = await userModel.User.findByIdAndUpdate(
       id,
       updatedData,
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
-    console.log(updatedUser);
+
     res.status(200).json(updatedUser);
   } catch (err) {
     res.status(500).json("Error in updating User", err);
