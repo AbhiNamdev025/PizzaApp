@@ -46,8 +46,16 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 mongoose
   .connect(mongourl)
-  .then(() => console.log("DB connected"))
-  .catch((err) => console.log("DB connection failed:", err));
+  .then(() => {
+    console.log("DB connected");
+    app.listen(port, () => {
+      console.log(`Running at port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("DB connection failed:", err.message);
+    process.exit(1);
+  });
 
 //For Produts
 app.use("/product", postProductData);
