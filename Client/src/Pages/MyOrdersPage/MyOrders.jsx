@@ -16,6 +16,8 @@ import { BASE_URL } from "../../utils/constant";
 import Header from "../../Components/Global/Header/Header";
 import Footer from "../../Components/Global/Footer/Footer";
 import BillReceipt from "../../Components/Global/BillReceipt/BillReceipt";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function MyOrders() {
   const navigate = useNavigate();
@@ -27,7 +29,6 @@ function MyOrders() {
   useEffect(() => {
     fetchOrders();
 
-    // Poll for order updates every 30 seconds
     const interval = setInterval(() => {
       fetchOrders();
     }, 30000);
@@ -105,10 +106,56 @@ function MyOrders() {
       <>
         <Header />
         <div className={styles.container}>
-          <div className={styles.loading}>
-            <h2>Loading your orders...</h2>
+          <div className={styles.wrapper}>
+            <div style={{ marginBottom: "2rem" }}>
+              <Skeleton height={40} width={200} />
+              <Skeleton
+                height={20}
+                width={300}
+                style={{ marginTop: "0.5rem" }}
+              />
+            </div>
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className={styles.orderCard}
+                style={{ marginBottom: "1.5rem" }}
+              >
+                <div style={{ padding: "1.5rem" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    <Skeleton width={150} height={25} />
+                    <Skeleton width={100} height={25} borderRadius={20} />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "1rem",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    <Skeleton width={80} height={80} borderRadius={12} />
+                    <div style={{ flex: 1 }}>
+                      <Skeleton width="60%" height={20} />
+                      <Skeleton
+                        width="30%"
+                        height={15}
+                        style={{ marginTop: "0.5rem" }}
+                      />
+                    </div>
+                  </div>
+                  <Skeleton width="100%" height={60} borderRadius={12} />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
+        <Footer />
       </>
     );
   }

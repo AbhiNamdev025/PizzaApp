@@ -8,7 +8,14 @@ const ProductsTab = ({
   handleAddProduct,
   handleEditProduct,
   deleteProduct,
+  onShowBulkConfirm,
 }) => {
+  const [bulkDiscountValue, setBulkDiscountValue] = React.useState(0);
+
+  const onBulkApply = () => {
+    onShowBulkConfirm(bulkDiscountValue);
+  };
+
   return (
     <motion.div
       key="products"
@@ -19,14 +26,30 @@ const ProductsTab = ({
     >
       <div className={styles.sectionHeader}>
         <h1>Products ({products.length})</h1>
-        <motion.button
-          className={styles.addBtn}
-          onClick={handleAddProduct}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Plus size={18} /> Add Product
-        </motion.button>
+        <div className={styles.headerActions}>
+          <div className={styles.bulkDiscountBox}>
+            <input
+              type="number"
+              placeholder="Set Global Discount %"
+              value={bulkDiscountValue}
+              onChange={(e) => setBulkDiscountValue(e.target.value)}
+              className={styles.bulkInput}
+              min="0"
+              max="100"
+            />
+            <button className={styles.bulkBtn} onClick={onBulkApply}>
+              Apply All
+            </button>
+          </div>
+          <motion.button
+            className={styles.addBtn}
+            onClick={handleAddProduct}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Plus size={18} /> Add Product
+          </motion.button>
+        </div>
       </div>
 
       <div className={styles.productsGrid}>
@@ -39,12 +62,17 @@ const ProductsTab = ({
             transition={{ delay: index * 0.05 }}
             whileHover={{ y: -5 }}
           >
+            {product.discount > 0 && (
+              <div className={styles.discountBadge}>
+                {product.discount}% OFF
+              </div>
+            )}
             {product.isPremium && (
               <div className={styles.premiumBadge}>
                 <Star size={12} fill="#333" /> Premium
               </div>
             )}
-            {/* Veg/Non-Veg indicator */}
+
             <div
               className={`${styles.dietIndicator} ${product.isVeg !== false ? styles.veg : styles.nonveg}`}
             >
@@ -62,7 +90,19 @@ const ProductsTab = ({
               )}
               <p>{product.description}</p>
               <div className={styles.productMeta}>
-                <span className={styles.productPrice}>Rs. {product.price}</span>
+                <span className={styles.productPrice}>
+                  Rs.{" "}
+                  {product.discount > 0
+                    ? Math.round(
+                        Number(product.price) * (1 - product.discount / 100),
+                      )
+                    : product.price}
+                </span>
+                {product.discount > 0 && (
+                  <span className={styles.strikePrice}>
+                    Rs. {product.price}
+                  </span>
+                )}
                 {product.averageRating > 0 && (
                   <span className={styles.productRating}>
                     <Star size={14} fill="#ffc107" /> {product.averageRating}

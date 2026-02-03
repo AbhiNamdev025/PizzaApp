@@ -1,0 +1,73 @@
+.premiumSection {
+  padding: 3rem 2rem;
+  background: white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 850;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.titleIcon {
+  color: #ffc107;
+}
+
+.sectionSubtitle {
+  color: #666;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.premiumGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2.5rem;
+}
+
+.viewAllContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.viewAllLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ff6f61;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.viewAllLink:hover {
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .premiumSection {
+    padding: 4rem 1.5rem;
+  }
+}

@@ -146,7 +146,6 @@ const ParentCard = ({ showFilters = false, limit = null }) => {
 
         {showFilters && (
           <>
-            {/* All filters in one row */}
             <div className={styles.filtersRow}>
               <div className={styles.searchBox}>
                 <Search size={16} className={styles.searchIcon} />

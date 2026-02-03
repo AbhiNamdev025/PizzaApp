@@ -30,11 +30,12 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("medium");
+  const [selectedPortion, setSelectedPortion] = useState("full");
   const [isLiked, setIsLiked] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
-  // Rating states
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
@@ -69,6 +70,24 @@ function ProductDetails() {
     }
   };
 
+  const getBasePrice = () => {
+    if (!product) return 0;
+    if (product.hasSizes && product.sizes) {
+      return product.sizes[selectedSize] || product.price;
+    }
+    if (product.hasPortions && product.portions) {
+      return product.portions[selectedPortion] || product.price;
+    }
+    return product.price;
+  };
+
+  const basePrice = Number(getBasePrice());
+  const discountAmount = Number(product?.discount) || 0;
+  const currentPrice =
+    discountAmount > 0
+      ? Math.round(basePrice * (1 - discountAmount / 100))
+      : basePrice;
+
   const addToCart = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -87,16 +106,18 @@ function ProductDetails() {
         body: JSON.stringify({
           productId: product._id,
           name: product.name,
-          price: product.price,
+          price: currentPrice,
           image: product.image,
           description: product.description,
           quantity: quantity,
+          size: product.hasSizes ? selectedSize : null,
+          portion: product.hasPortions ? selectedPortion : null,
         }),
       });
 
       if (res.ok) {
         toast.success(`${quantity} ${product.name} added to cart!`);
-        // Notify Header to update cart count
+
         window.dispatchEvent(new Event("cartUpdate"));
       } else {
         toast.error("Failed to add to cart");
@@ -269,6 +290,62 @@ function ProductDetails() {
                 ))}
               </div>
             )}
+
+            <div className={styles.imageSelectionArea}>
+              {product.hasSizes && product.sizes && (
+                <div className={styles.selectionSection}>
+                  <h3 className={styles.selectionTitle}>Select Size</h3>
+                  <div className={styles.sizeSelector}>
+                    {["small", "medium", "large"].map(
+                      (size) =>
+                        product.sizes[size] > 0 && (
+                          <button
+                            key={size}
+                            className={`${styles.sizeBtn} ${selectedSize === size ? styles.sizeActive : ""}`}
+                            onClick={() => setSelectedSize(size)}
+                          >
+                            <span className={styles.sizeLabel}>
+                              {size === "small"
+                                ? "Small"
+                                : size === "medium"
+                                  ? "Medium"
+                                  : "Large"}
+                            </span>
+                            <span className={styles.sizePrice}>
+                              Rs. {product.sizes[size]}
+                            </span>
+                          </button>
+                        ),
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {product.hasPortions && product.portions && (
+                <div className={styles.selectionSection}>
+                  <div className={styles.selectionTitle}>Select Portion</div>
+                  <div className={styles.portionSelector}>
+                    {["half", "full"].map(
+                      (portion) =>
+                        product.portions[portion] > 0 && (
+                          <button
+                            key={portion}
+                            className={`${styles.portionBtn} ${selectedPortion === portion ? styles.portionActive : ""}`}
+                            onClick={() => setSelectedPortion(portion)}
+                          >
+                            <span className={styles.portionLabel}>
+                              {portion === "half" ? "Half" : "Full"}
+                            </span>
+                            <span className={styles.portionPrice}>
+                              Rs. {product.portions[portion]}
+                            </span>
+                          </button>
+                        ),
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </motion.div>
 
           <motion.div
@@ -320,11 +397,13 @@ function ProductDetails() {
             </div>
 
             <div className={styles.priceSection}>
-              <span className={styles.price}>Rs. {product.price}</span>
-              <span className={styles.originalPrice}>
-                Rs. {Math.round(product.price * 1.2)}
-              </span>
-              <span className={styles.discount}>20% OFF</span>
+              <span className={styles.price}>Rs. {currentPrice}</span>
+              {discountAmount > 0 && (
+                <>
+                  <span className={styles.originalPrice}>Rs. {basePrice}</span>
+                  <span className={styles.discount}>{discountAmount}% OFF</span>
+                </>
+              )}
             </div>
 
             <div className={styles.quantitySection}>
@@ -354,7 +433,7 @@ function ProductDetails() {
             <div className={styles.totalPrice}>
               <span>Total:</span>
               <span className={styles.totalAmount}>
-                Rs. {product.price * quantity}
+                Rs. {currentPrice * quantity}
               </span>
             </div>
 
@@ -384,7 +463,6 @@ function ProductDetails() {
           </motion.div>
         </div>
 
-        {/* Add Review Section */}
         <motion.div
           className={styles.addReviewSection}
           initial={{ opacity: 0, y: 50 }}
@@ -441,7 +519,6 @@ function ProductDetails() {
           </motion.button>
         </motion.div>
 
-        {/* Reviews Carousel Section */}
         <motion.div
           className={styles.reviewsSection}
           initial={{ opacity: 0, y: 50 }}

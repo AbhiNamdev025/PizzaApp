@@ -2,7 +2,6 @@ const { Order } = require("../../Model/OrderModel/orderSchema");
 const Cart = require("../../Model/CartModel/cartModel");
 const { sendOrderNotificationToAdmin } = require("../../Utils/emailService");
 
-// Create new order
 exports.createOrder = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -55,10 +54,8 @@ exports.createOrder = async (req, res) => {
 
     await newOrder.save();
 
-    // Clear user's cart after order
     await Cart.deleteMany({ userId });
 
-    // Send email notification to admin (async, don't block response)
     sendOrderNotificationToAdmin(newOrder).catch(() => {});
 
     res.status(201).json({
@@ -72,7 +69,6 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-// Get all orders (Admin)
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 });
@@ -84,7 +80,6 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-// Get user's orders
 exports.getUserOrders = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -97,7 +92,6 @@ exports.getUserOrders = async (req, res) => {
   }
 };
 
-// Get single order
 exports.getOrderById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -113,7 +107,6 @@ exports.getOrderById = async (req, res) => {
   }
 };
 
-// Update order status (Admin)
 exports.updateOrderStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -138,7 +131,6 @@ exports.updateOrderStatus = async (req, res) => {
   }
 };
 
-// Delete order (Admin)
 exports.deleteOrder = async (req, res) => {
   try {
     const { id } = req.params;
@@ -156,7 +148,6 @@ exports.deleteOrder = async (req, res) => {
   }
 };
 
-// Get order stats (Admin)
 exports.getOrderStats = async (req, res) => {
   try {
     const totalOrders = await Order.countDocuments();

@@ -15,6 +15,8 @@ import {
   CheckCircle,
   Truck,
 } from "lucide-react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { BASE_URL } from "../../../utils/constant";
 
 function OrderForm() {
@@ -76,10 +78,10 @@ function OrderForm() {
       (total, item) => total + parseFloat(item.price) * item.quantity,
       0,
     );
-    // Free delivery for orders under Rs 300, Rs 40 for orders >= 300
+
     const isFreeDelivery = itemsTotal > 300;
     const deliveryCharge = isFreeDelivery ? 0 : 40;
-    // Only 1% packaging charge
+
     const packagingCharge = (itemsTotal * 0.01).toFixed(2);
     const grandTotal =
       itemsTotal + deliveryCharge + parseFloat(packagingCharge);
@@ -159,7 +161,6 @@ function OrderForm() {
       const data = await res.json();
 
       if (res.ok) {
-        // Navigate to confirmation page with order data
         navigate("/confirmation", {
           state: {
             orderData: {
@@ -176,7 +177,6 @@ function OrderForm() {
         });
 
         toast.success("Order placed successfully!");
-        // Notify Header to update cart count (will be 0 now)
         window.dispatchEvent(new Event("cartUpdate"));
       } else {
         toast.error(data.message || "Failed to place order");
@@ -189,8 +189,65 @@ function OrderForm() {
   if (loading) {
     return (
       <div className={styles.orderContainer}>
-        <div className={styles.loading}>
-          <h2>Loading your order...</h2>
+        <div className={styles.container}>
+          <Skeleton height={40} width={250} style={{ marginBottom: "1rem" }} />
+          <Skeleton
+            height={20}
+            width={150}
+            style={{ marginBottom: "2.5rem" }}
+          />
+
+          <div className={styles.orderContent}>
+            <div className={styles.orderSummary}>
+              <Skeleton
+                height={28}
+                width="50%"
+                style={{ marginBottom: "2rem" }}
+              />
+              <div className={styles.orderItems}>
+                {[1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className={styles.orderItem}
+                    style={{ border: "none" }}
+                  >
+                    <Skeleton width={80} height={80} borderRadius={15} />
+                    <div style={{ flex: 1, marginLeft: "1.5rem" }}>
+                      <Skeleton width="60%" height={20} />
+                      <Skeleton
+                        width="40%"
+                        height={14}
+                        style={{ marginTop: "0.8rem" }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.checkoutForm}>
+              <Skeleton
+                height={30}
+                width="60%"
+                style={{ marginBottom: "2rem" }}
+              />
+              {[1, 2, 3].map((i) => (
+                <div key={i} style={{ marginBottom: "1.5rem" }}>
+                  <Skeleton
+                    width={100}
+                    height={16}
+                    style={{ marginBottom: "0.8rem" }}
+                  />
+                  <Skeleton height={45} borderRadius={10} />
+                </div>
+              ))}
+              <Skeleton
+                height={60}
+                borderRadius={12}
+                style={{ marginTop: "2rem" }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );

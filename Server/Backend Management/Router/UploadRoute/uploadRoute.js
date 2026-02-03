@@ -4,7 +4,6 @@ const upload = require("../../../config/multerConfig");
 const productModel = require("../../Model/ProductModel/productSchema");
 const verifyToken = require("../../auth/authToken");
 
-// Upload single image
 router.post(
   "/single",
   verifyToken,
@@ -26,7 +25,6 @@ router.post(
   },
 );
 
-// Upload multiple images
 router.post(
   "/multiple",
   verifyToken,
@@ -48,7 +46,6 @@ router.post(
   },
 );
 
-// Add images to product
 router.put(
   "/product/:productId",
   verifyToken,
@@ -66,7 +63,6 @@ router.put(
         const newImages = req.files.map((file) => `/uploads/${file.filename}`);
         product.images = [...(product.images || []), ...newImages];
 
-        // Set first image as main if not set
         if (!product.image && newImages.length > 0) {
           product.image = newImages[0];
         }

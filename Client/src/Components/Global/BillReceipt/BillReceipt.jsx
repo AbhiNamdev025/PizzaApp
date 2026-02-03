@@ -30,12 +30,10 @@ function BillReceipt({ bill, onClose, isAdmin = false }) {
   };
 
   const handlePrint = () => {
-    // Create a temporary iframe to print just the receipt content
     const printContent = receiptRef.current.innerHTML;
 
     const printWindow = window.open("", "", "height=600,width=800");
     printWindow.document.write("<html><head><title>Print Receipt</title>");
-    // Copy styles for correct printing (simplified for print)
     printWindow.document.write(`
         <style>
           body { font-family: 'Courier New', monospace; padding: 20px; text-align: center; }
@@ -48,7 +46,6 @@ function BillReceipt({ bill, onClose, isAdmin = false }) {
           .itemInfo { text-align: left; }
           .itemPrice { text-align: right; }
           img { display: none; } 
-          svg { width: 100%; height: auto; max-height: 50px; }
         </style>
       `);
     printWindow.document.write("</head><body>");
@@ -60,7 +57,6 @@ function BillReceipt({ bill, onClose, isAdmin = false }) {
     printWindow.focus();
     setTimeout(() => {
       printWindow.print();
-      // printWindow.close(); // Optional
     }, 250);
   };
 

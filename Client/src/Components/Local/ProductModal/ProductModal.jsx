@@ -37,6 +37,7 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
     hasPortions: false,
     sizes: { small: "", medium: "", large: "" },
     portions: { half: "", full: "" },
+    discount: 0,
   });
   const [additionalImages, setAdditionalImages] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -58,6 +59,7 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
         hasPortions: product.hasPortions || false,
         sizes: product.sizes || { small: "", medium: "", large: "" },
         portions: product.portions || { half: "", full: "" },
+        discount: product.discount || 0,
       });
       setAdditionalImages(product.images || []);
     } else {
@@ -73,6 +75,7 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
         hasPortions: false,
         sizes: { small: "", medium: "", large: "" },
         portions: { half: "", full: "" },
+        discount: 0,
       });
       setAdditionalImages([]);
     }
@@ -95,7 +98,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
 
     try {
       if (isMain) {
-        // Upload single main image
         const formDataUpload = new FormData();
         formDataUpload.append("image", files[0]);
 
@@ -116,7 +118,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
           toast.error("Failed to upload image");
         }
       } else {
-        // Upload multiple images
         const formDataUpload = new FormData();
         for (let i = 0; i < files.length && i < 5; i++) {
           formDataUpload.append("images", files[i]);
@@ -172,6 +173,7 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
 
       const payload = {
         ...formData,
+        discount: Number(formData.discount) || 0,
         images: additionalImages,
       };
 
@@ -227,7 +229,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formGrid}>
               <div className={styles.leftCol}>
-                {/* Main Image */}
                 <div className={styles.imageSection}>
                   <label className={styles.sectionLabel}>Main Image *</label>
                   <div className={styles.imagePreview}>
@@ -267,7 +268,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
                   </div>
                 </div>
 
-                {/* Additional Images */}
                 <div className={styles.imageSection}>
                   <label className={styles.sectionLabel}>
                     Additional Images (Optional)
@@ -300,9 +300,7 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
                   </div>
                 </div>
 
-                {/* Toggles Section */}
                 <div className={styles.togglesSection}>
-                  {/* Premium Toggle */}
                   <div className={styles.premiumToggle}>
                     <label className={styles.toggleLabel}>
                       <input
@@ -322,7 +320,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
                     </label>
                   </div>
 
-                  {/* Veg/Non-Veg Toggle */}
                   <div className={styles.dietToggle}>
                     <label className={styles.dietLabel}>Diet Type</label>
                     <div className={styles.dietOptions}>
@@ -362,7 +359,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
                   />
                 </div>
 
-                {/* Category Dropdown */}
                 <div className={styles.formGroup}>
                   <label>Category *</label>
                   <select
@@ -404,7 +400,19 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
                   />
                 </div>
 
-                {/* Sizes Toggle */}
+                <div className={styles.formGroup}>
+                  <label>Discount (%)</label>
+                  <input
+                    type="number"
+                    name="discount"
+                    value={formData.discount}
+                    onChange={handleChange}
+                    placeholder="10"
+                    min="0"
+                    max="100"
+                  />
+                </div>
+
                 <div className={styles.sizesSection}>
                   <label className={styles.toggleLabel}>
                     <input
@@ -470,7 +478,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
                   )}
                 </div>
 
-                {/* Portions Toggle */}
                 <div className={styles.sizesSection}>
                   <label className={styles.toggleLabel}>
                     <input

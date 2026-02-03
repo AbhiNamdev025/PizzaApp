@@ -1,22 +1,18 @@
 const { Bill } = require("../../Model/BillModel/billSchema");
 const { Order } = require("../../Model/OrderModel/orderSchema");
 
-// Generate a Bill for an Order
 exports.generateBill = async (req, res) => {
   try {
     const { orderId } = req.body;
 
-    // Fetch order details
     const order = await Order.findOne({ orderId });
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // Check if bill already exists
     let bill = await Bill.findOne({ orderId });
 
     if (bill) {
-      // Update items in case schema/logic changed (Development fix)
       bill.items = order.items.map((item) => ({
         name: item.name,
         quantity: item.quantity,
@@ -32,7 +28,6 @@ exports.generateBill = async (req, res) => {
       return res.status(200).json({ message: "Bill fetched/updated", bill });
     }
 
-    // Create new bill
     const newBill = new Bill({
       billId: `BIL-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       orderId: order.orderId,
@@ -61,11 +56,10 @@ exports.generateBill = async (req, res) => {
   }
 };
 
-// Get Bill by Order ID or Bill ID
 exports.getBill = async (req, res) => {
   try {
     const { id } = req.params;
-    // Try finding by billId first, then orderId
+
     const bill = await Bill.findOne({ $or: [{ billId: id }, { orderId: id }] });
 
     if (!bill) {

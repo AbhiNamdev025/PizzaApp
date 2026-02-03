@@ -10,6 +10,8 @@ import {
   LogOut,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { BASE_URL } from "../../utils/constant";
 import Header from "../../Components/Global/Header/Header";
 import Footer from "../../Components/Global/Footer/Footer";
@@ -61,9 +63,58 @@ const ProfilePage = () => {
     return (
       <>
         <Header />
-        <div className={styles.loadingContainer}>
-          <div className={styles.spinner}></div>
-          <p>Loading your profile...</p>
+        <div className={styles.profileContainer}>
+          <div className={styles.container}>
+            <div className={styles.profileHeader}>
+              <div className={styles.avatarSection}>
+                <Skeleton circle width={80} height={80} />
+                <div className={styles.headerInfo}>
+                  <Skeleton width={200} height={32} />
+                  <Skeleton
+                    width={100}
+                    height={20}
+                    style={{ marginTop: "0.5rem" }}
+                  />
+                </div>
+              </div>
+              <Skeleton width={100} height={40} borderRadius={20} />
+            </div>
+
+            <div className={styles.profileGrid}>
+              <div className={styles.infoCard}>
+                <Skeleton
+                  width={150}
+                  height={24}
+                  style={{ marginBottom: "1.5rem" }}
+                />
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className={styles.infoItem}>
+                    <Skeleton circle width={20} height={20} />
+                    <div style={{ flex: 1, marginLeft: "1rem" }}>
+                      <Skeleton width={80} height={12} />
+                      <Skeleton
+                        width="60%"
+                        height={16}
+                        style={{ marginTop: "0.4rem" }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.quickLinks}>
+                <Skeleton
+                  width={150}
+                  height={24}
+                  style={{ marginBottom: "1.5rem" }}
+                />
+                <div className={styles.linksGrid}>
+                  {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} height={100} borderRadius={16} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <Footer />
       </>
@@ -115,7 +166,6 @@ const ProfilePage = () => {
                   <label>Joined On</label>
                   <p>
                     {(() => {
-                      // Try createdAt first, then extract from MongoDB ObjectId
                       const dateSource =
                         user?.createdAt ||
                         (user?._id

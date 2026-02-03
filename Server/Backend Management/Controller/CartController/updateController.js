@@ -13,9 +13,6 @@ const updateQuantity = async (req, res) => {
   try {
     const qty = parseInt(quantity);
     if (qty < 1) {
-      // If quantity is set to 0 or less, we could delete it,
-      // but usually decrement handles delete or just stops at 1.
-      // Let's just enforce minimum 1 here, or call delete if preferred.
       return res.status(400).json({ message: "Quantity must be at least 1" });
     }
 

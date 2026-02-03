@@ -21,6 +21,7 @@ import DashboardTab from "./Components/DashboardTab";
 import OrdersTab from "./Components/OrdersTab";
 import ProductsTab from "./Components/ProductsTab";
 import AnalyticsTab from "./Components/AnalyticsTab";
+import ConfirmModal from "./Components/ConfirmModal";
 
 function AdminPanel() {
   const navigate = useNavigate();
@@ -33,6 +34,9 @@ function AdminPanel() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [bulkDiscountValue, setBulkDiscountValue] = useState(0);
+  const [isBulkLoading, setIsBulkLoading] = useState(false);
 
   useEffect(() => {
     const role = localStorage.getItem("role");
@@ -43,7 +47,6 @@ function AdminPanel() {
     }
     fetchData();
 
-    // Poll for new data every 30 seconds
     const interval = setInterval(() => {
       fetchData();
     }, 30000);
@@ -175,6 +178,40 @@ function AdminPanel() {
     }
   };
 
+  const handleBulkDiscount = async () => {
+    setIsBulkLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${BASE_URL}/product/bulk-discount`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ discount: Number(bulkDiscountValue) }),
+      });
+
+      if (res.ok) {
+        toast.success(
+          `Applied ${bulkDiscountValue}% discount to all products!`,
+        );
+        setIsConfirmOpen(false);
+        fetchData();
+      } else {
+        toast.error("Failed to apply bulk discount");
+      }
+    } catch (error) {
+      toast.error("Error applying bulk discount");
+    } finally {
+      setIsBulkLoading(false);
+    }
+  };
+
+  const onShowBulkConfirm = (value) => {
+    setBulkDiscountValue(value);
+    setIsConfirmOpen(true);
+  };
+
   const handleAddProduct = () => {
     setEditingProduct(null);
     setIsModalOpen(true);
@@ -239,7 +276,6 @@ function AdminPanel() {
 
   return (
     <div className={styles.adminContainer}>
-      {/* Mobile Header */}
       <div className={styles.mobileHeader}>
         <div className={styles.mobileHeaderContent}>
           <h2>
@@ -264,7 +300,6 @@ function AdminPanel() {
         handleAddProduct={handleAddProduct}
       />
 
-      {/* Main Content */}
       <main className={styles.mainContent}>
         <AnimatePresence mode="wait">
           {activeTab === "dashboard" && (
@@ -292,6 +327,7 @@ function AdminPanel() {
               handleAddProduct={handleAddProduct}
               handleEditProduct={handleEditProduct}
               deleteProduct={deleteProduct}
+              onShowBulkConfirm={onShowBulkConfirm}
             />
           )}
           {activeTab === "analytics" && (
@@ -308,6 +344,15 @@ function AdminPanel() {
         }}
         product={editingProduct}
         onSuccess={fetchData}
+      />
+
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        onConfirm={handleBulkDiscount}
+        title="Apply Bulk Discount?"
+        message={`Are you sure you want to apply a ${bulkDiscountValue}% discount to ALL products? This will overwrite individual discount values.`}
+        isLoading={isBulkLoading}
       />
     </div>
   );

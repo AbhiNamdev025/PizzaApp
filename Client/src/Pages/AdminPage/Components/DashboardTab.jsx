@@ -109,7 +109,6 @@ const DashboardTab = ({ stats, orders, getStatusIcon }) => {
             </tbody>
           </table>
 
-          {/* Mobile Card View for Recent Orders */}
           <div className={styles.mobileOrdersList}>
             {orders.slice(0, 5).map((order) => (
               <div key={order._id} className={styles.mobileOrderCard}>

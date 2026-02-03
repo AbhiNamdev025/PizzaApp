@@ -108,10 +108,8 @@ const seedDatabase = async () => {
   try {
     await mongoose.connect(process.env.MongoURL);
 
-    // Clear existing products
     await Product.deleteMany({});
 
-    // Insert new products
     await Product.insertMany(pizzas);
 
     const premiumCount = pizzas.filter((p) => p.isPremium).length;

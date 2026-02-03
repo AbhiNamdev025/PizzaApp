@@ -64,8 +64,7 @@ const PizzaCard = ({ pizza, addToCart }) => {
 
   const rating = pizza.averageRating || (4 + Math.random()).toFixed(1);
 
-  // Get current price based on selection
-  const getCurrentPrice = () => {
+  const getBasePrice = () => {
     if (pizza.hasSizes && pizza.sizes) {
       return pizza.sizes[selectedSize] || pizza.price;
     }
@@ -75,9 +74,11 @@ const PizzaCard = ({ pizza, addToCart }) => {
     return pizza.price;
   };
 
-  const currentPrice = getCurrentPrice();
+  const basePrice = Number(getBasePrice());
+  const discount = Number(pizza.discount) || 0;
+  const currentPrice =
+    discount > 0 ? Math.round(basePrice * (1 - discount / 100)) : basePrice;
 
-  // Handle add to cart with size/portion info
   const handleAddToCart = (e) => {
     e.stopPropagation();
     const cartData = {
@@ -117,6 +118,11 @@ const PizzaCard = ({ pizza, addToCart }) => {
         >
           <Heart size={18} fill={isWishlisted ? "#ff4757" : "none"} />
         </button>
+        {Number(pizza.discount) > 0 && (
+          <div className={styles.discountBadge}>
+            {Number(pizza.discount)}% OFF
+          </div>
+        )}
         {pizza.isPremium ? (
           <div className={`${styles.badge} ${styles.premiumBadge}`}>
             <Star size={12} fill="#333" /> Premium
@@ -126,7 +132,7 @@ const PizzaCard = ({ pizza, addToCart }) => {
             <Star size={12} /> Popular
           </div>
         )}
-        {/* Veg/Non-Veg indicator */}
+
         <div
           className={`${styles.dietBadge} ${pizza.isVeg !== false ? styles.vegBadge : styles.nonvegBadge}`}
         >
@@ -151,6 +157,9 @@ const PizzaCard = ({ pizza, addToCart }) => {
             ))}
           </div>
           <span className={styles.ratingValue}>{rating}</span>
+          {Number(pizza.discount) > 0 && (
+            <span className={styles.cardDiscountTag}>-{pizza.discount}%</span>
+          )}
         </div>
 
         <h3
@@ -161,7 +170,6 @@ const PizzaCard = ({ pizza, addToCart }) => {
         </h3>
         <p className={styles.pizzaDescription}>{pizza.description}</p>
 
-        {/* Size Selection */}
         {pizza.hasSizes && pizza.sizes && (
           <div className={styles.sizeSelector}>
             {["small", "medium", "large"].map(
@@ -182,7 +190,6 @@ const PizzaCard = ({ pizza, addToCart }) => {
           </div>
         )}
 
-        {/* Portion Selection */}
         {pizza.hasPortions && pizza.portions && (
           <div className={styles.portionSelector}>
             {["half", "full"].map(
@@ -206,9 +213,9 @@ const PizzaCard = ({ pizza, addToCart }) => {
         <div className={styles.cardFooter}>
           <div className={styles.priceBox}>
             <span className={styles.price}>Rs. {currentPrice}</span>
-            <span className={styles.originalPrice}>
-              Rs. {Math.round(currentPrice * 1.2)}
-            </span>
+            {discount > 0 && (
+              <span className={styles.originalPrice}>Rs. {basePrice}</span>
+            )}
           </div>
           <motion.button
             className={styles.addToCartBtn}

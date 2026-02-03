@@ -1,0 +1,107 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+}
+
+.modal {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 24px;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.iconBox {
+  width: 80px;
+  height: 80px;
+  background: #fff3f2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.icon {
+  color: #ff6f61;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
+}
+
+.message {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.cancelBtn,
+.confirmBtn {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.cancelBtn {
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  color: #666;
+}
+
+.cancelBtn:hover {
+  background: #eee;
+}
+
+.confirmBtn {
+  background: #2d3436;
+  border: none;
+  color: white;
+}
+
+.confirmBtn:hover {
+  background: #ff6f61;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 111, 97, 0.3);
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

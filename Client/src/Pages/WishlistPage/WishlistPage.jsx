@@ -65,7 +65,7 @@ const WishlistPage = () => {
 
       if (res.ok) {
         toast.success(`${pizza.name} added to cart!`);
-        // Notify Header to update cart count
+
         window.dispatchEvent(new Event("cartUpdate"));
       } else {
         toast.error("Failed to add to cart");
@@ -74,8 +74,6 @@ const WishlistPage = () => {
       toast.error("Failed to add to cart");
     }
   };
-
-  // No longer returning solid loading page, grid handles it
 
   const displayContent = () => {
     if (loading) {

@@ -1,6 +1,5 @@
 const productModel = require("../../../Model/ProductModel/productSchema");
 
-// Add rating to product
 exports.addRating = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -19,7 +18,6 @@ exports.addRating = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // Add new rating (Allowing multiple ratings per user as requested)
     product.ratings.push({
       userId,
       userName,
@@ -27,7 +25,6 @@ exports.addRating = async (req, res) => {
       review,
     });
 
-    // Calculate average rating
     const totalRatings = product.ratings.length;
     const sumRatings = product.ratings.reduce((sum, r) => sum + r.rating, 0);
     product.averageRating = (sumRatings / totalRatings).toFixed(1);
@@ -45,7 +42,6 @@ exports.addRating = async (req, res) => {
   }
 };
 
-// Get product ratings
 exports.getProductRatings = async (req, res) => {
   try {
     const { productId } = req.params;

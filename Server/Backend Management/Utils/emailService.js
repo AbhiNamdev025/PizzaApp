@@ -1,7 +1,5 @@
 const nodemailer = require("nodemailer");
 
-// Create transporter - using Gmail as default
-// For production, use environment variables for credentials
 const createTransporter = () => {
   return nodemailer.createTransport({
     service: "gmail",
@@ -12,7 +10,6 @@ const createTransporter = () => {
   });
 };
 
-// Send order notification to admin
 const sendOrderNotificationToAdmin = async (order) => {
   const adminEmail = process.env.ADMIN_EMAIL || "admin@pizzalio.com";
 
@@ -190,7 +187,6 @@ ${order.specialInstructions ? `Special Instructions: ${order.specialInstructions
 
     return true;
   } catch (error) {
-    // Don't throw - we don't want to fail the order if email fails
     return false;
   }
 };

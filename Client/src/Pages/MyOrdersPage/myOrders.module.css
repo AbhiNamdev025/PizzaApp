@@ -42,6 +42,9 @@
   .ordersList {
     grid-template-columns: 1fr;
   }
+  .orderHeader{
+    flex-direction: column;
+  }
 
   .orderFooter {
     flex-direction: column;

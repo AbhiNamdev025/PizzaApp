@@ -42,7 +42,6 @@ function LoginForm() {
         toast.success("Login successful");
 
         setTimeout(() => {
-          // Redirect admin to admin dashboard, regular users to home
           if (role === "admin") {
             navigate("/admin");
           } else {

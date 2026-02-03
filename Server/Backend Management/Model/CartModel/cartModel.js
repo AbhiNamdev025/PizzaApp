@@ -1,16 +1,3 @@
-// const mongoose = require("mongoose");
-
-// const cartSchema = new mongoose.Schema({
-//   productId: { type: mongoose.Schema.Types.ObjectId },
-//   token: { type: String },
-//   name: { type: String },
-//   price: { type: String },
-//   image: { type: String },
-//   quantity: { type: Number, default: 1 },
-// });
-
-// module.exports = mongoose.model("Cart", cartSchema);
-
 const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema({

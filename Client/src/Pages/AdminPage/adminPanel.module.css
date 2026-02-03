@@ -159,6 +159,54 @@
   margin-bottom: 1.5rem;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.bulkDiscountBox {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 0.35rem 0.6rem;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.bulkInput {
+  width: 140px;
+  border: none;
+  background: transparent;
+  padding: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.bulkInput:focus {
+  outline: none;
+}
+
+.bulkBtn {
+  background: #2d3436;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.bulkBtn:hover {
+  background: #ff6f61;
+  transform: translateY(-1px);
+}
+
 .refreshBtn,
 .addBtn {
   padding: 0.7rem 1.25rem;
@@ -602,6 +650,25 @@
   box-shadow: 0 3px 10px rgba(255, 193, 7, 0.3);
 }
 
+.discountBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: #ff6f61;
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  z-index: 6;
+  box-shadow: 0 4px 12px rgba(255, 111, 97, 0.4);
+}
+
+.productCard:has(.premiumBadge) .discountBadge {
+  right: auto;
+  left: 3rem; /* Offset from veg/non-veg indicator */
+}
+
 .productImageWrapper {
   height: 160px;
   overflow: hidden;
@@ -643,6 +710,13 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: #ff6f61;
+}
+
+.strikePrice {
+  font-size: 0.85rem;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 0.5rem;
 }
 
 .productMeta {

@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import styles from "./cart.module.css";
 import { toast } from "react-hot-toast";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { BASE_URL } from "../../../utils/constant";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -71,7 +73,6 @@ const CartPage = () => {
       if (res.ok) {
         fetchCartItems();
         toast.success("Item Removed From Cart");
-        // Notify other components (Header) to update cart count
         window.dispatchEvent(new Event("cartUpdate"));
       } else {
         const errorData = await res.json();
@@ -114,8 +115,74 @@ const CartPage = () => {
       <>
         <Header />
         <div className={styles.cartContainer}>
-          <div className={styles.loading}>
-            <h2>Loading your cart...</h2>
+          <div className={styles.container}>
+            <Skeleton
+              height={50}
+              width={300}
+              style={{ marginBottom: "1rem" }}
+            />
+            <Skeleton
+              height={20}
+              width={150}
+              style={{ marginBottom: "2.5rem" }}
+            />
+
+            <div className={styles.cartContent}>
+              <div className={styles.cartItems}>
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className={styles.cartItem}
+                    style={{ border: "none" }}
+                  >
+                    <Skeleton width={120} height={120} borderRadius={20} />
+                    <div
+                      className={styles.itemDetails}
+                      style={{ padding: "0 1.5rem" }}
+                    >
+                      <Skeleton width="40%" height={24} />
+                      <Skeleton
+                        width="90%"
+                        height={16}
+                        style={{ marginTop: "1rem" }}
+                      />
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginTop: "1.5rem",
+                        }}
+                      >
+                        <Skeleton width={80} height={24} />
+                        <Skeleton width={100} height={36} borderRadius={20} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div
+                className={styles.cartSummary}
+                style={{ height: "fit-content" }}
+              >
+                <Skeleton
+                  height={26}
+                  width="60%"
+                  style={{ marginBottom: "2rem" }}
+                />
+                <Skeleton
+                  height={20}
+                  width="100%"
+                  count={2}
+                  style={{ marginBottom: "1.2rem" }}
+                />
+                <Skeleton
+                  height={55}
+                  width="100%"
+                  borderRadius={15}
+                  style={{ marginTop: "1.5rem" }}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <Footer />

@@ -33,7 +33,6 @@ const Header = () => {
   const isLoggedIn = !!token;
   const isAdmin = role === "admin";
 
-  // Check if current path matches
   const isActive = (path) => {
     return location.pathname === path;
   };

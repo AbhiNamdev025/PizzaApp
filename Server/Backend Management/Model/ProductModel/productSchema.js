@@ -44,6 +44,7 @@ const productSchema = new mongoose.Schema(
     ratings: [ratingSchema],
     averageRating: { type: Number, default: 0 },
     totalRatings: { type: Number, default: 0 },
+    discount: { type: Number, default: 0 },
   },
   { timestamps: true },
 );

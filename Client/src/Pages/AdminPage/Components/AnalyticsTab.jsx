@@ -77,7 +77,6 @@ const AnalyticsTab = ({ orders = [], products = [] }) => {
   const [filterType, setFilterType] = useState("all");
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
 
-  // Filter Logic
   const filteredOrders = useMemo(() => {
     if (!orders) return [];
 
@@ -101,7 +100,7 @@ const AnalyticsTab = ({ orders = [], products = [] }) => {
       if (filterType === "custom" && dateRange.start && dateRange.end) {
         const start = new Date(dateRange.start);
         const end = new Date(dateRange.end);
-        end.setHours(23, 59, 59, 999); // Include full end day
+        end.setHours(23, 59, 59, 999);
         return orderDate >= start && orderDate <= end;
       }
       return true;

@@ -43,7 +43,6 @@ function Confirmation() {
                 Order ID: <strong>{orderData.orderId}</strong>
               </p>
 
-              {/* Order Items Summary */}
               {orderData.items && orderData.items.length > 0 && (
                 <div className={styles.itemsList}>
                   {orderData.items.map((item, index) => (

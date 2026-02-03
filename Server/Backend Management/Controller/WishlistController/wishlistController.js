@@ -1,7 +1,6 @@
 const userModel = require("../../Model/UserModel/userModel");
 const productModel = require("../../Model/ProductModel/productSchema");
 
-// Toggles item in wishlist
 exports.toggleWishlist = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -14,14 +13,12 @@ exports.toggleWishlist = async (req, res) => {
 
     const index = user.wishlist.indexOf(productId);
     if (index === -1) {
-      // Add to wishlist
       user.wishlist.push(productId);
       await user.save();
       return res
         .status(200)
         .json({ message: "Added to wishlist", isWishlisted: true });
     } else {
-      // Remove from wishlist
       user.wishlist.splice(index, 1);
       await user.save();
       return res
@@ -33,7 +30,6 @@ exports.toggleWishlist = async (req, res) => {
   }
 };
 
-// Gets user wishlist
 exports.getWishlist = async (req, res) => {
   try {
     const userId = req.user.id;

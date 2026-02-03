@@ -274,8 +274,8 @@
   .menuBtn {
     width: 100%;
     max-width: 100%;
-    padding: 1rem;
-    font-size: 1.05rem;
+    padding: 0.5rem;
+    font-size: 0.8rem;
     justify-content: center;
     border-radius: 16px;
   }
