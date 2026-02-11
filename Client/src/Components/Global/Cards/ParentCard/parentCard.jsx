@@ -2,11 +2,38 @@ import React, { useState, useEffect } from "react";
 import PizzaCard from "../PizzaCard/pizzaCard";
 import styles from "./parentCard.module.css";
 import { toast } from "react-hot-toast";
-import { Pizza, Search, X } from "lucide-react";
+import {
+  Pizza,
+  Search,
+  X,
+  LayoutGrid,
+  Zap,
+  Coffee,
+  IceCream,
+  Utensils,
+  Layers,
+  Soup,
+  Leaf,
+  Drumstick,
+  ArrowUpDown,
+  TrendingUp,
+} from "lucide-react";
 import PizzaSkeleton from "../PizzaCard/PizzaSkeleton";
+import CustomSelect from "../../../Global/CustomSelect/CustomSelect";
 import { BASE_URL } from "../../../../utils/constant";
 
-const CATEGORIES = [
+const CATEGORY_ICONS = {
+  All: <LayoutGrid size={16} />,
+  "Fast Food": <Zap size={16} />,
+  "Junk Food": <Utensils size={16} />,
+  Drinks: <Coffee size={16} />,
+  Desserts: <IceCream size={16} />,
+  Snacks: <Soup size={16} />,
+  Combos: <Layers size={16} />,
+  "Main Course": <Pizza size={16} />,
+};
+
+const CATEGORIES_LIST = [
   "All",
   "Fast Food",
   "Junk Food",
@@ -15,7 +42,11 @@ const CATEGORIES = [
   "Snacks",
   "Combos",
   "Main Course",
-];
+].map((cat) => ({
+  label: cat,
+  value: cat,
+  icon: CATEGORY_ICONS[cat] || <Pizza size={16} />,
+}));
 
 const ParentCard = ({ showFilters = false, limit = null }) => {
   const [pizzas, setPizzas] = useState([]);
@@ -166,38 +197,65 @@ const ParentCard = ({ showFilters = false, limit = null }) => {
                 )}
               </div>
 
-              <select
+              <CustomSelect
+                options={CATEGORIES_LIST}
                 value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className={styles.filterSelect}
-              >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
+                onChange={setCategoryFilter}
+              />
 
-              <select
+              <CustomSelect
+                options={[
+                  {
+                    label: "All Diet",
+                    value: "all",
+                    icon: <LayoutGrid size={16} />,
+                  },
+                  {
+                    label: "Veg Only",
+                    value: "veg",
+                    icon: <Leaf size={16} color="#4caf50" />,
+                  },
+                  {
+                    label: "Non-Veg",
+                    value: "nonveg",
+                    icon: <Drumstick size={16} color="#e53935" />,
+                  },
+                ]}
                 value={dietFilter}
-                onChange={(e) => setDietFilter(e.target.value)}
-                className={styles.filterSelect}
-              >
-                <option value="all">All Diet</option>
-                <option value="veg">Veg</option>
-                <option value="nonveg">Non-Veg</option>
-              </select>
+                onChange={setDietFilter}
+              />
 
-              <select
+              <CustomSelect
+                options={[
+                  {
+                    label: "Sort By",
+                    value: "default",
+                    icon: <ArrowUpDown size={16} />,
+                  },
+                  {
+                    label: "Price: Low to High",
+                    value: "priceLow",
+                    icon: (
+                      <TrendingUp
+                        size={16}
+                        style={{ transform: "rotate(180deg)" }}
+                      />
+                    ),
+                  },
+                  {
+                    label: "Price: High to Low",
+                    value: "priceHigh",
+                    icon: <TrendingUp size={16} />,
+                  },
+                  {
+                    label: "Top Rated",
+                    value: "rating",
+                    icon: <Pizza size={16} />,
+                  },
+                ]}
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className={styles.filterSelect}
-              >
-                <option value="default">Sort By</option>
-                <option value="priceLow">Price: Low</option>
-                <option value="priceHigh">Price: High</option>
-                <option value="rating">Top Rated</option>
-              </select>
+                onChange={setSortBy}
+              />
 
               {hasActiveFilters && (
                 <button className={styles.clearBtn} onClick={clearAllFilters}>

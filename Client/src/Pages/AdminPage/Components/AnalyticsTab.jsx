@@ -21,8 +21,11 @@ import {
   DollarSign,
   Calendar,
   Filter,
+  Clock,
+  RefreshCw,
 } from "lucide-react";
 import styles from "../adminPanel.module.css";
+import CustomSelect from "../../../Components/Global/CustomSelect/CustomSelect";
 
 const STATUS_COLORS = {
   Pending: "#f1c40f",
@@ -184,17 +187,34 @@ const AnalyticsTab = ({ orders = [], products = [] }) => {
         <div className={styles.filterControls}>
           <div className={styles.selectWrapper}>
             <Filter size={16} className={styles.filterIcon} />
-            <select
+            <CustomSelect
+              options={[
+                { label: "All Time", value: "all", icon: <Clock size={14} /> },
+                {
+                  label: "Today",
+                  value: "today",
+                  icon: <RefreshCw size={14} />,
+                },
+                {
+                  label: "Last 7 Days",
+                  value: "week",
+                  icon: <Calendar size={14} />,
+                },
+                {
+                  label: "Last 30 Days",
+                  value: "month",
+                  icon: <Calendar size={14} />,
+                },
+                {
+                  label: "Custom Range",
+                  value: "custom",
+                  icon: <Filter size={14} />,
+                },
+              ]}
               value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              className={styles.filterSelect}
-            >
-              <option value="all">All Time</option>
-              <option value="today">Today</option>
-              <option value="week">Last 7 Days</option>
-              <option value="month">Last 30 Days</option>
-              <option value="custom">Custom Range</option>
-            </select>
+              onChange={setFilterType}
+              className={styles.filterCustomSelect}
+            />
           </div>
 
           {filterType === "custom" && (

@@ -211,4 +211,7 @@
   .headerInfo h1 {
     font-size: 1.8rem;
   }
+  .container{
+    padding: 0 0.8rem;
+  }
 }

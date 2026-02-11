@@ -1,6 +1,9 @@
 const express = require("express");
 
 const productModel = require("../../../Model/ProductModel/productSchema");
+const {
+  sendPushNotification,
+} = require("../../../Utils/pushNotificationHelper");
 
 exports.updateProduct = async (req, res) => {
   try {
@@ -37,6 +40,20 @@ exports.bulkUpdateDiscount = async (req, res) => {
       { $set: { discount: Number(discount) } },
     );
     console.log("Bulk update result:", result);
+
+    // Notify all users about the new discount
+    sendPushNotification(
+      null,
+      {
+        title: "Flash Sale! 🍕",
+        body: `We are offering ${discount}% off on all our pizzas! Order now!`,
+        icon: "/logo192.png",
+        data: { url: "/product" },
+      },
+      false,
+      true,
+    ).catch((err) => console.error("Broadcast push failed", err));
+
     res.status(200).json({ message: "Bulk discount updated successfully" });
   } catch (err) {
     console.error("Bulk update error:", err);

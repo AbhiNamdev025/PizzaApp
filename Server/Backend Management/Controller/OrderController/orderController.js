@@ -1,6 +1,7 @@
 const { Order } = require("../../Model/OrderModel/orderSchema");
 const Cart = require("../../Model/CartModel/cartModel");
 const { sendOrderNotificationToAdmin } = require("../../Utils/emailService");
+const { sendPushNotification } = require("../../Utils/pushNotificationHelper");
 
 exports.createOrder = async (req, res) => {
   try {
@@ -57,6 +58,18 @@ exports.createOrder = async (req, res) => {
     await Cart.deleteMany({ userId });
 
     sendOrderNotificationToAdmin(newOrder).catch(() => {});
+
+    // Web Push Notification to Admin
+    sendPushNotification(
+      null,
+      {
+        title: "New Order! 🍕",
+        body: `New order ${orderId} placed by ${customerName}.`,
+        icon: "/logo192.png",
+        data: { url: "/admin/orders" },
+      },
+      true,
+    ).catch((err) => console.error("Admin push failed", err));
 
     res.status(201).json({
       message: "Order placed successfully",
@@ -121,6 +134,16 @@ exports.updateOrderStatus = async (req, res) => {
 
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Web Push Notification to User
+    if (orderStatus) {
+      sendPushNotification(order.userId, {
+        title: "Order Status Update! 🍕",
+        body: `Your order ${order.orderId} is now ${orderStatus}.`,
+        icon: "/logo192.png",
+        data: { url: "/my-orders" },
+      }).catch((err) => console.error("User push failed", err));
     }
 
     res.status(200).json({ message: "Order updated successfully", order });

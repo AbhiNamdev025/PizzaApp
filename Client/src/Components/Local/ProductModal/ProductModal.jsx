@@ -9,12 +9,30 @@ import {
   Star,
   Leaf,
   Drumstick,
+  Zap,
+  Utensils,
+  Coffee,
+  IceCream,
+  Layers,
+  Soup,
+  Pizza,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import CustomSelect from "../../Global/CustomSelect/CustomSelect";
 import styles from "./productModal.module.css";
 import { BASE_URL } from "../../../utils/constant";
 
-const CATEGORIES = [
+const CATEGORY_ICONS = {
+  "Fast Food": <Zap size={16} />,
+  "Junk Food": <Utensils size={16} />,
+  Drinks: <Coffee size={16} />,
+  Desserts: <IceCream size={16} />,
+  Snacks: <Soup size={16} />,
+  Combos: <Layers size={16} />,
+  "Main Course": <Pizza size={16} />,
+};
+
+const CATEGORIES_LIST = [
   "Fast Food",
   "Junk Food",
   "Drinks",
@@ -22,7 +40,11 @@ const CATEGORIES = [
   "Snacks",
   "Combos",
   "Main Course",
-];
+].map((cat) => ({
+  label: cat,
+  value: cat,
+  icon: CATEGORY_ICONS[cat] || <Pizza size={16} />,
+}));
 
 function ProductModal({ isOpen, onClose, product, onSuccess }) {
   const [formData, setFormData] = useState({
@@ -361,19 +383,13 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
 
                 <div className={styles.formGroup}>
                   <label>Category *</label>
-                  <select
-                    name="category"
+                  <CustomSelect
+                    options={CATEGORIES_LIST}
                     value={formData.category}
-                    onChange={handleChange}
-                    className={styles.categorySelect}
-                    required
-                  >
-                    {CATEGORIES.map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(value) =>
+                      setFormData((prev) => ({ ...prev, category: value }))
+                    }
+                  />
                 </div>
 
                 <div className={styles.formGroup}>

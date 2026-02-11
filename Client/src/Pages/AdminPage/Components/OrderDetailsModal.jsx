@@ -10,8 +10,17 @@ import {
   IndianRupee,
   FileText,
   Trash2,
+  Clock,
+  CheckCircle,
+  Truck,
+  Package,
+  XCircle,
+  Flame,
+  CreditCard,
+  AlertCircle,
 } from "lucide-react";
 import styles from "../adminPanel.module.css";
+import CustomSelect from "../../../Components/Global/CustomSelect/CustomSelect";
 import { BASE_URL } from "../../../utils/constant";
 
 const OrderDetailsModal = ({
@@ -132,38 +141,72 @@ const OrderDetailsModal = ({
             <div className={styles.statusControls}>
               <div className={styles.selectGroup}>
                 <label>Status</label>
-                <select
+                <CustomSelect
+                  options={[
+                    {
+                      label: "Pending",
+                      value: "Pending",
+                      icon: <Clock size={16} color="#f1c40f" />,
+                    },
+                    {
+                      label: "Confirmed",
+                      value: "Confirmed",
+                      icon: <CheckCircle size={16} color="#3498db" />,
+                    },
+                    {
+                      label: "Preparing",
+                      value: "Preparing",
+                      icon: <Flame size={16} color="#e67e22" />,
+                    },
+                    {
+                      label: "Out For Delivery",
+                      value: "Out for Delivery",
+                      icon: <Truck size={16} color="#9b59b6" />,
+                    },
+                    {
+                      label: "Delivered",
+                      value: "Delivered",
+                      icon: <Package size={16} color="#2ecc71" />,
+                    },
+                    {
+                      label: "Cancelled",
+                      value: "Cancelled",
+                      icon: <XCircle size={16} color="#e74c3c" />,
+                    },
+                  ]}
                   value={order.orderStatus}
-                  onChange={(e) => updateOrderStatus(order._id, e.target.value)}
+                  onChange={(val) => updateOrderStatus(order._id, val)}
                   disabled={
                     order.orderStatus === "Delivered" ||
                     order.orderStatus === "Cancelled"
                   }
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Confirmed">Confirmed</option>
-                  <option value="Preparing">Preparing</option>
-                  <option value="Out for Delivery">Out For Delivery</option>
-                  <option value="Delivered">Delivered</option>
-                  <option value="Cancelled">Cancelled</option>
-                </select>
+                  className={styles.modalStatusSelect}
+                />
               </div>
 
               <div className={styles.selectGroup}>
                 <label>Payment</label>
-                <select
+                <CustomSelect
+                  options={[
+                    {
+                      label: "Pending",
+                      value: "Pending",
+                      icon: <AlertCircle size={16} color="#f1c40f" />,
+                    },
+                    {
+                      label: "Paid",
+                      value: "Paid",
+                      icon: <CreditCard size={16} color="#2ecc71" />,
+                    },
+                  ]}
                   value={order.paymentStatus}
-                  onChange={(e) =>
-                    updatePaymentStatus(order._id, e.target.value)
-                  }
+                  onChange={(val) => updatePaymentStatus(order._id, val)}
                   disabled={
                     order.orderStatus === "Delivered" ||
                     order.orderStatus === "Cancelled"
                   }
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Paid">Paid</option>
-                </select>
+                  className={styles.modalStatusSelect}
+                />
               </div>
             </div>
 

@@ -45,6 +45,8 @@
   padding: 1rem;
   border-radius: 16px;
   backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 100; /* Ensure this entire row stays above the grid below */
 }
 
 .searchBox {

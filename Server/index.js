@@ -17,6 +17,7 @@ const getUserData = require("./Backend Management/Router/UserRoute/getRoute/getR
 const postUserData = require("./Backend Management/Router/UserRoute/postRoute/postRoute");
 const putUserData = require("./Backend Management/Router/UserRoute/updateRoute/putRoute");
 const deleteUserData = require("./Backend Management/Router/UserRoute/delRoute/delRoute");
+const forgotPasswordData = require("./Backend Management/Router/UserRoute/forgotPasswordRoute");
 
 const loginUser = require("./Backend Management/Router/LoginRoute/loginRoute");
 
@@ -30,6 +31,7 @@ const orderRoutes = require("./Backend Management/Router/OrderRoute/orderRoute")
 const uploadRoutes = require("./Backend Management/Router/UploadRoute/uploadRoute");
 const wishlistRoutes = require("./Backend Management/Router/WishlistRoute/wishlistRoute");
 const billRoutes = require("./Backend Management/Router/BillRoute/billRoute");
+const notificationRoutes = require("./Backend Management/Router/NotificationRoute/notificationRoute");
 
 const app = express();
 
@@ -61,6 +63,7 @@ app.use("/user", getUserData);
 app.use("/user", postUserData);
 app.use("/user", putUserData);
 app.use("/user", deleteUserData);
+app.use("/user", forgotPasswordData);
 app.use("/user", loginUser);
 
 app.use("/cart", addCart);
@@ -73,6 +76,7 @@ app.use("/order", orderRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/wishlist", wishlistRoutes);
 app.use("/bill", billRoutes);
+app.use("/notifications", notificationRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });

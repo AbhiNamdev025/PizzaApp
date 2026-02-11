@@ -112,6 +112,9 @@
   cursor: pointer;
   font-size: 0.95rem;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .logoutBtn:hover {
@@ -991,7 +994,7 @@
   .bulkDiscountBox {
     width: 100%;
   }
-  .bulkInput{
+  .bulkInput {
     width: 100%;
   }
 
@@ -1090,6 +1093,8 @@
   border-radius: 50px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 100;
 }
 
 .selectWrapper {
@@ -1567,4 +1572,43 @@
 .minTotal {
   font-size: 0.9rem;
   color: #333;
+}
+
+/* Custom Select Overrides */
+.filterCustomSelect :global(.selectedValue) {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.filterCustomSelect :global(.selectHeader) {
+  padding: 8px 14px;
+  border-radius: 10px;
+  min-width: 140px;
+}
+
+.miniStatusSelectCustom {
+  min-width: 130px;
+}
+
+.miniStatusSelectCustom :global(.selectHeader) {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  background-color: #fafafa;
+}
+
+.miniStatusSelectCustom :global(.selectedValue) {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.modalStatusSelect {
+  width: 100%;
+}
+
+.modalStatusSelect :global(.selectHeader) {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background-color: #fafafa;
 }

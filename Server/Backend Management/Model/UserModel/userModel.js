@@ -24,6 +24,12 @@ const userSchema = new mongoose.Schema(
         ref: "Product",
       },
     ],
+    resetOtp: {
+      type: String,
+    },
+    resetOtpExpires: {
+      type: Date,
+    },
   },
   { timestamps: true },
 );

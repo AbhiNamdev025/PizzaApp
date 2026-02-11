@@ -1,9 +1,23 @@
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RefreshCw, User, Filter, Eye, Calendar, FileText } from "lucide-react";
+import {
+  RefreshCw,
+  User,
+  Filter,
+  Eye,
+  Calendar,
+  FileText,
+  CheckCircle,
+  Clock,
+  Truck,
+  Package,
+  XCircle,
+  Flame,
+} from "lucide-react";
 import styles from "../adminPanel.module.css";
 import BillReceipt from "../../../Components/Global/BillReceipt/BillReceipt";
 import OrderDetailsModal from "./OrderDetailsModal";
+import CustomSelect from "../../../Components/Global/CustomSelect/CustomSelect";
 import { toast } from "react-hot-toast";
 import { BASE_URL } from "../../../utils/constant";
 
@@ -112,17 +126,34 @@ const OrdersTab = ({
         <div className={styles.filterControls}>
           <div className={styles.selectWrapper}>
             <Filter size={16} className={styles.filterIcon} />
-            <select
+            <CustomSelect
+              options={[
+                { label: "All Time", value: "all", icon: <Clock size={14} /> },
+                {
+                  label: "Today",
+                  value: "today",
+                  icon: <RefreshCw size={14} />,
+                },
+                {
+                  label: "Last 7 Days",
+                  value: "week",
+                  icon: <Calendar size={14} />,
+                },
+                {
+                  label: "Last 30 Days",
+                  value: "month",
+                  icon: <Calendar size={14} />,
+                },
+                {
+                  label: "Custom Range",
+                  value: "custom",
+                  icon: <Filter size={14} />,
+                },
+              ]}
               value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              className={styles.filterSelect}
-            >
-              <option value="all">All Time</option>
-              <option value="today">Today</option>
-              <option value="week">Last 7 Days</option>
-              <option value="month">Last 30 Days</option>
-              <option value="custom">Custom Range</option>
-            </select>
+              onChange={setFilterType}
+              className={styles.filterCustomSelect}
+            />
           </div>
 
           {filterType === "custom" && (
@@ -192,23 +223,47 @@ const OrdersTab = ({
 
             <div className={styles.minCardFooter}>
               <div className={styles.cardActions}>
-                <select
-                  className={styles.miniStatusSelect}
+                <CustomSelect
+                  options={[
+                    {
+                      label: "Pending",
+                      value: "Pending",
+                      icon: <Clock size={14} color="#f1c40f" />,
+                    },
+                    {
+                      label: "Confirmed",
+                      value: "Confirmed",
+                      icon: <CheckCircle size={14} color="#3498db" />,
+                    },
+                    {
+                      label: "Preparing",
+                      value: "Preparing",
+                      icon: <Flame size={14} color="#e67e22" />,
+                    },
+                    {
+                      label: "Out For Delivery",
+                      value: "Out for Delivery",
+                      icon: <Truck size={14} color="#9b59b6" />,
+                    },
+                    {
+                      label: "Delivered",
+                      value: "Delivered",
+                      icon: <Package size={14} color="#2ecc71" />,
+                    },
+                    {
+                      label: "Cancelled",
+                      value: "Cancelled",
+                      icon: <XCircle size={14} color="#e74c3c" />,
+                    },
+                  ]}
                   value={order.orderStatus}
-                  onClick={(e) => e.stopPropagation()}
-                  onChange={(e) => updateOrderStatus(order._id, e.target.value)}
+                  onChange={(val) => updateOrderStatus(order._id, val)}
                   disabled={
                     order.orderStatus === "Delivered" ||
                     order.orderStatus === "Cancelled"
                   }
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Confirmed">Confirmed</option>
-                  <option value="Preparing">Preparing</option>
-                  <option value="Out for Delivery">Out For Delivery</option>
-                  <option value="Delivered">Delivered</option>
-                  <option value="Cancelled">Cancelled</option>
-                </select>
+                  className={styles.miniStatusSelectCustom}
+                />
 
                 <button
                   className={styles.miniBillBtn}

@@ -1,25 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { Mail, Lock, LogIn, Pizza } from "lucide-react";
+import { Mail, Lock, LogIn, Pizza, Loader2, Eye, EyeOff } from "lucide-react";
 import styles from "./loginform.module.css";
 import { BASE_URL } from "../../../utils/constant";
+import { registerPushNotifications } from "../../../utils/pushNotifications";
 
 function LoginForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+    if (token) {
+      if (role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/home");
+      }
+    }
+  }, [navigate]);
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Clear error when user starts typing
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: "" });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Must be at least 6 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
+    setLoading(true);
     try {
       const response = await fetch(`${BASE_URL}/user/login`, {
         method: "POST",
@@ -32,27 +73,25 @@ function LoginForm() {
       const userData = await response.json();
 
       if (response.status === 200) {
-        const token = userData.token;
-        localStorage.setItem("token", token);
-        const userName = userData.user.name;
-        localStorage.setItem("userName", userName);
-        const role = userData.user.role;
-        localStorage.setItem("role", role);
+        localStorage.setItem("token", userData.token);
+        localStorage.setItem("userName", userData.user.name);
+        localStorage.setItem("role", userData.user.role);
+        localStorage.setItem("userId", userData.user._id);
 
-        toast.success("Login successful");
-
-        setTimeout(() => {
-          if (role === "admin") {
-            navigate("/admin");
-          } else {
-            navigate("/home");
-          }
-        }, 1500);
+        // Register for push notifications
+        registerPushNotifications(userData.user._id);
+        if (userData.user.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/home");
+        }
       } else {
-        toast.error("Wrong Details");
+        toast.error(userData.message || "Invalid credentials");
       }
     } catch (err) {
-      toast.error("Wrong Details");
+      toast.error("Connection error. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,31 +115,62 @@ function LoginForm() {
               <input
                 type="email"
                 placeholder="Email Address"
-                className={styles.loginInput}
+                className={`${styles.loginInput} ${errors.email ? styles.errorInput : ""}`}
                 name="email"
                 value={formData.email}
                 onChange={changeHandler}
                 required
+                disabled={loading}
               />
             </div>
+            {errors.email && (
+              <span className={styles.errorText}>{errors.email}</span>
+            )}
           </div>
           <div className={styles.inputGroup}>
             <div className={styles.inputWrapper}>
               <Lock className={styles.inputIcon} size={20} />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                className={styles.loginInput}
+                className={`${styles.loginInput} ${errors.password ? styles.errorInput : ""}`}
                 name="password"
                 value={formData.password}
                 onChange={changeHandler}
                 required
+                disabled={loading}
               />
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={() => setShowPassword(!showPassword)}
+                disabled={loading}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
             </div>
+            {errors.password && (
+              <span className={styles.errorText}>{errors.password}</span>
+            )}
           </div>
 
-          <button type="submit" className={styles.loginButton}>
-            <LogIn size={20} /> Log In
+          <div className={styles.forgotPasswordWrapper}>
+            <Link to="/forgot-password" className={styles.forgotPassword}>
+              Forgot Password?
+            </Link>
+          </div>
+
+          <button
+            type="submit"
+            className={styles.loginButton}
+            disabled={loading}
+          >
+            {loading ? (
+              <Loader2 className={styles.spinner} size={20} />
+            ) : (
+              <LogIn size={20} />
+            )}
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 

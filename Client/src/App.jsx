@@ -23,6 +23,8 @@ import { useLocation } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ScrollToTop from "./Components/Global/ScrollToTop/ScrollToTop";
+import ForgotPassword from "./Components/Local/ForgotPassword/ForgotPassword";
+import { registerPushNotifications } from "./utils/pushNotifications";
 
 const AppContent = () => {
   const [progress, setProgress] = useState(0);
@@ -31,6 +33,12 @@ const AppContent = () => {
   useEffect(() => {
     setProgress(30);
     setTimeout(() => setProgress(100), 500);
+
+    // Register push notifications if logged in
+    const token = localStorage.getItem("token");
+    if (token) {
+      registerPushNotifications();
+    }
   }, [location]);
 
   return (
@@ -53,6 +61,7 @@ const AppContent = () => {
         />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="/cart"
           element={
