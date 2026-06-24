@@ -15,6 +15,19 @@ import {
   CheckCircle,
   Truck,
 } from "lucide-react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+  Grid,
+  Divider,
+  Container,
+  InputAdornment,
+  Card,
+  CardContent,
+} from "@mui/material";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { BASE_URL } from "../../../utils/constant";
@@ -188,8 +201,8 @@ function OrderForm() {
 
   if (loading) {
     return (
-      <div className={styles.orderContainer}>
-        <div className={styles.container}>
+      <Box className={styles.orderContainer}>
+        <Container maxWidth="xl" className={styles.container}>
           <Skeleton height={40} width={250} style={{ marginBottom: "1rem" }} />
           <Skeleton
             height={20}
@@ -197,288 +210,340 @@ function OrderForm() {
             style={{ marginBottom: "2.5rem" }}
           />
 
-          <div className={styles.orderContent}>
-            <div className={styles.orderSummary}>
+          <Box className={styles.orderContent}>
+            <Box className={styles.orderSummary}>
               <Skeleton
                 height={28}
                 width="50%"
                 style={{ marginBottom: "2rem" }}
               />
-              <div className={styles.orderItems}>
+              <Box className={styles.orderItems}>
                 {[1, 2].map((i) => (
-                  <div
+                  <Box
                     key={i}
                     className={styles.orderItem}
                     style={{ border: "none" }}
                   >
                     <Skeleton width={80} height={80} borderRadius={15} />
-                    <div style={{ flex: 1, marginLeft: "1.5rem" }}>
+                    <Box style={{ flex: 1, marginLeft: "1.5rem" }}>
                       <Skeleton width="60%" height={20} />
                       <Skeleton
                         width="40%"
                         height={14}
                         style={{ marginTop: "0.8rem" }}
                       />
-                    </div>
-                  </div>
+                    </Box>
+                  </Box>
                 ))}
-              </div>
-            </div>
+              </Box>
+            </Box>
 
-            <div className={styles.checkoutForm}>
+            <Box className={styles.checkoutForm}>
               <Skeleton
                 height={30}
                 width="60%"
                 style={{ marginBottom: "2rem" }}
               />
               {[1, 2, 3].map((i) => (
-                <div key={i} style={{ marginBottom: "1.5rem" }}>
+                <Box key={i} style={{ marginBottom: "1.5rem" }}>
                   <Skeleton
                     width={100}
                     height={16}
                     style={{ marginBottom: "0.8rem" }}
                   />
                   <Skeleton height={45} borderRadius={10} />
-                </div>
+                </Box>
               ))}
               <Skeleton
                 height={60}
                 borderRadius={12}
                 style={{ marginTop: "2rem" }}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
     );
   }
 
   if (!orderItems || orderItems.length === 0) {
     return (
-      <div className={styles.orderContainer}>
-        <div className={styles.emptyCart}>
+      <Box className={styles.orderContainer}>
+        <Box className={styles.emptyCart} sx={{ textAlign: 'center', py: 10 }}>
           <ShoppingBag size={80} color="#ddd" strokeWidth={1} />
-          <h2>Your Cart is Empty</h2>
-          <p>Add some delicious pizzas to place an order!</p>
-          <button
-            className={styles.continueShopping}
+          <Typography variant="h4" sx={{ mt: 2, fontWeight: 700 }}>Your Cart is Empty</Typography>
+          <Typography variant="body1" color="textSecondary" sx={{ mb: 4 }}>Add some delicious pizzas to place an order!</Typography>
+          <Button
+            variant="contained"
+            startIcon={<ArrowLeft size={18} />}
             onClick={() => navigate("/home")}
+            sx={{
+              borderRadius: '50px',
+              px: 4,
+              py: 1.5,
+              background: 'linear-gradient(45deg, #ff6f61, #ff8e53)',
+            }}
           >
-            <ArrowLeft size={18} /> Continue Shopping
-          </button>
-        </div>
-      </div>
+             Continue Shopping
+          </Button>
+        </Box>
+      </Box>
     );
   }
 
   const totals = calculateOrderTotal();
 
   return (
-    <div className={styles.orderContainer}>
-      <div className={styles.container}>
-        <h1 className={styles.orderTitle}>Checkout</h1>
-        <p className={styles.orderSubtitle}>
+    <Box className={styles.orderContainer}>
+      <Container maxWidth="xl" className={styles.container}>
+        <Typography variant="h3" sx={{ fontWeight: 800, mb: 1 }}>Checkout</Typography>
+        <Typography variant="body1" color="textSecondary" sx={{ mb: 4 }}>
           {orderItems.length} item(s) in your order
-        </p>
+        </Typography>
 
-        <div className={styles.orderContent}>
-          <div className={styles.orderSummary}>
-            <h3>Order Summary</h3>
-            <div className={styles.orderItems}>
-              {orderItems.map((item) => (
-                <div key={item._id} className={styles.orderItem}>
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className={styles.itemImage}
-                  />
-                  <div className={styles.itemDetails}>
-                    <h4 className={styles.itemName}>
-                      {item.name}
-                      {item.size && (
-                        <span className={styles.sizeBadge}>
-                          {item.size.charAt(0).toUpperCase()}
-                        </span>
-                      )}
-                      {item.portion && (
-                        <span className={styles.portionBadge}>
-                          {item.portion}
-                        </span>
-                      )}
-                    </h4>
-                    <p className={styles.itemDescription}>{item.description}</p>
-                    <div className={styles.itemInfo}>
-                      <span className={styles.itemPrice}>Rs. {item.price}</span>
-                      <span className={styles.quantity}>
-                        Quantity: {item.quantity}
-                      </span>
-                    </div>
-                  </div>
-                  <div className={styles.itemTotal}>
-                    Rs. {(item.price * item.quantity).toFixed(2)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', md: 'row' }, 
+          gap: 4, 
+          mt: 4,
+          alignItems: 'flex-start'
+        }}>
+          {/* LEFT SIDE: Order Summary */}
+          <Box sx={{ 
+            width: { xs: '100%', md: '350px', lg: '400px' },
+            flexShrink: 0,
+            position: { md: 'sticky' },
+            top: { md: '100px' }
+          }}>
+            <Paper elevation={0} sx={{ p: 3, borderRadius: '25px', border: '1px solid #f0f0f0', bgcolor: 'white' }}>
+              <Typography variant="h6" sx={{ mb: 3, fontWeight: 700, color: '#333' }}>Order Summary</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {orderItems.map((item) => (
+                  <Box key={item._id} sx={{ display: 'flex', gap: 2, pb: 2, borderBottom: '1px solid #f9f9f9' }}>
+                    <Box sx={{ width: 60, height: 60, borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    </Box>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 700, lineHeight: 1.2 }}>{item.name}</Typography>
+                      <Typography variant="caption" color="textSecondary" sx={{ mb: 1, display: 'block' }}>
+                        Qty: {item.quantity} × Rs. {item.price}
+                      </Typography>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#ff6f61' }}>
+                        Rs. {(item.price * item.quantity).toFixed(2)}
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
 
-          <div className={styles.checkoutForm}>
-            <form onSubmit={handleSubmit}>
-              <h3 className={styles.sectionHeader}>
-                <MapPin size={20} /> Delivery Information
-              </h3>
+              <Box sx={{ mt: 3, p: 2, bgcolor: '#fffaf0', borderRadius: '15px' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                   <Typography variant="body2" color="textSecondary">Subtotal</Typography>
+                   <Typography variant="body2" sx={{ fontWeight: 600 }}>Rs. {totals.itemsTotal}</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                   <Typography variant="body2" color="textSecondary">Delivery</Typography>
+                   <Typography variant="body2" sx={{ fontWeight: 600, color: totals.isFreeDelivery ? '#4caf50' : 'inherit' }}>
+                     {totals.isFreeDelivery ? 'FREE' : `Rs. ${totals.deliveryCharge}`}
+                   </Typography>
+                </Box>
+                <Divider sx={{ my: 1.5, borderStyle: 'dashed' }} />
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                   <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Total</Typography>
+                   <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#ff6f61' }}>Rs. {totals.grandTotal}</Typography>
+                </Box>
+              </Box>
+            </Paper>
+          </Box>
 
-              <div className={styles.formGroup}>
-                <label>
-                  <User size={16} /> Full Name *
-                </label>
-                <input
-                  type="text"
-                  name="customerName"
-                  value={formData.customerName}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter your full name"
-                />
-              </div>
+          {/* RIGHT SIDE: Delivery Info Form */}
+          <Box sx={{ flex: 1, width: '100%' }}>
+            <Paper elevation={0} sx={{ p: { xs: 3, md: 5 }, borderRadius: '25px', border: '1px solid #f0f0f0', bgcolor: 'white' }}>
+              <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                <Typography variant="h5" sx={{ mb: 4, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                  <MapPin size={24} color="#ff6f61" /> Delivery Information
+                </Typography>
 
-              <div className={styles.formGroup}>
-                <label>
-                  <Phone size={16} /> Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter your phone number"
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>
-                  <Mail size={16} /> Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>
-                  <MapPin size={16} /> Delivery Address *
-                </label>
-                <textarea
-                  name="deliveryAddress"
-                  value={formData.deliveryAddress}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter complete delivery address"
-                  rows="3"
-                />
-              </div>
-
-              <div className={styles.formRow}>
-                <div className={styles.formGroup}>
-                  <label>City *</label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
+                <Box sx={{ 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: 3, // Spacing between fields
+                  '& > *': { 
+                    width: { xs: '100%', md: 'calc(50% - 12px)' } // Force two per row on desktop
+                  } 
+                }}>
+                  <TextField
+                    label="Full Name"
+                    name="customerName"
+                    value={formData.customerName}
                     onChange={handleInputChange}
                     required
-                    placeholder="City"
+                    variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <User size={18} color="#ccc" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
                   />
-                </div>
-                <div className={styles.formGroup}>
-                  <label>Pincode *</label>
-                  <input
-                    type="text"
-                    name="pincode"
-                    value={formData.pincode}
+
+                  <TextField
+                    label="Phone Number"
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    placeholder="Pincode"
+                    variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Phone size={18} color="#ccc" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
                   />
-                </div>
-              </div>
 
-              <div className={styles.formGroup}>
-                <label>
-                  <CreditCard size={16} /> Payment Method
-                </label>
-                <div className={styles.codBadge}>
-                  <Truck size={16} /> Cash on Delivery
-                </div>
-              </div>
+                  <TextField
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Mail size={18} color="#ccc" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
+                  />
 
-              <div className={styles.formGroup}>
-                <label>Special Instructions</label>
-                <textarea
-                  name="specialInstructions"
-                  value={formData.specialInstructions}
-                  onChange={handleInputChange}
-                  placeholder="Any special instructions for delivery..."
-                  rows="2"
-                />
-              </div>
+                  <TextField
+                     label="City"
+                     name="city"
+                     value={formData.city}
+                     onChange={handleInputChange}
+                     required
+                     variant="outlined"
+                     sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
+                  />
 
-              <div className={styles.orderTotal}>
-                <h4>Order Total</h4>
-                <div className={styles.totalRow}>
-                  <span>Items ({orderItems.length})</span>
-                  <span>Rs. {totals.itemsTotal}</span>
-                </div>
-                <div className={styles.totalRow}>
-                  <span>
-                    Delivery{" "}
-                    {totals.isFreeDelivery && (
-                      <span className={styles.freeBadge}>FREE</span>
-                    )}
-                  </span>
-                  <span
-                    style={
-                      totals.isFreeDelivery
-                        ? { textDecoration: "line-through", color: "#999" }
-                        : {}
-                    }
-                  >
-                    {totals.isFreeDelivery
-                      ? "Rs. 40"
-                      : `Rs. ${totals.deliveryCharge}`}
-                  </span>
-                </div>
-                <div className={styles.totalRow}>
-                  <span>Packaging (1%)</span>
-                  <span>Rs. {totals.packagingCharge}</span>
-                </div>
-                <div className={styles.grandTotal}>
-                  <span>Total:</span>
-                  <span>Rs. {totals.grandTotal}</span>
-                </div>
-              </div>
+                  <TextField
+                     label="Pincode"
+                     name="pincode"
+                     value={formData.pincode}
+                     onChange={handleInputChange}
+                     required
+                     variant="outlined"
+                     sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
+                  />
 
-              <button type="submit" className={styles.placeOrderBtn}>
-                <CheckCircle size={20} /> Place Order - Rs. {totals.grandTotal}
-              </button>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                     <Typography variant="subtitle2" sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <CreditCard size={18} color="#ff6f61" /> Payment Method
+                     </Typography>
+                     <Box sx={{ display: 'inline-flex', alignSelf: 'flex-start', alignItems: 'center', gap: 1, px: 2, py: 1, borderRadius: '50px', backgroundColor: '#f5f5f5', color: '#666', border: '1px solid #eee' }}>
+                        <Truck size={16} /> Cash on Delivery
+                     </Box>
+                  </Box>
 
-              <button
-                type="button"
-                className={styles.backButton}
-                onClick={() => navigate("/cart")}
-              >
-                <ArrowLeft size={18} /> Back to Cart
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+                  <TextField
+                    fullWidth
+                    label="Delivery Address"
+                    name="deliveryAddress"
+                    multiline
+                    rows={2}
+                    value={formData.deliveryAddress}
+                    onChange={handleInputChange}
+                    required
+                    variant="outlined"
+                    sx={{ width: '100% !important', '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
+                  />
+
+                  <TextField
+                    fullWidth
+                    label="Special Instructions"
+                    name="specialInstructions"
+                    multiline
+                    rows={2}
+                    value={formData.specialInstructions}
+                    onChange={handleInputChange}
+                    placeholder="Any special instructions for delivery..."
+                    variant="outlined"
+                    sx={{ width: '100% !important', '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
+                  />
+                </Box>
+
+                <Box sx={{ mt: 5, p: 3, bgcolor: '#fafafa', borderRadius: '20px', border: '1px solid #f0f0f0' }}>
+                  <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>Order Total</Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                     <Typography color="textSecondary">Items ({orderItems.length})</Typography>
+                     <Typography sx={{ fontWeight: 600 }}>Rs. {totals.itemsTotal}</Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                     <Typography color="textSecondary">
+                       Delivery {totals.isFreeDelivery && <span style={{ color: '#2ecc71', fontWeight: 800, marginLeft: 8 }}>FREE</span>}
+                     </Typography>
+                     <Typography sx={{ fontWeight: 600, color: totals.isFreeDelivery ? '#aaa' : 'black', textDecoration: totals.isFreeDelivery ? 'line-through' : 'none' }}>
+                        Rs. 40
+                     </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                     <Typography color="textSecondary">Packaging (1%)</Typography>
+                     <Typography sx={{ fontWeight: 600 }}>Rs. {totals.packagingCharge}</Typography>
+                  </Box>
+                  <Divider sx={{ my: 2 }} />
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                     <Typography variant="h5" sx={{ fontWeight: 800 }}>Total</Typography>
+                     <Typography variant="h4" color="primary" sx={{ fontWeight: 900 }}>Rs. {totals.grandTotal}</Typography>
+                  </Box>
+                </Box>
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  startIcon={<CheckCircle size={24} />}
+                  sx={{
+                    mt: 4,
+                    height: '65px',
+                    borderRadius: '18px',
+                    fontSize: '1.2rem',
+                    fontWeight: 700,
+                    textTransform: 'none',
+                    background: 'linear-gradient(45deg, #ff6f61, #ff8e53)',
+                    boxShadow: '0 10px 25px rgba(255,111,97,0.3)',
+                  }}
+                >
+                   Place Order - Rs. {totals.grandTotal}
+                </Button>
+
+                <Button
+                  fullWidth
+                  variant="text"
+                  startIcon={<ArrowLeft size={18} />}
+                  onClick={() => navigate("/cart")}
+                  sx={{ mt: 2, color: '#666', fontWeight: 600, textTransform: 'none' }}
+                >
+                  Back to Cart
+                </Button>
+              </form>
+            </Paper>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 }
 

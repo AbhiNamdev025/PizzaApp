@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { Mail, Lock, LogIn, Pizza, Loader2, Eye, EyeOff } from "lucide-react";
+import {
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  Box,
+  Typography,
+  Paper,
+  CircularProgress,
+  Container,
+} from "@mui/material";
 import styles from "./loginform.module.css";
 import { BASE_URL } from "../../../utils/constant";
 import { registerPushNotifications } from "../../../utils/pushNotifications";
@@ -96,92 +107,135 @@ function LoginForm() {
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginForm}>
-        <div className={styles.loginHeader}>
-          <div className={styles.iconCircle}>
+    <Box className={styles.loginContainer}>
+      <Paper elevation={0} className={styles.loginForm}>
+        <Box className={styles.loginHeader}>
+          <Box className={styles.iconCircle}>
             <Pizza size={40} className={styles.headerIcon} />
-          </div>
-          <h2 className={styles.loginTitle}>Login to Pizzaiolo</h2>
-          <p className={styles.loginSubtitle}>
+          </Box>
+          <Typography variant="h2" className={styles.loginTitle}>
+            Login to Pizzaiolo
+          </Typography>
+          <Typography className={styles.loginSubtitle}>
             Welcome back! Sign in to continue your pizza journey.
-          </p>
-        </div>
+          </Typography>
+        </Box>
 
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
-            <div className={styles.inputWrapper}>
-              <Mail className={styles.inputIcon} size={20} />
-              <input
-                type="email"
-                placeholder="Email Address"
-                className={`${styles.loginInput} ${errors.email ? styles.errorInput : ""}`}
-                name="email"
-                value={formData.email}
-                onChange={changeHandler}
-                required
-                disabled={loading}
-              />
-            </div>
-            {errors.email && (
-              <span className={styles.errorText}>{errors.email}</span>
-            )}
-          </div>
-          <div className={styles.inputGroup}>
-            <div className={styles.inputWrapper}>
-              <Lock className={styles.inputIcon} size={20} />
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                className={`${styles.loginInput} ${errors.password ? styles.errorInput : ""}`}
-                name="password"
-                value={formData.password}
-                onChange={changeHandler}
-                required
-                disabled={loading}
-              />
-              <button
-                type="button"
-                className={styles.eyeBtn}
-                onClick={() => setShowPassword(!showPassword)}
-                disabled={loading}
-              >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
-            </div>
-            {errors.password && (
-              <span className={styles.errorText}>{errors.password}</span>
-            )}
-          </div>
+        <form onSubmit={handleSubmit}>
+          <Box sx={{ mb: 2 }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Email Address"
+              name="email"
+              value={formData.email}
+              onChange={changeHandler}
+              error={!!errors.email}
+              helperText={errors.email}
+              disabled={loading}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Mail size={20} color="#ff6f61" />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                   borderRadius: '12px',
+                   height: '55px',
+                   backgroundColor: '#fafafa',
+                   '& fieldset': { borderColor: '#f0f0f0' },
+                   '&:hover fieldset': { borderColor: '#ff6f61' },
+                   '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                }
+              }}
+            />
+          </Box>
 
-          <div className={styles.forgotPasswordWrapper}>
+          <Box sx={{ mb: 1 }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              name="password"
+              value={formData.password}
+              onChange={changeHandler}
+              error={!!errors.password}
+              helperText={errors.password}
+              disabled={loading}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock size={20} color="#ff6f61" />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                      disabled={loading}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                   borderRadius: '12px',
+                   height: '55px',
+                   backgroundColor: '#fafafa',
+                   '& fieldset': { borderColor: '#f0f0f0' },
+                   '&:hover fieldset': { borderColor: '#ff6f61' },
+                   '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                }
+              }}
+            />
+          </Box>
+
+          <Box className={styles.forgotPasswordWrapper} sx={{ mb: 3 }}>
             <Link to="/forgot-password" className={styles.forgotPassword}>
               Forgot Password?
             </Link>
-          </div>
+          </Box>
 
-          <button
+          <Button
             type="submit"
-            className={styles.loginButton}
+            fullWidth
+            variant="contained"
             disabled={loading}
+            className={styles.loginButton}
+            startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <LogIn size={20} />}
+            sx={{
+              height: '55px',
+              borderRadius: '12px',
+              fontSize: '1.1rem',
+              fontWeight: 600,
+              textTransform: 'none',
+              mb: 4,
+              background: 'linear-gradient(45deg, #ff6f61, #ff8e53)',
+              boxShadow: '0 4px 15px rgba(255, 111, 97, 0.3)',
+              '&:hover': {
+                 transform: 'translateY(-2px)',
+                 boxShadow: '0 6px 20px rgba(255, 111, 97, 0.4)',
+              }
+            }}
           >
-            {loading ? (
-              <Loader2 className={styles.spinner} size={20} />
-            ) : (
-              <LogIn size={20} />
-            )}
             {loading ? "Logging in..." : "Log In"}
-          </button>
+          </Button>
         </form>
 
-        <p className={styles.switchText}>
+        <Typography className={styles.switchText} sx={{ mt: 2 }}>
           Don't have an account?{" "}
           <Link to="/signup" className={styles.switchLink}>
             Create one here
           </Link>
-        </p>
-      </div>
-    </div>
+        </Typography>
+      </Paper>
+    </Box>
   );
 }
 

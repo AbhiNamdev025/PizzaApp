@@ -11,6 +11,18 @@ import {
   Eye,
   EyeOff,
 } from "lucide-react";
+import {
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  Box,
+  Typography,
+  Paper,
+  CircularProgress,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import styles from "./signup.module.css";
 import { BASE_URL } from "../../../utils/constant";
 
@@ -100,119 +112,171 @@ function SignUpForm() {
   };
 
   return (
-    <>
-      <div className={styles.signupContainer}>
-        <div className={styles.signupForm}>
-          <div className={styles.signupHeader}>
-            <div className={styles.iconCircle}>
-              <Pizza size={40} className={styles.headerIcon} />
-            </div>
-            <h2 className={styles.signupTitle}>Join Pizzaiolo</h2>
-            <p className={styles.signupSubtitle}>
-              Create your account and start your pizza adventure
-            </p>
-          </div>
+    <Box className={styles.signupContainer}>
+      <Paper elevation={0} className={styles.signupForm}>
+        <Box className={styles.signupHeader}>
+          <Box className={styles.iconCircle}>
+            <Pizza size={40} className={styles.headerIcon} />
+          </Box>
+          <Typography variant="h2" className={styles.signupTitle}>
+            Join Pizzaiolo
+          </Typography>
+          <Typography className={styles.signupSubtitle}>
+            Create your account and start your pizza adventure
+          </Typography>
+        </Box>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
-              <div className={styles.inputWrapper}>
-                <User className={styles.inputIcon} size={20} />
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className={`${styles.signupInput} ${errors.name ? styles.errorInput : ""}`}
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  disabled={loading}
-                />
-              </div>
-              {errors.name && (
-                <span className={styles.errorText}>{errors.name}</span>
-              )}
-            </div>
-            <div className={styles.inputGroup}>
-              <div className={styles.inputWrapper}>
-                <Mail className={styles.inputIcon} size={20} />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className={`${styles.signupInput} ${errors.email ? styles.errorInput : ""}`}
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  disabled={loading}
-                />
-              </div>
-              {errors.email && (
-                <span className={styles.errorText}>{errors.email}</span>
-              )}
-            </div>
-            <div className={styles.inputGroup}>
-              <div className={styles.inputWrapper}>
-                <Lock className={styles.inputIcon} size={20} />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  className={`${styles.signupInput} ${errors.password ? styles.errorInput : ""}`}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  disabled={loading}
-                />
-                <button
-                  type="button"
-                  className={styles.eyeBtn}
-                  onClick={() => setShowPassword(!showPassword)}
-                  disabled={loading}
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-              {errors.password && (
-                <span className={styles.errorText}>{errors.password}</span>
-              )}
-            </div>
-
-            <div className={styles.terms}>
-              <label className={styles.termsLabel}>
-                <input type="checkbox" required />I agree to the{" "}
-                <a href="#terms" className={styles.termsLink}>
-                  Terms of Service
-                </a>{" "}
-                and{" "}
-                <a href="#privacy" className={styles.termsLink}>
-                  Privacy Policy
-                </a>
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              className={styles.signupButton}
+        <form onSubmit={handleSubmit}>
+          <Box sx={{ mb: 2 }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Full Name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              error={!!errors.name}
+              helperText={errors.name}
               disabled={loading}
-            >
-              {loading ? (
-                <Loader2 className={styles.spinner} size={20} />
-              ) : (
-                <UserPlus size={20} />
-              )}
-              {loading ? "Creating Account..." : "Create Account"}
-            </button>
-          </form>
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <User size={20} color="#ff6f61" />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                   borderRadius: '12px',
+                   height: '55px',
+                   backgroundColor: '#fafafa',
+                   '& fieldset': { borderColor: '#f0f0f0' },
+                   '&:hover fieldset': { borderColor: '#ff6f61' },
+                   '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                }
+              }}
+            />
+          </Box>
 
-          <p className={styles.switchText}>
-            Already have an account?{" "}
-            <Link to="/" className={styles.switchLink}>
-              Log In here
-            </Link>
-          </p>
-        </div>
-      </div>
-    </>
+          <Box sx={{ mb: 2 }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Email Address"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              error={!!errors.email}
+              helperText={errors.email}
+              disabled={loading}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Mail size={20} color="#ff6f61" />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                   borderRadius: '12px',
+                   height: '55px',
+                   backgroundColor: '#fafafa',
+                   '& fieldset': { borderColor: '#f0f0f0' },
+                   '&:hover fieldset': { borderColor: '#ff6f61' },
+                   '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                }
+              }}
+            />
+          </Box>
+
+          <Box sx={{ mb: 2 }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              error={!!errors.password}
+              helperText={errors.password}
+              disabled={loading}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock size={20} color="#ff6f61" />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                      disabled={loading}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                   borderRadius: '12px',
+                   height: '55px',
+                   backgroundColor: '#fafafa',
+                   '& fieldset': { borderColor: '#f0f0f0' },
+                   '&:hover fieldset': { borderColor: '#ff6f61' },
+                   '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                }
+              }}
+            />
+          </Box>
+
+          <Box sx={{ mb: 3, display: 'flex', alignItems: 'flex-start', gap: 1 }}>
+            <Checkbox 
+              size="small"
+              sx={{ p: 0, mt: 0.3, color: '#ff6f61', '&.Mui-checked': { color: '#ff6f61' } }} 
+            />
+            <Typography variant="body2" sx={{ color: '#666', lineHeight: 1.5 }}>
+              I agree to the{" "}
+              <Link to="/terms" style={{ color: '#ff6f61', textDecoration: 'none', fontWeight: 600 }}>Terms of Service</Link>{" "}
+              and{" "}
+              <Link to="/privacy" style={{ color: '#ff6f61', textDecoration: 'none', fontWeight: 600 }}>Privacy Policy</Link>
+            </Typography>
+          </Box>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={loading}
+            startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <UserPlus size={20} />}
+            sx={{
+              height: '55px',
+              borderRadius: '12px',
+              fontSize: '1.1rem',
+              fontWeight: 600,
+              textTransform: 'none',
+              background: 'linear-gradient(45deg, #ff6f61, #ff8e53)',
+              boxShadow: '0 4px 15px rgba(255, 111, 97, 0.3)',
+              '&:hover': {
+                 transform: 'translateY(-2px)',
+                 boxShadow: '0 6px 20px rgba(255, 111, 97, 0.4)',
+              }
+            }}
+          >
+            {loading ? "Creating Account..." : "Create Account"}
+          </Button>
+        </form>
+
+        <Typography sx={{ textAlign: 'center', mt: 3, color: '#666' }}>
+          Already have an account?{" "}
+          <Link to="/" style={{ color: '#ff6f61', textDecoration: 'none', fontWeight: 600 }}>
+            Log In here
+          </Link>
+        </Typography>
+      </Paper>
+    </Box>
   );
 }
 

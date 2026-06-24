@@ -19,6 +19,20 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import {
+  Button,
+  IconButton,
+  Typography,
+  Box,
+  TextField,
+  Paper,
+  Rating,
+  Divider,
+  Container,
+  Avatar,
+  Tooltip,
+  CircularProgress,
+} from "@mui/material";
 import styles from "./productDetails.module.css";
 import { BASE_URL } from "../../utils/constant";
 import Header from "../../Components/Global/Header/Header";
@@ -177,9 +191,9 @@ function ProductDetails() {
     return (
       <>
         <Header />
-        <div className={styles.container}>
-          <div className={styles.productWrapper}>
-            <div className={styles.imageSection}>
+        <Box className={styles.container}>
+          <Box className={styles.productWrapper}>
+            <Box className={styles.imageSection}>
               <Skeleton height={400} borderRadius={20} />
               <div className={styles.thumbnails} style={{ marginTop: "1rem" }}>
                 <Skeleton
@@ -190,8 +204,8 @@ function ProductDetails() {
                   containerClassName={styles.thumbnails}
                 />
               </div>
-            </div>
-            <div className={styles.infoSection}>
+            </Box>
+            <Box className={styles.infoSection}>
               <Skeleton
                 height={40}
                 width="80%"
@@ -206,9 +220,9 @@ function ProductDetails() {
               <div style={{ marginTop: "2rem" }}>
                 <Skeleton height={50} width="100%" borderRadius={12} />
               </div>
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Box>
+        </Box>
         <Footer />
       </>
     );
@@ -236,24 +250,23 @@ function ProductDetails() {
   return (
     <>
       <Header />
-      <div className={styles.container}>
-        <motion.button
-          className={styles.backBtn}
+      <Box className={styles.container}>
+        <Button
+          startIcon={<ArrowLeft size={18} />}
           onClick={() => navigate(-1)}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          sx={{ mb: 3, textTransform: 'none', color: '#666' }}
         >
-          <ArrowLeft size={18} /> Back
-        </motion.button>
+          Back
+        </Button>
 
-        <div className={styles.productWrapper}>
+        <Box className={styles.productWrapper}>
           <motion.div
             className={styles.imageSection}
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className={styles.imageContainer}>
+            <Paper elevation={0} className={styles.imageContainer} sx={{ position: 'relative', overflow: 'hidden' }}>
               <motion.img
                 src={allImages[activeImage] || product.image}
                 alt={product.name}
@@ -262,88 +275,121 @@ function ProductDetails() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               />
-              <motion.button
+              <IconButton
                 className={`${styles.likeBtn} ${isLiked ? styles.liked : ""}`}
                 onClick={() => setIsLiked(!isLiked)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                sx={{
+                  position: 'absolute',
+                  top: '15px',
+                  right: '15px',
+                  backgroundColor: 'white',
+                  '&:hover': { backgroundColor: '#f5f5f5' }
+                }}
               >
-                <Heart size={20} fill={isLiked ? "#e74c3c" : "none"} />
-              </motion.button>
+                <Heart size={20} fill={isLiked ? "#e74c3c" : "none"} color="#e74c3c" />
+              </IconButton>
               {product.isPremium && (
-                <div className={styles.premiumBadge}>
+                <Box className={styles.premiumBadge}>
                   <Star size={14} fill="#333" /> Premium
-                </div>
+                </Box>
               )}
-            </div>
+            </Paper>
 
             {allImages.length > 1 && (
-              <div className={styles.thumbnails}>
+              <Box className={styles.thumbnails}>
                 {allImages.map((img, index) => (
-                  <button
+                  <Box
                     key={index}
                     className={`${styles.thumbnail} ${activeImage === index ? styles.active : ""}`}
                     onClick={() => setActiveImage(index)}
+                    component="button"
+                    sx={{
+                       border: activeImage === index ? '2px solid #ff6f61' : '2px solid transparent',
+                       borderRadius: '12px',
+                       overflow: 'hidden',
+                       p: 0,
+                       cursor: 'pointer'
+                    }}
                   >
                     <img src={img} alt={`View ${index + 1}`} />
-                  </button>
+                  </Box>
                 ))}
-              </div>
+              </Box>
             )}
 
             <div className={styles.imageSelectionArea}>
               {product.hasSizes && product.sizes && (
-                <div className={styles.selectionSection}>
-                  <h3 className={styles.selectionTitle}>Select Size</h3>
-                  <div className={styles.sizeSelector}>
+                <Box className={styles.selectionSection}>
+                  <Typography variant="h6" className={styles.selectionTitle}>Select Size</Typography>
+                  <Box className={styles.sizeSelector}>
                     {["small", "medium", "large"].map(
                       (size) =>
                         product.sizes[size] > 0 && (
-                          <button
+                          <Button
                             key={size}
-                            className={`${styles.sizeBtn} ${selectedSize === size ? styles.sizeActive : ""}`}
+                            variant="outlined"
                             onClick={() => setSelectedSize(size)}
+                            sx={{
+                               flex: 1,
+                               flexDirection: 'column',
+                               height: 'auto',
+                               py: 1.5,
+                               borderRadius: '12px',
+                               borderColor: selectedSize === size ? '#ff6f61' : '#f0f0f0',
+                               color: selectedSize === size ? '#ff6f61' : '#666',
+                               backgroundColor: selectedSize === size ? 'rgba(255,111,97,0.05)' : 'transparent',
+                               '&:hover': {
+                                  borderColor: '#ff6f61',
+                                  backgroundColor: 'rgba(255,111,97,0.1)'
+                               }
+                            }}
                           >
-                            <span className={styles.sizeLabel}>
-                              {size === "small"
-                                ? "Small"
-                                : size === "medium"
-                                  ? "Medium"
-                                  : "Large"}
-                            </span>
-                            <span className={styles.sizePrice}>
-                              Rs. {product.sizes[size]}
-                            </span>
-                          </button>
+                            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                              {size === "small" ? "Small" : size === "medium" ? "Medium" : "Large"}
+                            </Typography>
+                            <Typography variant="caption">Rs. {product.sizes[size]}</Typography>
+                          </Button>
                         ),
                     )}
-                  </div>
-                </div>
+                  </Box>
+                </Box>
               )}
 
               {product.hasPortions && product.portions && (
-                <div className={styles.selectionSection}>
-                  <div className={styles.selectionTitle}>Select Portion</div>
-                  <div className={styles.portionSelector}>
+                <Box className={styles.selectionSection}>
+                  <Typography variant="h6" className={styles.selectionTitle}>Select Portion</Typography>
+                  <Box className={styles.portionSelector}>
                     {["half", "full"].map(
                       (portion) =>
                         product.portions[portion] > 0 && (
-                          <button
+                          <Button
                             key={portion}
-                            className={`${styles.portionBtn} ${selectedPortion === portion ? styles.portionActive : ""}`}
+                            variant="outlined"
                             onClick={() => setSelectedPortion(portion)}
+                            sx={{
+                               flex: 1,
+                               flexDirection: 'column',
+                               height: 'auto',
+                               py: 1.5,
+                               borderRadius: '12px',
+                               borderColor: selectedPortion === portion ? '#ff6f61' : '#f0f0f0',
+                               color: selectedPortion === portion ? '#ff6f61' : '#666',
+                               backgroundColor: selectedPortion === portion ? 'rgba(255,111,97,0.05)' : 'transparent',
+                               '&:hover': {
+                                  borderColor: '#ff6f61',
+                                  backgroundColor: 'rgba(255,111,97,0.1)'
+                               }
+                            }}
                           >
-                            <span className={styles.portionLabel}>
-                              {portion === "half" ? "Half" : "Full"}
-                            </span>
-                            <span className={styles.portionPrice}>
-                              Rs. {product.portions[portion]}
-                            </span>
-                          </button>
+                            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                {portion === "half" ? "Half" : "Full"}
+                            </Typography>
+                            <Typography variant="caption">Rs. {product.portions[portion]}</Typography>
+                          </Button>
                         ),
                     )}
-                  </div>
-                </div>
+                  </Box>
+                </Box>
               )}
             </div>
           </motion.div>
@@ -354,178 +400,153 @@ function ProductDetails() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h1 className={styles.productName}>{product.name}</h1>
+            <Typography variant="h1" className={styles.productName}>{product.name}</Typography>
 
-            <div className={styles.ratingRow}>
-              <div className={styles.stars}>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    size={20}
-                    className={
-                      star <= Math.round(totalRating)
-                        ? styles.starFilled
-                        : styles.starEmpty
-                    }
-                    fill={star <= Math.round(totalRating) ? "#ffc107" : "none"}
-                  />
-                ))}
-              </div>
-              <span className={styles.ratingValue}>
-                {totalRating > 0 ? totalRating : "No ratings"}
-              </span>
-              <span className={styles.reviewCount}>
-                {reviewLinksCount} reviews
-              </span>
-            </div>
+            <Box className={styles.ratingRow} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <Rating value={totalRating} precision={0.5} readOnly size="medium" />
+              <Typography variant="body2" sx={{ ml: 1, color: '#666' }}>
+                ({reviewLinksCount} reviews)
+              </Typography>
+            </Box>
 
-            <p className={styles.description}>{product.description}</p>
+            <Typography variant="body1" className={styles.description} sx={{ mb: 3 }}>{product.description}</Typography>
 
-            <div className={styles.metaInfo}>
-              <div className={styles.metaItem}>
-                <Clock size={16} />
-                <span>20-30 mins delivery</span>
-              </div>
-              <div className={styles.metaItem}>
-                <Truck size={16} />
-                <span>Free delivery over Rs. 500</span>
-              </div>
-              <div className={styles.metaItem}>
-                <Shield size={16} />
-                <span>Quality guaranteed</span>
-              </div>
-            </div>
+            <Box className={styles.metaInfo}>
+              <Box className={styles.metaItem} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Clock size={16} style={{ marginRight: '8px' }} />
+                <Typography variant="body2">20-30 mins delivery</Typography>
+              </Box>
+              <Box className={styles.metaItem} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Truck size={16} style={{ marginRight: '8px' }} />
+                <Typography variant="body2">Free delivery over Rs. 500</Typography>
+              </Box>
+              <Box className={styles.metaItem} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Shield size={16} style={{ marginRight: '8px' }} />
+                <Typography variant="body2">Quality guaranteed</Typography>
+              </Box>
+            </Box>
 
-            <div className={styles.priceSection}>
-              <span className={styles.price}>Rs. {currentPrice}</span>
+            <Box className={styles.priceSection} sx={{ my: 3 }}>
+              <Typography variant="h4" color="primary" sx={{ fontWeight: 700 }}>Rs. {currentPrice}</Typography>
               {discountAmount > 0 && (
-                <>
-                  <span className={styles.originalPrice}>Rs. {basePrice}</span>
-                  <span className={styles.discount}>{discountAmount}% OFF</span>
-                </>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="body1" sx={{ textDecoration: 'line-through', color: '#999' }}>Rs. {basePrice}</Typography>
+                  <Typography variant="body2" color="error" sx={{ fontWeight: 600 }}>{discountAmount}% OFF</Typography>
+                </Box>
               )}
-            </div>
+            </Box>
 
-            <div className={styles.quantitySection}>
-              <span>Quantity:</span>
-              <div className={styles.quantityControls}>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+            <Box className={styles.quantitySection} sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+              <Typography sx={{ mr: 2, fontWeight: 600 }}>Quantity:</Typography>
+              <Box className={styles.quantityControls} sx={{ display: 'flex', alignItems: 'center', border: '1px solid #f0f0f0', borderRadius: '50px', p: 0.5 }}>
+                <IconButton
+                  size="small"
                   onClick={() => handleQuantityChange("decrease")}
-                  className={styles.qtyBtn}
                   disabled={quantity <= 1}
+                  sx={{ backgroundColor: '#f5f5f5' }}
                 >
-                  <Minus size={18} />
-                </motion.button>
-                <span className={styles.qtyValue}>{quantity}</span>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  <Minus size={16} />
+                </IconButton>
+                <Typography sx={{ mx: 2, minWidth: '20px', textAlign: 'center', fontWeight: 600 }}>{quantity}</Typography>
+                <IconButton
+                  size="small"
                   onClick={() => handleQuantityChange("increase")}
-                  className={styles.qtyBtn}
+                  sx={{ backgroundColor: '#f5f5f5' }}
                 >
-                  <Plus size={18} />
-                </motion.button>
-              </div>
-            </div>
+                  <Plus size={16} />
+                </IconButton>
+              </Box>
+            </Box>
 
-            <div className={styles.totalPrice}>
-              <span>Total:</span>
-              <span className={styles.totalAmount}>
-                Rs. {currentPrice * quantity}
-              </span>
-            </div>
+            <Box className={styles.totalPrice} sx={{ mb: 4 }}>
+              <Typography variant="h6">Total: <span style={{ color: '#ff6f61', fontWeight: 700 }}>Rs. {currentPrice * quantity}</span></Typography>
+            </Box>
 
-            <motion.button
-              className={styles.addToCartBtn}
+            <Button
+              fullWidth
+              variant="contained"
+              size="large"
+              startIcon={<ShoppingCart size={22} />}
               onClick={addToCart}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              sx={{
+                 height: '60px',
+                 borderRadius: '15px',
+                 fontSize: '1.2rem',
+                 background: 'linear-gradient(45deg, #ff6f61, #ff8e53)',
+                 boxShadow: '0 8px 20px rgba(255,111,97,0.3)',
+                 mb: 4
+              }}
             >
-              <ShoppingCart size={20} /> Add to Cart
-            </motion.button>
+              Add to Cart
+            </Button>
 
-            <div className={styles.features}>
-              <div className={styles.feature}>
+            <Divider sx={{ mb: 4 }} />
+
+            <Box className={styles.features} sx={{ display: 'flex', justifyContent: 'space-around' }}>
+              <Box className={styles.feature} sx={{ textAlign: 'center' }}>
                 <Clock size={24} />
-                <p>Fresh & Hot</p>
-              </div>
-              <div className={styles.feature}>
+                <Typography variant="caption" display="block">Fresh & Hot</Typography>
+              </Box>
+              <Box className={styles.feature} sx={{ textAlign: 'center' }}>
                 <Truck size={24} />
-                <p>Fast Delivery</p>
-              </div>
-              <div className={styles.feature}>
+                <Typography variant="caption" display="block">Fast Delivery</Typography>
+              </Box>
+              <Box className={styles.feature} sx={{ textAlign: 'center' }}>
                 <Shield size={24} />
-                <p>Best Quality</p>
-              </div>
-            </div>
+                <Typography variant="caption" display="block">Best Quality</Typography>
+              </Box>
+            </Box>
           </motion.div>
-        </div>
+        </Box>
 
-        <motion.div
-          className={styles.addReviewSection}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <h2>Rate this Product</h2>
-          <div className={styles.ratingInput}>
-            <div className={styles.starInput}>
-              {[1, 2, 3, 4, 5].map((star) => (
-                <motion.button
-                  key={star}
-                  className={styles.starBtn}
-                  onMouseEnter={() => setHoverRating(star)}
-                  onMouseLeave={() => setHoverRating(0)}
-                  onClick={() => setUserRating(star)}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Star
-                    size={32}
-                    fill={
-                      (hoverRating || userRating) >= star ? "#ffc107" : "none"
-                    }
-                    stroke={
-                      (hoverRating || userRating) >= star ? "#ffc107" : "#ddd"
-                    }
-                  />
-                </motion.button>
-              ))}
-            </div>
-            <span className={styles.selectedRating}>
-              {userRating > 0
-                ? `${userRating} Star${userRating > 1 ? "s" : ""}`
-                : "Select rating"}
-            </span>
-          </div>
-          <textarea
-            className={styles.reviewInput}
-            placeholder="Write your review (optional)..."
-            value={reviewText}
-            onChange={(e) => setReviewText(e.target.value)}
-            rows={3}
+        <Paper elevation={0} className={styles.addReviewSection} sx={{ mt: 6, p: 4, borderRadius: '20px', border: '1px solid #f0f0f0' }}>
+          <Typography variant="h5" sx={{ mb: 3, fontWeight: 700 }}>Rate this Product</Typography>
+          <Box className={styles.ratingInput} sx={{ mb: 3 }}>
+            <Rating
+              value={userRating}
+              onChange={(event, newValue) => setUserRating(newValue)}
+              size="large"
+              sx={{ mb: 1 }}
+            />
+            <Typography variant="body2" sx={{ color: '#666' }}>
+              {userRating > 0 ? `${userRating} Star${userRating > 1 ? "s" : ""}` : "Select rating"}
+            </Typography>
+          </Box>
+          <TextField
+             fullWidth
+             multiline
+             rows={4}
+             variant="outlined"
+             placeholder="Write your review (optional)..."
+             value={reviewText}
+             onChange={(e) => setReviewText(e.target.value)}
+             sx={{
+                mb: 3,
+                '& .MuiOutlinedInput-root': {
+                   borderRadius: '12px',
+                   backgroundColor: '#fafafa'
+                }
+             }}
           />
-          <motion.button
-            className={styles.submitReviewBtn}
+          <Button
+            variant="contained"
+            size="large"
             onClick={submitRating}
             disabled={submittingRating || !userRating}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            startIcon={submittingRating ? <CircularProgress size={20} color="inherit" /> : <Send size={18} />}
+            sx={{
+               borderRadius: '12px',
+               px: 4,
+               py: 1.5,
+               background: 'linear-gradient(45deg, #ff6f61, #ff8e53)'
+            }}
           >
-            <Send size={18} />
             {submittingRating ? "Submitting..." : "Submit Review"}
-          </motion.button>
-        </motion.div>
+          </Button>
+        </Paper>
 
-        <motion.div
-          className={styles.reviewsSection}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <h2>Customer Reviews ({reviewLinksCount})</h2>
+        <Box className={styles.reviewsSection} sx={{ mt: 6, mb: 10 }}>
+          <Typography variant="h5" sx={{ mb: 4, fontWeight: 700 }}>Customer Reviews ({reviewLinksCount})</Typography>
           <div className={styles.carouselContainer}>
             {product.ratings && product.ratings.length > 0 ? (
               <>
@@ -533,93 +554,64 @@ function ProductDetails() {
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentReviewIndex}
-                      className={styles.reviewCard}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className={styles.reviewHeader}>
-                        <div className={styles.reviewerInfo}>
-                          <div className={styles.avatar}>
-                            {product.ratings[currentReviewIndex].userName ? (
-                              product.ratings[currentReviewIndex].userName
-                                .charAt(0)
-                                .toUpperCase()
-                            ) : (
-                              <User size={20} />
-                            )}
-                          </div>
-                          <div>
-                            <span className={styles.reviewerName}>
-                              {product.ratings[currentReviewIndex].userName ||
-                                product.ratings[currentReviewIndex].userId
-                                  ?.name ||
-                                "Guest User"}
-                            </span>
-                            <span className={styles.reviewDate}>
-                              {new Date(
-                                product.ratings[currentReviewIndex].createdAt,
-                              ).toLocaleDateString()}
-                            </span>
-                          </div>
-                        </div>
-                        <div className={styles.reviewStars}>
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              size={14}
-                              fill={
-                                i < product.ratings[currentReviewIndex].rating
-                                  ? "#ffc107"
-                                  : "none"
-                              }
-                              stroke={
-                                i < product.ratings[currentReviewIndex].rating
-                                  ? "#ffc107"
-                                  : "#ddd"
-                              }
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      {product.ratings[currentReviewIndex].review && (
-                        <p className={styles.reviewText}>
-                          {product.ratings[currentReviewIndex].review}
-                        </p>
-                      )}
+                      <Paper elevation={0} sx={{ p: 3, borderRadius: '15px', border: '1px solid #f0f0f0' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                             <Avatar sx={{ bgcolor: '#ff6f61', mr: 2 }}>
+                                {product.ratings[currentReviewIndex].userName ? product.ratings[currentReviewIndex].userName.charAt(0).toUpperCase() : <User size={20} />}
+                             </Avatar>
+                             <Box>
+                                <Typography sx={{ fontWeight: 600 }}>{product.ratings[currentReviewIndex].userName || "Guest"}</Typography>
+                                <Typography variant="caption" sx={{ color: '#999' }}>{new Date(product.ratings[currentReviewIndex].createdAt).toLocaleDateString()}</Typography>
+                             </Box>
+                          </Box>
+                          <Rating value={product.ratings[currentReviewIndex].rating} readOnly size="small" />
+                        </Box>
+                        {product.ratings[currentReviewIndex].review && (
+                          <Typography variant="body1">{product.ratings[currentReviewIndex].review}</Typography>
+                        )}
+                      </Paper>
                     </motion.div>
                   </AnimatePresence>
                 </div>
 
                 {product.ratings.length > 1 && (
-                  <div className={styles.carouselActions}>
-                    <button className={styles.carouselBtn} onClick={prevReview}>
+                  <Box className={styles.carouselActions} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 3, gap: 2 }}>
+                    <IconButton onClick={prevReview} sx={{ backgroundColor: 'white', border: '1px solid #f0f0f0' }}>
                       <ChevronLeft size={24} />
-                    </button>
-                    <div className={styles.carouselDots}>
-                      {product.ratings.map((_, i) => (
-                        <div
-                          key={i}
-                          className={`${styles.dot} ${currentReviewIndex === i ? styles.activeDot : ""}`}
-                          onClick={() => setCurrentReviewIndex(i)}
-                        />
-                      ))}
-                    </div>
-                    <button className={styles.carouselBtn} onClick={nextReview}>
+                    </IconButton>
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                       {product.ratings.map((_, i) => (
+                           <Box
+                              key={i}
+                              onClick={() => setCurrentReviewIndex(i)}
+                              sx={{
+                                 width: '10px',
+                                 height: '10px',
+                                 borderRadius: '50%',
+                                 backgroundColor: currentReviewIndex === i ? '#ff6f61' : '#ddd',
+                                 cursor: 'pointer'
+                              }}
+                           />
+                       ))}
+                    </Box>
+                    <IconButton onClick={nextReview} sx={{ backgroundColor: 'white', border: '1px solid #f0f0f0' }}>
                       <ChevronRight size={24} />
-                    </button>
-                  </div>
+                    </IconButton>
+                  </Box>
                 )}
               </>
             ) : (
-              <p className={styles.noReviews}>
-                No reviews yet. Be the first to review!
-              </p>
+              <Typography sx={{ textAlign: 'center', color: '#666', py: 5 }}>No reviews yet. Be the first to review!</Typography>
             )}
           </div>
-        </motion.div>
-      </div>
+        </Box>
+      </Box>
       <Footer />
     </>
   );

@@ -13,6 +13,18 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import {
+  Box,
+  Typography,
+  IconButton,
+  CircularProgress,
+  AppBar,
+  Toolbar,
+  Drawer,
+  useTheme,
+  useMediaQuery,
+  Paper,
+} from "@mui/material";
 import styles from "./adminPanel.module.css";
 import { BASE_URL } from "../../utils/constant";
 import ProductModal from "../../Components/Local/ProductModal/ProductModal";
@@ -25,6 +37,8 @@ import ConfirmModal from "./Components/ConfirmModal";
 
 function AdminPanel() {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [activeTab, setActiveTab] = useState("dashboard");
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
@@ -260,35 +274,54 @@ function AdminPanel() {
 
   if (loading) {
     return (
-      <div className={styles.adminContainer}>
-        <div className={styles.loading}>
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          >
-            <Pizza size={48} />
-          </motion.div>
-          <h2>Loading Admin Panel...</h2>
-        </div>
-      </div>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        height: '100vh', 
+        gap: 3,
+        background: 'linear-gradient(135deg, #fffaf0 0%, #fff5e6 100%)'
+      }}>
+        <motion.div
+          animate={{ 
+            rotate: 360,
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ 
+            rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+            scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+          }}
+        >
+          <Pizza size={80} color="#ff6f61" strokeWidth={1.5} />
+        </motion.div>
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="h5" sx={{ fontWeight: 800, color: '#333', letterSpacing: '1px' }}>
+            PREPARING DASHBOARD
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#ff6f61', fontWeight: 600, mt: 1 }}>
+            Cooking up your admin stats...
+          </Typography>
+        </Box>
+      </Box>
     );
   }
 
   return (
-    <div className={styles.adminContainer}>
-      <div className={styles.mobileHeader}>
-        <div className={styles.mobileHeaderContent}>
-          <h2>
-            <Pizza size={24} /> Admin
-          </h2>
-          <button
-            className={styles.menuToggle}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: '#fafafa' }}>
+      {isMobile && (
+        <AppBar position="fixed" elevation={0} sx={{ bgcolor: 'white', borderBottom: '1px solid #f0f0f0' }}>
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Pizza size={24} color="#ff6f61" />
+              <Typography variant="h6" color="textPrimary" sx={{ fontWeight: 800 }}>Admin</Typography>
+            </Box>
+            <IconButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)} color="primary">
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      )}
 
       <Sidebar
         activeTab={activeTab}
@@ -300,7 +333,13 @@ function AdminPanel() {
         handleAddProduct={handleAddProduct}
       />
 
-      <main className={styles.mainContent}>
+      <Box component="main" sx={{ 
+        flexGrow: 1, 
+        p: { xs: 2, md: 4 }, 
+        pt: { xs: 10, md: 4 },
+        ml: { md: '260px' }, // Offset for the fixed sidebar
+        width: { md: `calc(100% - 260px)` } // Ensure content fits correctly
+      }}>
         <AnimatePresence mode="wait">
           {activeTab === "dashboard" && (
             <DashboardTab
@@ -334,7 +373,7 @@ function AdminPanel() {
             <AnalyticsTab orders={orders} products={products} />
           )}
         </AnimatePresence>
-      </main>
+      </Box>
 
       <ProductModal
         isOpen={isModalOpen}
@@ -354,7 +393,7 @@ function AdminPanel() {
         message={`Are you sure you want to apply a ${bulkDiscountValue}% discount to ALL products? This will overwrite individual discount values.`}
         isLoading={isBulkLoading}
       />
-    </div>
+    </Box>
   );
 }
 

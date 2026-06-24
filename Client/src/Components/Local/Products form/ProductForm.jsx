@@ -1,5 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Paper,
+  Container,
+} from "@mui/material";
+import { PlusCircle } from "lucide-react";
 import styles from "./productfrom.module.css";
 import { BASE_URL } from "../../../utils/constant";
 import Header from "../../Global/Header/Header";
@@ -46,66 +55,125 @@ function ProductForm() {
   return (
     <>
       <Header />
-      <div className={styles.loginContainer}>
-        <div className={styles.loginForm}>
-          <div className={styles.loginHeader}>
-            <h2 className={styles.loginTitle}>Add Products to Pizzaiolo</h2>
-            <p className={styles.loginSubtitle}>Expand our delicious menu</p>
-          </div>
+      <Box className={styles.loginContainer}>
+        <Paper elevation={0} className={styles.loginForm}>
+          <Box className={styles.loginHeader}>
+            <Typography variant="h2" className={styles.loginTitle} sx={{ fontSize: '2rem' }}>
+              Add Products to Pizzaiolo
+            </Typography>
+            <Typography className={styles.loginSubtitle}>
+              Expand our delicious menu
+            </Typography>
+          </Box>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
-              <input
-                type="text"
+          <form onSubmit={handleSubmit}>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                fullWidth
+                variant="outlined"
                 placeholder="Product Name"
-                className={styles.loginInput}
                 name="name"
                 value={formData.name}
                 onChange={changeHandler}
                 required
+                sx={{
+                   '& .MuiOutlinedInput-root': {
+                      borderRadius: '12px',
+                      backgroundColor: '#fafafa',
+                      '& fieldset': { borderColor: '#f0f0f0' },
+                      '&:hover fieldset': { borderColor: '#ff6f61' },
+                      '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                   }
+                }}
               />
-            </div>
-            <div className={styles.inputGroup}>
-              <input
-                type="text"
-                placeholder="Price (Rs. )"
-                className={styles.loginInput}
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Price (Rs.)"
                 name="price"
                 value={formData.price}
                 onChange={changeHandler}
                 required
+                sx={{
+                   '& .MuiOutlinedInput-root': {
+                      borderRadius: '12px',
+                      backgroundColor: '#fafafa',
+                      '& fieldset': { borderColor: '#f0f0f0' },
+                      '&:hover fieldset': { borderColor: '#ff6f61' },
+                      '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                   }
+                }}
               />
-            </div>
-            <div className={styles.inputGroup}>
-              <input
-                type="text"
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                fullWidth
+                variant="outlined"
                 placeholder="Image URL"
-                className={styles.loginInput}
                 name="image"
                 value={formData.image}
                 onChange={changeHandler}
                 required
+                sx={{
+                   '& .MuiOutlinedInput-root': {
+                      borderRadius: '12px',
+                      backgroundColor: '#fafafa',
+                      '& fieldset': { borderColor: '#f0f0f0' },
+                      '&:hover fieldset': { borderColor: '#ff6f61' },
+                      '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                   }
+                }}
               />
-            </div>
-            <div className={styles.inputGroup}>
-              <textarea
+            </Box>
+            <Box sx={{ mb: 3 }}>
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                variant="outlined"
                 placeholder="Description"
-                className={styles.loginInput}
                 name="description"
                 value={formData.description}
                 onChange={changeHandler}
                 required
-                rows="3"
-                style={{ resize: "vertical" }}
+                sx={{
+                   '& .MuiOutlinedInput-root': {
+                      borderRadius: '12px',
+                      backgroundColor: '#fafafa',
+                      '& fieldset': { borderColor: '#f0f0f0' },
+                      '&:hover fieldset': { borderColor: '#ff6f61' },
+                      '&.Mui-focused fieldset': { borderColor: '#ff6f61' },
+                   }
+                }}
               />
-            </div>
+            </Box>
 
-            <button type="submit" className={styles.loginButton}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              startIcon={<PlusCircle size={20} />}
+              sx={{
+                height: '55px',
+                borderRadius: '12px',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                textTransform: 'none',
+                background: 'linear-gradient(45deg, #ff6f61, #ff8e53)',
+                boxShadow: '0 4px 15px rgba(255, 111, 97, 0.3)',
+                '&:hover': {
+                   transform: 'translateY(-2px)',
+                   boxShadow: '0 6px 20px rgba(255, 111, 97, 0.4)',
+                }
+              }}
+            >
               Add Product
-            </button>
+            </Button>
           </form>
-        </div>
-      </div>
+        </Paper>
+      </Box>
       <Footer />
     </>
   );
